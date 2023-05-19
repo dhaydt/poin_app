@@ -703,6 +703,8 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Banner' => __DIR__ . '/../..' . '/app/Models/Banner.php',
+        'App\\Models\\Catalog' => __DIR__ . '/../..' . '/app/Models/Catalog.php',
         'App\\Models\\Outlet' => __DIR__ . '/../..' . '/app/Models/Outlet.php',
         'App\\Models\\Poin' => __DIR__ . '/../..' . '/app/Models/Poin.php',
         'App\\Models\\PoinHistory' => __DIR__ . '/../..' . '/app/Models/PoinHistory.php',

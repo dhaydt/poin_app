@@ -23,6 +23,7 @@ class CreateAdmin extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['password'] = Hash::make(12345678);
+        $data['is_admin'] = 1;
 
         return $data;
     }

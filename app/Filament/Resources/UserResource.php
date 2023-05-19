@@ -41,9 +41,11 @@ class UserResource extends Resource
                         ->email()
                         ->label('Email')
                         ->required()
+                        ->unique()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('phone')
                         ->tel()
+                        ->unique()
                         ->label('No Handphone')
                         ->maxLength(20),
                     Forms\Components\DatePicker::make('birthday')
@@ -81,28 +83,29 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable()
                     ->label('No Handphone'),
-                Tables\Columns\TextColumn::make('birthday')
-                    ->label('Tanggal lahir')
-                    ->date(),
-                Tables\Columns\TextColumn::make('gender')
-                    ->label('Kelamin'),
-                Tables\Columns\TextColumn::make('roles.name')
-                    ->label('Hak Akses'),
+                // Tables\Columns\TextColumn::make('birthday')
+                //     ->label('Tanggal lahir')
+                //     ->date(),
+                // Tables\Columns\TextColumn::make('gender')
+                //     ->label('Kelamin'),
+                // Tables\Columns\TextColumn::make('roles.name')
+                //     ->label('Hak Akses'),
                 Tables\Columns\TextColumn::make('occupation')
                     ->label('Pekerjaan'),
-                Tables\Columns\TextColumn::make('province')
-                    ->label('Provinsi'),
-                Tables\Columns\TextColumn::make('city')
-                    ->label('Kota'),
-                Tables\Columns\TextColumn::make('address')
-                    ->label('Alamat'),
+                // Tables\Columns\TextColumn::make('province')
+                //     ->label('Provinsi'),
+                // Tables\Columns\TextColumn::make('city')
+                //     ->label('Kota'),
+                // Tables\Columns\TextColumn::make('address')
+                //     ->label('Alamat'),
             ])
             ->filters([
                 // 
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                Tables\Actions\ViewAction::make()->label('')->tooltip('Lihat Customer'),
+                Tables\Actions\EditAction::make()->label('')->tooltip('Ubah Customer'),
+                Tables\Actions\DeleteAction::make()->label('')->tooltip('Hapus Customer')
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
@@ -116,7 +119,7 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::query()->role('customer');
+        return static::getModel()::query()->where('is_admin', 0);
     }
 
     public static function getRelations(): array

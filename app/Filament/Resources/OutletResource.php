@@ -35,7 +35,7 @@ class OutletResource extends Resource
                         ->required()
                         ->label('Nama')
                         ->maxLength(50),
-                    RichEditor::make('description')
+                    Forms\Components\Textarea::make('description')
                         ->label('Deskripsi'),
                     FileUpload::make('image')
                         ->label('Foto')
@@ -52,8 +52,7 @@ class OutletResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('Nama'),
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Deskripsi')
-                    ->html(),
+                    ->label('Deskripsi'),
                 ImageColumn::make('image')
                     ->label('Foto')
             ])

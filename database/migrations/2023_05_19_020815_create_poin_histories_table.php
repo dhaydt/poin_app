@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('poin_histories', function (Blueprint $table) {
             $table->id();
             $table->string('user_id', 20);
-            $table->string('outlet_id', 20);
-            $table->string('admin_id', 20);
-            $table->string('no_receipt', 100);
-            $table->double('pembelian');
+            $table->string('outlet_id', 20)->nullable();
+            $table->string('admin_id', 20)->nullable();
+            $table->string('no_receipt', 100)->nullable();
+            $table->double('pembelian')->nullable();
+            $table->string('type', 50)->nullable();
+            $table->string('poin', 250)->default(0);
             $table->timestamps();
         });
     }

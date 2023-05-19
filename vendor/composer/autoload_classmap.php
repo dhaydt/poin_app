@@ -51,6 +51,8 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Models\\Banner' => $baseDir . '/app/Models/Banner.php',
+    'App\\Models\\Catalog' => $baseDir . '/app/Models/Catalog.php',
     'App\\Models\\Outlet' => $baseDir . '/app/Models/Outlet.php',
     'App\\Models\\Poin' => $baseDir . '/app/Models/Poin.php',
     'App\\Models\\PoinHistory' => $baseDir . '/app/Models/PoinHistory.php',

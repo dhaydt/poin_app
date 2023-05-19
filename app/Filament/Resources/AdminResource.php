@@ -44,6 +44,7 @@ class AdminResource extends Resource
                         ->label('Email')
                         ->email()
                         ->required()
+                        ->unique()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('password')
                         ->password()
@@ -51,6 +52,7 @@ class AdminResource extends Resource
                     Forms\Components\TextInput::make('phone')
                         ->label('Nomor Handphone')
                         ->tel()
+                        ->unique()
                         ->maxLength(20),
                     Select::make('outlet_id')->label('Outlet')
                         ->options(function(callable $get){
@@ -90,13 +92,9 @@ class AdminResource extends Resource
             // Tables\Actions\DeleteBulkAction::make(),
         ]);
     }
-    public static function createButtonLabel()
-    {
-        return 'YourButtonTextHere';
-    }
     public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::query()->role(['admin', 'manager']);
+        return static::getModel()::query()->where('is_admin', 1);
     }
     
     public static function getRelations(): array

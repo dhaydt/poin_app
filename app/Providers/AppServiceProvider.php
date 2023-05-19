@@ -25,13 +25,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $users = User::get();
-        $role = Role::pluck('name');
-        foreach($users as $u){
-            if($u['is_admin'] == 0 && !$u->hasRole($role)){
-                $u->assignRole('customer');
-            };
-        }
+        // $users = User::get();
+        // $role = Role::pluck('name');
+        // foreach($users as $u){
+        //     if($u['is_admin'] == 0 && !$u->hasRole($role)){
+        //         $u->assignRole('customer');
+        //     };
+        // }
         
     }
 }
