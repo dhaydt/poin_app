@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Passport::routes();
         // $users = User::get();
         // $role = Role::pluck('name');
         // foreach($users as $u){
