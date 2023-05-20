@@ -25,6 +25,13 @@ Route::get('/banner/{id}', [HomeController::class, 'banner_details']);
 Route::get('/outlet', [HomeController::class, 'outlet']);
 Route::get('/outlet/{id}', [HomeController::class, 'outlet_details']);
 
+Route::get('/catalog', [HomeController::class, 'catalog']);
+Route::get('/catalog/{id}', [HomeController::class, 'catalog_details']);
+
+Route::get('/about_us', [HomeController::class, 'about_us']);
+Route::get('/contact', [HomeController::class, 'contact']);
+Route::get('/term', [HomeController::class, 'term']);
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
