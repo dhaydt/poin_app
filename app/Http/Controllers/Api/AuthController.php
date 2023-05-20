@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
+use App\Mail\ReserPasswordMail;
+use App\Mail\ResetPasswordMail;
 use App\Models\Poin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -109,5 +112,30 @@ class AuthController extends Controller
         $poin->save();
 
         return response()->json(['status' => 'success', 'message' => 'Pendaftaran berhasil!'], 200);
+    }
+
+    public function forgot(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+        ], [
+            'email.required' => 'Masukan email untuk reset password!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if(!$user){
+            return response()->json(['status' => 'error', 'message' => 'Email tidak ditemukan!'], 401);
+        }else{
+            $email = $user['email'];
+            // $email = '1992dayat@gmail.com';
+            $pass = str_pad(mt_rand(1,99999999),8,'0',STR_PAD_LEFT);
+            $user['password'] = Hash::make($pass);
+            $user->save();
+            Mail::to($email)->send(new ResetPasswordMail($pass));
+            return response()->json(['status' => 'success', 'message' => 'Password baru sudah dikirimkan ke email anda!'], 200);
+        }
     }
 }
