@@ -101,9 +101,11 @@ class AuthController extends Controller
         $user->province = $request['province'];
         $user->city = $request['city'];
         $user->address = $request['address'];
+        $user->is_admin = 0;
         $user->password = Hash::make($request['password']);
         $user->save();
 
+        $user->assignRole('customer');
 
         $poin = new Poin();
         $poin->poin = 0;

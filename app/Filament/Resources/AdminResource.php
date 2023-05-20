@@ -17,9 +17,12 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use stdClass;
 
 class AdminResource extends Resource
 {
@@ -28,7 +31,7 @@ class AdminResource extends Resource
     protected static ?string $slug = 'admins';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 6;
     protected static ?string $label = 'Admin';
 
     public static function form(Form $form): Form
@@ -75,9 +78,19 @@ class AdminResource extends Resource
     {
         return $table
         ->columns([
-            Tables\Columns\TextColumn::make('name')->label('Nama'),
-            Tables\Columns\TextColumn::make('email')->label('Email'),
-            Tables\Columns\TextColumn::make('phone')->label('No Handphone'),
+            TextColumn::make('No')->getStateUsing(
+                static function (stdClass $rowLoop, HasTable $livewire): string {
+                    return (string) (
+                        $rowLoop->iteration +
+                        ($livewire->tableRecordsPerPage * (
+                            $livewire->page - 1
+                        ))
+                    );
+                }
+            ),
+            Tables\Columns\TextColumn::make('name')->label('Nama')->searchable(),
+            Tables\Columns\TextColumn::make('email')->label('Email')->searchable(),
+            Tables\Columns\TextColumn::make('phone')->label('No Handphone')->searchable(),
             Tables\Columns\TextColumn::make('roles.name')->label('Hak Akses'),
             Tables\Columns\TextColumn::make('outlet.name'),
         ])
