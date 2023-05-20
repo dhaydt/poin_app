@@ -22,6 +22,9 @@ Route::post('/forgot-password', [AuthController::class, 'forgot']);
 Route::get('/banner', [HomeController::class, 'banner']);
 Route::get('/banner/{id}', [HomeController::class, 'banner_details']);
 
+Route::get('/outlet', [HomeController::class, 'outlet']);
+Route::get('/outlet/{id}', [HomeController::class, 'outlet_details']);
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
