@@ -4,6 +4,7 @@ namespace App\CPU;
 
 use App\Models\PoinHistory;
 use App\Models\User;
+use Carbon\Carbon;
 
 class Helpers
 {
@@ -65,5 +66,15 @@ class Helpers
     $data->type = $type;
     $data->poin = $poin;
     $data->save();
+  }
+
+  public static function refresh_total($user_id){
+    $date = Carbon::now()->addDay();
+    $to = $date->format('Y-m-d');
+    $from = $date->subDays(365)->format('Y-m-d');
+
+    $total = PoinHistory::where(['user_id' => $user_id, 'type' => 'add'])->whereBetween('created_at', [$from, $to])->pluck('pembelian')->toArray();
+
+    return $total;
   }
 }

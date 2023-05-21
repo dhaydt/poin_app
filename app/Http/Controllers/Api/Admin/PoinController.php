@@ -6,6 +6,7 @@ use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Poin;
 use App\Models\PoinHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -35,24 +36,26 @@ class PoinController extends Controller
                 return response()->json(['status' => 'error', 'message' => 'No receipt sudah pernah di masukkan!'], 200);
             } else {
                 $customer = Helpers::check_customer($request->phone);
-                if($customer){
+                if ($customer) {
                     $check_poin = Poin::where("user_id", $customer['id'])->first();
                     $poin = Helpers::poin_counter($request->amount);
-                    
-                    if(!$check_poin){
+
+                    if (!$check_poin) {
                         $check_poin = new Poin();
                         $check_poin->poin = 0;
                         $check_poin->user_id = $customer['id'];
                     }
                     Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
-                    $total = PoinHistory::where(['user_id' => $customer['id'], 'type' => 'add'])->pluck('pembelian')->toArray();
-    
+                    // $total = PoinHistory::where(['user_id' => $customer['id'], 'type' => 'add'])->pluck('pembelian')->toArray();
+                    $total = Helpers::refresh_total($customer['id']);
+
+
                     $check_poin->poin += $poin;
                     $check_poin->total_pembelian = array_sum($total);
                     $check_poin->save();
-    
-                    return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak '.$poin], 200);
-                }else{
+
+                    return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak ' . $poin], 200);
+                } else {
                     return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan'], 200);
                 }
             }
@@ -61,7 +64,8 @@ class PoinController extends Controller
         return response()->json(['status' => 'error', 'message' => 'not authorized'], 200);
     }
 
-    public function redeem_stamp(Request $request){
+    public function redeem_stamp(Request $request)
+    {
         $user = $request->user();
         $role = Helpers::checkRole($user, 'karyawan');
         $validator = Validator::make($request->all(), [
@@ -78,27 +82,26 @@ class PoinController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        if($role){
+        if ($role) {
             $customer = Helpers::check_customer($request->phone);
-            if($customer){
+            if ($customer) {
                 $total_poin = Poin::where('user_id', $customer['id'])->first();
-                if($total_poin){
-                    if($total_poin['poin'] !== $request->total_stamp){
-                        return response()->json(['status' => 'error', 'message' => 'Total poin tidak sesuai! poin saat ini adalah '.$total_poin['poin']], 200);
+                if ($total_poin) {
+                    if ($total_poin['poin'] !== $request->total_stamp) {
+                        return response()->json(['status' => 'error', 'message' => 'Total poin tidak sesuai! poin saat ini adalah ' . $total_poin['poin']], 200);
                     }
-                    if($total_poin['poin'] < $request->redeem_stamp){
+                    if ($total_poin['poin'] < $request->redeem_stamp) {
                         return response()->json(['status' => 'error', 'message' => 'Stamp tidak mencukupi'], 200);
                     }
                     Helpers::poin_history(null, 0, $customer, $user, 'redeem', $request->redeem_stamp);
                     $total_poin->poin -= $request['redeem_stamp'];
                     $total_poin->save();
 
-                    return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem. sisa poin '.$total_poin->poin], 200);
-                }else{
+                    return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem. sisa poin ' . $total_poin->poin], 200);
+                } else {
                     return response()->json(['status' => 'error', 'message' => 'Customer tidak memiliki poin'], 200);
                 }
-                
-            }else{
+            } else {
                 return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan'], 200);
             }
         }
