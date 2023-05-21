@@ -13,4 +13,13 @@ class Helpers
 
     return $err_keeper;
   }
+
+  public static function level($id){
+
+    return $id;
+  }
+
+  public static function checkRole($user, $role){
+    return $user->hasRole([$role]);
+  }
 }

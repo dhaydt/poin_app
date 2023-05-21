@@ -6,6 +6,7 @@ use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
 use App\Mail\ReserPasswordMail;
 use App\Mail\ResetPasswordMail;
+use App\Models\Outlet;
 use App\Models\Poin;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,22 +42,36 @@ class AuthController extends Controller
         }
 
         $user = User::where('phone', $request['phone'])->firstOrFail();
-        if($user->is_admin == 1){
-            return response()->json(['message' => 'Kamu memiliki hak akses admin, tidak bisa memasuki aplikasi ini!']);
-        }
-
-        if($user->hasRole('customer')){
-            $type = 'customer';
-        }
-        
-        if($user->hasRole('karyawan')){
-            $type = 'karyawan';
+        if($user->is_admin == 1 && $user->hasRole(['admin', 'manager'])){
+            return response()->json(['message' => 'Kamu memiliki hak akses admin atau manager, tidak bisa memasuki aplikasi ini!']);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()
+        if($user->hasRole('customer')){
+            $type = 'customer';
+            return response()
             ->json(['message' => 'Hi ' . $user->name . ', welcome to home', 'access_token' => $token, 'token_type' => 'Bearer', 'Role' => $type]);
+        }
+        
+        if($user->hasRole('karyawan')){
+            $type = 'karyawan';
+            $outlet = Outlet::find($user['outlet_id']);
+
+            $data = [
+                'name' => $user['name'],
+                'phone' => $user['phone'],
+                'email' => $user['email'],
+                'outlet' => $outlet ? $outlet['name'] : 'invalid outlet',
+            ];
+
+            return response()
+            ->json(['message' => 'Hi ' . $user->name . ', welcome to admin', 'access_token' => $token, 'token_type' => 'Bearer', 'Role' => $type, 'data' => $data]);
+        }
+
+
+        return response()
+            ->json(['message' => 'Your Account is not rollable']);
     }
 
     public function register(Request $request){
