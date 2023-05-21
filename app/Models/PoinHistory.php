@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PoinHistory extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'admin_id', 'outlet_id', 'no_receipt', 'type','poin', 'pembelian'];
 }

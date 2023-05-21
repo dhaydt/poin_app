@@ -2,6 +2,9 @@
 
 namespace App\CPU;
 
+use App\Models\PoinHistory;
+use App\Models\User;
+
 class Helpers
 {
   public static function error_processor($validator)
@@ -14,12 +17,53 @@ class Helpers
     return $err_keeper;
   }
 
-  public static function level($id){
+  public static function level($id)
+  {
 
     return $id;
   }
 
-  public static function checkRole($user, $role){
+  public static function checkRole($user, $role)
+  {
     return $user->hasRole([$role]);
+  }
+
+  public static function check_receipt($no)
+  {
+    $check = PoinHistory::where('no_receipt', $no)->first();
+    if ($check) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public static function check_customer($phone)
+  {
+    $user = User::where('phone', $phone)->first();
+
+    return $user;
+  }
+
+  public static function poin_counter($amount)
+  {
+    if ($amount > 100000) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  public static function poin_history($request, $user, $admin, $type, $poin)
+  {
+    $data = new PoinHistory();
+    $data->user_id = $user['id'];
+    $data->admin_id = $admin['id'];
+    $data->outlet_id = $admin['outlet_id'];
+    $data->no_receipt = $request->receipt;
+    $data->pembelian = $request->amount;
+    $data->type = $type;
+    $data->poin = $poin;
+    $data->save();
   }
 }

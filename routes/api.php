@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\PoinController;
+use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\UserController;
@@ -36,5 +38,10 @@ Route::get('/term', [HomeController::class, 'term']);
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('profile', [UserController::class, 'profile']);
     Route::get('level', [UserController::class, 'level']);
+
+    Route::prefix('karyawan')->group(function(){
+        Route::get('profile', [AdminUserController::class, 'profile']);
+        Route::post('add_stamp', [PoinController::class, 'add_stamp']);
+    });
 });
 
