@@ -54,14 +54,14 @@ class Helpers
     }
   }
 
-  public static function poin_history($request, $user, $admin, $type, $poin)
+  public static function poin_history($receipt, $amount, $user, $admin, $type, $poin)
   {
     $data = new PoinHistory();
     $data->user_id = $user['id'];
     $data->admin_id = $admin['id'];
     $data->outlet_id = $admin['outlet_id'];
-    $data->no_receipt = $request->receipt;
-    $data->pembelian = $request->amount;
+    $data->no_receipt = $receipt;
+    $data->pembelian = $amount;
     $data->type = $type;
     $data->poin = $poin;
     $data->save();

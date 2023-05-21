@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::prefix('karyawan')->group(function(){
         Route::get('profile', [AdminUserController::class, 'profile']);
         Route::post('add_stamp', [PoinController::class, 'add_stamp']);
+        Route::post('redeem_stamp', [PoinController::class, 'redeem_stamp']);
     });
 });
 
