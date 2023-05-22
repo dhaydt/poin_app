@@ -2,6 +2,7 @@
 
 namespace App\CPU;
 
+use App\Models\Poin;
 use App\Models\PoinHistory;
 use App\Models\User;
 use Carbon\Carbon;
@@ -65,15 +66,38 @@ class Helpers
     $data->pembelian = $amount;
     $data->type = $type;
     $data->poin = $poin;
+    $data->isredeem = 0;
+    $data->isexpired = 0;
     $data->save();
+    
+    if($type == 'redeem'){
+      $date = Carbon::now()->addDay();
+      $to = $date->format('Y-m-d');
+      $from = $date->subDays(365)->format('Y-m-d');
+      $poins = PoinHistory::where(['user_id' => $user['id'], 'type' => 'add', 'isredeem' => 0, 'isexpired' => 0, 'isreset' => 0])->whereBetween('created_at', [$from, $to])->orderBy('created_at', 'asc')->limit($poin)->get();
+      // return $poins;
+      foreach($poins as $p){
+        $p->isredeem = 1;
+        $p->save();
+      }
+    }
+  }
+
+  public static function calc_poin($id){
+    // $date = Carbon::now()->addDay();
+    // $to = $date->format('Y-m-d');
+    // $from = $date->subDays(365)->format('Y-m-d');
+    // $poin = PoinHistory::where(['user_id' => $id, 'type' => 'add'])->whereBetween('created_at', [$from, $to])->pluck('poin')->toArray();
+
+    $poin = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 0, 'isexpired' =>0, 'isreset' => 0])->pluck('poin')->toArray();
+
+    $p = Poin::where('user_id', $id)->first();
+    $p->poin = array_sum($poin);
+    $p->save();
   }
 
   public static function refresh_total($user_id){
-    $date = Carbon::now()->addDay();
-    $to = $date->format('Y-m-d');
-    $from = $date->subDays(365)->format('Y-m-d');
-
-    $total = PoinHistory::where(['user_id' => $user_id, 'type' => 'add'])->whereBetween('created_at', [$from, $to])->pluck('pembelian')->toArray();
+    $total = PoinHistory::where(['user_id' => $user_id, 'type' => 'add'])->pluck('pembelian')->toArray();
 
     return $total;
   }

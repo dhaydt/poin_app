@@ -50,6 +50,8 @@ return array(
     'App\\Filament\\Resources\\UserResource\\Pages\\CreateUser' => $baseDir . '/app/Filament/Resources/UserResource/Pages/CreateUser.php',
     'App\\Filament\\Resources\\UserResource\\Pages\\EditUser' => $baseDir . '/app/Filament/Resources/UserResource/Pages/EditUser.php',
     'App\\Filament\\Resources\\UserResource\\Pages\\ListUsers' => $baseDir . '/app/Filament/Resources/UserResource/Pages/ListUsers.php',
+    'App\\Http\\Controllers\\Api\\Admin\\PoinController' => $baseDir . '/app/Http/Controllers/Api/Admin/PoinController.php',
+    'App\\Http\\Controllers\\Api\\Admin\\UserController' => $baseDir . '/app/Http/Controllers/Api/Admin/UserController.php',
     'App\\Http\\Controllers\\Api\\AuthController' => $baseDir . '/app/Http/Controllers/Api/AuthController.php',
     'App\\Http\\Controllers\\Api\\HomeController' => $baseDir . '/app/Http/Controllers/Api/HomeController.php',
     'App\\Http\\Controllers\\Api\\UserController' => $baseDir . '/app/Http/Controllers/Api/UserController.php',

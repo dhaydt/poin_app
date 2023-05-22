@@ -37,24 +37,29 @@ class PoinController extends Controller
             } else {
                 $customer = Helpers::check_customer($request->phone);
                 if ($customer) {
-                    $check_poin = Poin::where("user_id", $customer['id'])->first();
                     $poin = Helpers::poin_counter($request->amount);
+                    if ($poin > 0) {
+                        $check_poin = Poin::where("user_id", $customer['id'])->first();
+                        $total = Helpers::refresh_total($customer['id']);
+                        if (!$check_poin) {
+                            $check_poin = new Poin();
+                            $check_poin->poin = 0;
+                            $check_poin->user_id = $customer['id'];
+                        }
+                        $check_poin->poin += $poin;
+                        $check_poin->total_pembelian = array_sum($total);
+                        $check_poin->save();
 
-                    if (!$check_poin) {
-                        $check_poin = new Poin();
-                        $check_poin->poin = 0;
-                        $check_poin->user_id = $customer['id'];
+                        if ($check_poin['poin'] >= 6) {
+                            return response()->json(['status' => 'error', 'message' => 'Poin anda sudah mencapai limit. Jumlah poin ' . $check_poin['poin']], 200);
+                        } else {
+                            Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
+                            Helpers::calc_poin($customer['id']);
+                            return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak ' . $poin], 200);
+                        }
                     }
-                    Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
-                    // $total = PoinHistory::where(['user_id' => $customer['id'], 'type' => 'add'])->pluck('pembelian')->toArray();
-                    $total = Helpers::refresh_total($customer['id']);
 
 
-                    $check_poin->poin += $poin;
-                    $check_poin->total_pembelian = array_sum($total);
-                    $check_poin->save();
-
-                    return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak ' . $poin], 200);
                 } else {
                     return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan'], 200);
                 }
@@ -90,14 +95,17 @@ class PoinController extends Controller
                     if ($total_poin['poin'] !== $request->total_stamp) {
                         return response()->json(['status' => 'error', 'message' => 'Total poin tidak sesuai! poin saat ini adalah ' . $total_poin['poin']], 200);
                     }
-                    if ($total_poin['poin'] < $request->redeem_stamp) {
-                        return response()->json(['status' => 'error', 'message' => 'Stamp tidak mencukupi'], 200);
+                    if(in_array($request->redeem_stamp, [2,4,6])){
+                        if ($total_poin['poin'] < $request->redeem_stamp) {
+                            return response()->json(['status' => 'error', 'message' => 'Stamp tidak mencukupi'], 200);
+                        }
+                        Helpers::poin_history(null, 0, $customer, $user, 'redeem', $request->redeem_stamp);
+                        Helpers::calc_poin($customer['id']);
+    
+                        return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem. sisa poin ' . $total_poin->poin], 200);
+                    }else{
+                        return response()->json(['status' => 'error', 'message' => 'Nilai stamp yang diredeem hanya bisa 2, 4 atau 6'], 200);
                     }
-                    Helpers::poin_history(null, 0, $customer, $user, 'redeem', $request->redeem_stamp);
-                    $total_poin->poin -= $request['redeem_stamp'];
-                    $total_poin->save();
-
-                    return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem. sisa poin ' . $total_poin->poin], 200);
                 } else {
                     return response()->json(['status' => 'error', 'message' => 'Customer tidak memiliki poin'], 200);
                 }

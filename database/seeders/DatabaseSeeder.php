@@ -18,28 +18,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
-        $user = User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('adminadmin')
-        ]);
+        // $user = User::factory()->create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@admin.com',
+        //     'password' => Hash::make('adminadmin')
+        // ]);
 
-        User::factory()->create([
-            'name' => 'manager',
-            'email' => 'manager@manager.com',
-            'password' => Hash::make('adminadmin')
-        ]);
+        // User::factory()->create([
+        //     'name' => 'manager',
+        //     'email' => 'manager@manager.com',
+        //     'password' => Hash::make('adminadmin')
+        // ]);
 
-        $role = Role::create(['name' => 'admin']);
-        $user->assignRole($role);
+        // $role = Role::create(['name' => 'admin']);
+        // $user->assignRole($role);
 
-        $users = [
-            ['type' => 'about_us', 'value' => ''],
-            ['type' => 'contact', 'value' => ''],
-            ['type' => 'term_and_condition', 'value' => ''],
-        ];
+        // $users = [
+        //     ['type' => 'about_us', 'value' => ''],
+        //     ['type' => 'contact', 'value' => ''],
+        //     ['type' => 'term_and_condition', 'value' => ''],
+        // ];
 
-        Config::insert($users);
+        // Config::insert($users);
     }
 }

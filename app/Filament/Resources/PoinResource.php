@@ -82,6 +82,11 @@ class PoinResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
     
     public static function getRelations(): array
     {
