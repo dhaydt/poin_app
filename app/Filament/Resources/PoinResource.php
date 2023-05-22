@@ -33,9 +33,9 @@ class PoinResource extends Resource
             ->schema([
                 Card::make()->schema([
                     Select::make('user_id')->label('Customer')
-                        ->options(function(callable $get){
+                        ->options(function (callable $get) {
                             $outlet = User::where('is_admin', 0);
-                            if(!$outlet){
+                            if (!$outlet) {
                                 return [];
                             }
                             return $outlet->pluck('name', 'id');
@@ -58,17 +58,15 @@ class PoinResource extends Resource
             ->columns([
                 TextColumn::make('No')->getStateUsing(
                     static function (stdClass $rowLoop, HasTable $livewire): string {
-                        return (string) (
-                            $rowLoop->iteration +
-                            ($livewire->tableRecordsPerPage * (
-                                $livewire->page - 1
+                        return (string) ($rowLoop->iteration +
+                            ($livewire->tableRecordsPerPage * ($livewire->page - 1
                             ))
                         );
                     }
                 ),
                 Tables\Columns\TextColumn::make('user.name')->label('Customer')->searchable(),
                 Tables\Columns\TextColumn::make('poin'),
-                Tables\Columns\TextColumn::make('total_pembelian')->label('Total Belanja'),
+                Tables\Columns\TextColumn::make('total_pembelian')->label('Total Belanja')->formatStateUsing(fn (string $state): string => __(number_format("{$state}"))),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('d M Y H:i')
                     ->label('Tanggal Update'),
@@ -88,14 +86,14 @@ class PoinResource extends Resource
     {
         return false;
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -103,5 +101,5 @@ class PoinResource extends Resource
             'create' => Pages\CreatePoin::route('/create'),
             'edit' => Pages\EditPoin::route('/{record}/edit'),
         ];
-    }    
+    }
 }
