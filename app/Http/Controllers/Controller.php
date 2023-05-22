@@ -23,9 +23,9 @@ class Controller extends BaseController
             $user = User::find($check['id']);
             $role = $user->hasRole(['admin', 'manager']);
             if ($role) {
-                $ph = PoinHistory::where(['type' => 'add', 'isreset' => 1])->get();
+                $ph = PoinHistory::where(['type' => 'add', 'isreset' => 0])->get();
                 foreach ($ph as $p) {
-                    $p->isreset = 0;
+                    $p->isreset = 1;
                     $p->save();
                 }
 
