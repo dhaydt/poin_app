@@ -30,7 +30,7 @@ Route::get('/migrate', function () {
     dd('migrated!');
 });
 Route::get('/seed', function () {
-    Artisan::call('seed', [
+    Artisan::call('db:seed', [
         '--force' => true,
     ]);
     dd('seeded!');
