@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\PoinRewardResource\Pages;
+use App\Filament\Resources\PoinRewardResource\RelationManagers;
+use App\Models\PoinReward;
+use App\Models\Reward;
+use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use stdClass;
+
+class PoinRewardResource extends Resource
+{
+    protected static ?string $model = Reward::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-gift';
+    protected static ?string $label = 'Poin Reward';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                TextInput::make('poin')->label('Poin')->disabled(),
+                TextInput::make('reward')->label('Reward')
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('No')->getStateUsing(
+                    static function (stdClass $rowLoop, HasTable $livewire): string {
+                        return (string) (
+                            $rowLoop->iteration +
+                            ($livewire->tableRecordsPerPage * (
+                                $livewire->page - 1
+                            ))
+                        );
+                    }
+                ),
+                TextColumn::make('poin'),
+                TextColumn::make('reward')
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make()->label('')->tooltip('Ubah reward'),
+            ])
+            ->bulkActions([
+                // Tables\Actions\DeleteBulkAction::make(),
+            ]);
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+    
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+    
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListPoinRewards::route('/'),
+            'create' => Pages\CreatePoinReward::route('/create'),
+            // 'edit' => Pages\EditPoinReward::route('/{record}/edit'),
+        ];
+    }    
+}

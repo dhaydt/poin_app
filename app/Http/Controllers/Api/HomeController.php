@@ -7,6 +7,7 @@ use App\Models\Banner;
 use App\Models\Catalog;
 use App\Models\Config;
 use App\Models\Outlet;
+use App\Models\Reward;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -91,5 +92,9 @@ class HomeController extends Controller
         $about = Config::where('type', 'term_and_condition')->first();
 
         return response()->json(['status' => 'success', 'data' => $about], 200);
+    }
+
+    public function reward(){
+        return Reward::get();
     }
 }

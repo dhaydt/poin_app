@@ -22,6 +22,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot-password', [AuthController::class, 'forgot']);
 
+Route::get('/reward', [HomeController::class, 'reward']);
+
 Route::get('/banner', [HomeController::class, 'banner']);
 Route::get('/banner/{id}', [HomeController::class, 'banner_details']);
 

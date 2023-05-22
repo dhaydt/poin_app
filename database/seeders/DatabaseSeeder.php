@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Config;
+use App\Models\Reward;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,5 +41,16 @@ class DatabaseSeeder extends Seeder
         // ];
 
         // Config::insert($users);
+
+        $reward = [
+            ['poin' => 1, 'reward' => null],
+            ['poin' => 2, 'reward' => null],
+            ['poin' => 3, 'reward' => null],
+            ['poin' => 4, 'reward' => null],
+            ['poin' => 5, 'reward' => null],
+            ['poin' => 6, 'reward' => null],
+        ];
+
+        Reward::insert($reward);
     }
 }
