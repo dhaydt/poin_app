@@ -25,6 +25,8 @@ class PoinRewardResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-gift';
     protected static ?string $label = 'Poin Reward';
 
+    protected static ?string $navigationGroup = 'Poin';
+
     protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form

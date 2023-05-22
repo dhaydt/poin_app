@@ -23,6 +23,7 @@ class ConfigResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-cog';
     protected static ?int $navigationSort = 9;
     protected static ?string $label = 'Pengaturan Web';
+    protected static ?string $navigationGroup = 'Pengaturan';
 
     public static function form(Form $form): Form
     {

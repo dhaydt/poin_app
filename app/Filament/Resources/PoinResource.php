@@ -25,6 +25,7 @@ class PoinResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
     protected static ?int $navigationSort = 4;
+    protected static ?string $navigationGroup = 'Poin';
 
     public static function form(Form $form): Form
     {

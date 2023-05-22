@@ -6,10 +6,12 @@ use App\Filament\Resources\InputPoinResource\Pages;
 use App\Filament\Resources\InputPoinResource\RelationManagers;
 use App\Models\PoinHistory;
 use Filament\Forms;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
@@ -58,10 +60,10 @@ class InputPoinResource extends Resource
                     ->formatStateUsing(fn (string $state): string => __(number_format("{$state}"))),
                 Tables\Columns\TextColumn::make('poin')
                     ->label('Poin'),
-                CheckboxColumn::make('isredeem')
+                BooleanColumn::make('isredeem')
                     ->disabled()
                     ->label('Sudah diredeem ?'),
-                CheckboxColumn::make('isexpired')
+                BooleanColumn::make('isexpired')
                     ->disabled()
                     ->label('Sudah expire ?'),
                 Tables\Columns\TextColumn::make('created_at')

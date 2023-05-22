@@ -34,6 +34,8 @@ class AdminResource extends Resource
     protected static ?int $navigationSort = 7;
     protected static ?string $label = 'Admin';
 
+    protected static ?string $navigationGroup = 'Pengguna';
+
     public static function form(Form $form): Form
     {
         return $form

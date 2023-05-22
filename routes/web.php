@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -28,13 +29,15 @@ Route::get('/migrate', function () {
         '--force' => true,
     ]);
     dd('migrated!');
-});
+})->name('migrate');
 Route::get('/seed', function () {
     Artisan::call('db:seed', [
         '--force' => true,
     ]);
     dd('seeded!');
 });
+
+Route::get('reset/{is_admin}', [Controller::class, 'reset'])->name('reset');
 
 Route::get('/', function () {
     // return view('welcome');

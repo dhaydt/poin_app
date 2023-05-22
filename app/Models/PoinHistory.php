@@ -22,4 +22,9 @@ class PoinHistory extends Model
     public function outlet(){
         return $this->belongsTo(Outlet::class);
     }
+
+    // public function canAccessFilament(): bool
+    // {
+    //     return $this->hasRole(['karyawan']);
+    // }
 }
