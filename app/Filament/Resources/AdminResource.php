@@ -31,7 +31,7 @@ class AdminResource extends Resource
     protected static ?string $slug = 'admins';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
     protected static ?string $label = 'Admin';
 
     public static function form(Form $form): Form

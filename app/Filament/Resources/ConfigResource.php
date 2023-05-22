@@ -21,7 +21,7 @@ class ConfigResource extends Resource
     protected static ?string $model = Config::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-cog';
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 9;
     protected static ?string $label = 'Pengaturan Web';
 
     public static function form(Form $form): Form
