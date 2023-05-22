@@ -739,6 +739,7 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         'App\\Models\\PoinHistory' => __DIR__ . '/../..' . '/app/Models/PoinHistory.php',
         'App\\Models\\Reward' => __DIR__ . '/../..' . '/app/Models/Reward.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Policies\\UserPolicy' => __DIR__ . '/../..' . '/app/Policies/UserPolicy.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

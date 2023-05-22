@@ -13,8 +13,11 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use stdClass;
 
 class CatalogResource extends Resource
 {
@@ -33,12 +36,16 @@ class CatalogResource extends Resource
                         ->label('Nama')
                         ->required()
                         ->maxLength(100),
+                    Forms\Components\TextInput::make('name_eng')
+                        ->label('Nama (Eng)')
+                        ->maxLength(100),
                     Forms\Components\TextInput::make('price')
                         ->numeric()
                         ->label('Harga')
                         ->required()
                         ->maxLength(100),
                     Forms\Components\Textarea::make('description')->label('Deskripsi'),
+                    Forms\Components\Textarea::make('description_eng')->label('Deskripsi (Eng)'),
                     FileUpload::make('image')
                         ->label('Foto')
                         ->directory('storage/catalog')
@@ -53,9 +60,21 @@ class CatalogResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('Name')->searchable(),
-                Tables\Columns\TextColumn::make('price')->label('Harga'),
+                TextColumn::make('No')->getStateUsing(
+                    static function (stdClass $rowLoop, HasTable $livewire): string {
+                        return (string) (
+                            $rowLoop->iteration +
+                            ($livewire->tableRecordsPerPage * (
+                                $livewire->page - 1
+                            ))
+                        );
+                    }
+                ),
+                Tables\Columns\TextColumn::make('name')->label('Nama')->searchable(),
+                Tables\Columns\TextColumn::make('name_eng')->label('Nama (Eng)')->searchable(),
+                Tables\Columns\TextColumn::make('price')->label('Harga')->formatStateUsing(fn (string $state): string => __(number_format("{$state}"))),
                 Tables\Columns\TextColumn::make('description')->label('Deskripsi'),
+                Tables\Columns\TextColumn::make('description_eng')->label('Deskripsi (Eng)'),
                 ImageColumn::make('image')->label('Foto'),
             ])
             ->filters([

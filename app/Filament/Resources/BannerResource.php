@@ -26,6 +26,8 @@ class BannerResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $label = 'Promo / Banner';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -54,19 +56,29 @@ class BannerResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('No')->getStateUsing(
-                    static function (stdClass $rowLoop, HasTable $livewire): string {
-                        return (string) (
-                            $rowLoop->iteration +
-                            ($livewire->tableRecordsPerPage * (
-                                $livewire->page - 1
-                            ))
-                        );
-                    }
-                ),
-                Tables\Columns\TextColumn::make('title')->searchable(),
-                Tables\Columns\TextColumn::make('description'),
-                ImageColumn::make('image'),
+                TextColumn::make('No')
+                    ->getStateUsing(
+                        static function (stdClass $rowLoop, HasTable $livewire): string {
+                            return (string) (
+                                $rowLoop->iteration +
+                                ($livewire->tableRecordsPerPage * (
+                                    $livewire->page - 1
+                                ))
+                            );
+                        }
+                    ),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->label('Judul'),
+                Tables\Columns\TextColumn::make('title_eng')
+                    ->searchable()
+                    ->label('Judul (Eng)'),
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi'),
+                Tables\Columns\TextColumn::make('description_eng')
+                    ->label('Deskripsi (Eng)'),
+                ImageColumn::make('image')
+                    ->label('Banner'),
             ])
             ->filters([
                 //

@@ -9,5 +9,5 @@ class Reward extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['poin', 'reward'];
+    protected $fillable = ['poin', 'reward', 'reward_eng'];
 }

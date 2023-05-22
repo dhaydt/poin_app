@@ -34,7 +34,8 @@ class PoinRewardResource extends Resource
         return $form
             ->schema([
                 TextInput::make('poin')->label('Poin')->disabled(),
-                TextInput::make('reward')->label('Reward')
+                TextInput::make('reward')->label('Reward'),
+                TextInput::make('reward_eng')->label('Reward (Eng)')
             ]);
     }
 
@@ -53,7 +54,8 @@ class PoinRewardResource extends Resource
                     }
                 ),
                 TextColumn::make('poin'),
-                TextColumn::make('reward')
+                TextColumn::make('reward'),
+                TextColumn::make('reward_eng')->label('Reward (Eng)')
             ])
             ->filters([
                 //
