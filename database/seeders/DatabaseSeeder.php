@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        // $user = User::factory()->create([
-        //     'name' => 'admin',
-        //     'email' => 'admin@admin.com',
-        //     'password' => Hash::make('adminadmin')
-        // ]);
+        \App\Models\User::factory(10)->create();
+        $user = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('adminadmin')
+        ]);
 
         // User::factory()->create([
         //     'name' => 'manager',
@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make('adminadmin')
         // ]);
 
-        // $role = Role::create(['name' => 'admin']);
-        // $user->assignRole($role);
+        $role = Role::create(['name' => 'admin']);
+        $user->assignRole($role);
 
         $users = [
             ['type' => 'about_us', 'value' => ''],
