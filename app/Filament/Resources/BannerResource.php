@@ -34,8 +34,13 @@ class BannerResource extends Resource
                     Forms\Components\TextInput::make('title')
                         ->label('Judul banner')
                         ->maxLength(100),
+                    Forms\Components\TextInput::make('title_eng')
+                        ->label('Judul banner (Eng)')
+                        ->maxLength(100),
                     Forms\Components\Textarea::make('description')
                         ->label('Deskripsi'),
+                    Forms\Components\Textarea::make('description_eng')
+                        ->label('Deskripsi (Eng)'),
                     FileUpload::make('image')
                         ->label('Banner')
                         ->directory('storage/banner')
