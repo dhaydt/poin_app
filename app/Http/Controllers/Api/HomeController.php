@@ -29,6 +29,7 @@ class HomeController extends Controller
         foreach($banner as $b){
             $d['id'] = $b['id'];
             $d['title'] = $b['title'];
+            $d['title_eng'] = $b['title_eng'];
             $d['image'] = getenv('APP_URL').'/storage/'.$b['image'];
             array_push($banners, $d);
         }
