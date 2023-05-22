@@ -29,6 +29,12 @@ Route::get('/migrate', function () {
     ]);
     dd('migrated!');
 });
+Route::get('/seed', function () {
+    Artisan::call('seed', [
+        '--force' => true,
+    ]);
+    dd('seeded!');
+});
 
 Route::get('/', function () {
     // return view('welcome');
