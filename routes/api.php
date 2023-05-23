@@ -37,6 +37,10 @@ Route::get('/about_us', [HomeController::class, 'about_us']);
 Route::get('/contact', [HomeController::class, 'contact']);
 Route::get('/term', [HomeController::class, 'term']);
 
+Route::get('/province', [HomeController::class, 'province']);
+Route::get('/city/{id}', [HomeController::class, 'city']);
+Route::get('/occupation', [HomeController::class, 'occupation']);
+
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('profile', [UserController::class, 'profile']);
     Route::get('level', [UserController::class, 'level']);

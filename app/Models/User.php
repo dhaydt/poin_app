@@ -57,11 +57,11 @@ class User extends Authenticatable implements FilamentUser
     ];
 
     public function province(){
-        return $this->belongsTo(Province::class, 'province', 'code');
+        return $this->belongsTo(Province::class, 'province_id', 'code');
     }
     
     public function city(){
-        return $this->belongsTo(City::class, 'city', 'code');
+        return $this->belongsTo(City::class, 'city_id', 'code');
     }
 
     public function outlet(){

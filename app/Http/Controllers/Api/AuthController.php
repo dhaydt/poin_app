@@ -82,8 +82,8 @@ class AuthController extends Controller
             'birthday' => 'required',
             'gender' => 'required',
             'occupation' => 'required',
-            'province' => 'required',
-            'city' => 'required',
+            'province_id' => 'required',
+            'city_id' => 'required',
             'address' => 'required',
             'password' => 'required|min:6'
         ], [
@@ -113,8 +113,8 @@ class AuthController extends Controller
         $user->birthday = $request['birthday'];
         $user->gender = $request['gender'];
         $user->occupation = $request['occupation'];
-        $user->province = $request['province'];
-        $user->city = $request['city'];
+        $user->province_id = $request['province'];
+        $user->city_id = $request['city'];
         $user->address = $request['address'];
         $user->is_admin = 0;
         $user->password = Hash::make($request['password']);

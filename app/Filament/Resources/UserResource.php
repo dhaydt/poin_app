@@ -71,14 +71,14 @@ class UserResource extends Resource
                         ->label('Pekerjaan')
                         ->placeholder('-- Pilih pekerjaan --')
                         ->required(),
-                    Select::make('province')
+                    Select::make('province_id')
                         ->placeholder('-- Pilih provinsi --')
                         ->label('Provinsi')->options(Province::all()->pluck('name', 'code')->toArray())->reactive(),
-                    Select::make('city')
+                    Select::make('city_id')
                         ->placeholder('-- Pilih kota --')
                         ->hint('Pilih provinsi untuk menampilkan kota')
                         ->label('Kota')->options(function(callable $get){
-                                $city = City::where('province_code', $get('province'));
+                                $city = City::where('province_code', $get('province_id'));
                                 if(!$city){
                                     return City::all()->pluck('name', 'code');
                                 }
@@ -124,10 +124,10 @@ class UserResource extends Resource
                 //     ->label('Hak Akses'),
                 Tables\Columns\TextColumn::make('occupation')
                     ->label('Pekerjaan'),
-                // Tables\Columns\TextColumn::make('province')
-                //     ->label('Provinsi'),
-                // Tables\Columns\TextColumn::make('city')
-                //     ->label('Kota'),
+                Tables\Columns\TextColumn::make('province.name')
+                    ->label('Provinsi'),
+                Tables\Columns\TextColumn::make('city.name')
+                    ->label('Kota'),
                 // Tables\Columns\TextColumn::make('address')
                 //     ->label('Alamat'),
             ])

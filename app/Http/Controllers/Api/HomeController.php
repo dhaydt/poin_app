@@ -8,10 +8,30 @@ use App\Models\Catalog;
 use App\Models\Config;
 use App\Models\Outlet;
 use App\Models\Reward;
+use App\Models\Work;
 use Illuminate\Http\Request;
+use KodePandai\Indonesia\Models\City;
+use KodePandai\Indonesia\Models\Province;
 
 class HomeController extends Controller
 {
+    public function province(){
+        $prov = Province::all();
+
+        return response()->json(['status' => 'success', 'data' => $prov], 200);
+    }
+    
+    public function occupation(){
+        $prov = Work::all();
+
+        return response()->json(['status' => 'success', 'data' => $prov], 200);
+    }
+
+    public function city($id){
+        $prov = City::where('province_code', $id)->get();
+
+        return response()->json(['status' => 'success', 'data' => $prov], 200);
+    }
     public function outlet(){
         $outlet = Outlet::orderBy('created_at', 'desc')->get();
 
