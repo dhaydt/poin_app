@@ -9,11 +9,55 @@ use Filament\Notifications\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function broadcast(Request $request){
+        // dd($request);
+        $province = null;
+        $city = null;
+        $kelamin = [];
+        $pekerjaan = [];
+
+        $users = User::where('is_admin', 0);
+
+        if($request->province){
+            $province = $request->province;
+            $users = $users->where('province', '!=', null );
+            $users = $users->where('province', $province);
+        }
+
+        if($request->city){
+            $city = $request->city;
+            $users = $users->where('city', $city);
+        }
+
+        if($request->kelamin){
+            $kelamin = $request->kelamin;
+            $users = $users->where('gender', '!=', null );
+            if(count($kelamin) > 0){
+                foreach($kelamin as $k){
+                    $users = $users->orWhere('gender', $k);
+                }
+            }
+        }
+
+        if($request->pekerjaan){
+            $pekerjaan = $request->pekerjaan;
+            $users = $users->where('occupation', '!=', null );
+            if(count($pekerjaan) > 0){
+                foreach($pekerjaan as $p){
+                    $users = $users->orWhere('occupation','like','%'.$p.'%');
+                }
+            }
+        }
+
+        dd($users->get(), $request);
+    }
 
     public function reset($is_admin)
     {

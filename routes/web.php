@@ -37,9 +37,10 @@ Route::get('/seed', function () {
     dd('seeded!');
 });
 
+Route::post('broadcast', [Controller::class, 'broadcast'])->name('broadcast');
+
 Route::get('reset/{is_admin}', [Controller::class, 'reset'])->name('reset');
 
 Route::get('/', function () {
-    // return view('welcome');
     return redirect()->route('filament.auth.login');
 })->name('login');

@@ -5,6 +5,7 @@ namespace App\CPU;
 use App\Models\Poin;
 use App\Models\PoinHistory;
 use App\Models\User;
+use App\Models\Work;
 use Carbon\Carbon;
 
 class Helpers
@@ -113,5 +114,10 @@ class Helpers
       $p->total_pembelian = array_sum($poin);
       $p->save();
     }
+  }
+
+  public static function getPekerjaan(){
+    $work = Work::get();
+    return $work;
   }
 }
