@@ -120,4 +120,8 @@ class Helpers
     $work = Work::get();
     return $work;
   }
+
+  public function getCountry(){
+    return \Indonesia::allProvinces();
+  }
 }

@@ -7,6 +7,7 @@ use App\Filament\Resources\ConfigResource\RelationManagers;
 use App\Models\Config;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Textarea;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -35,7 +36,7 @@ class ConfigResource extends Resource
                         ->required()
                         ->disabled()
                         ->maxLength(100),
-                    Forms\Components\TextArea::make('value'),
+                    Textarea::make('value'),
                 ])
             ]);
     }

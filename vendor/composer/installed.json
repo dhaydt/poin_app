@@ -2452,6 +2452,65 @@
             "install-path": "../hamcrest/hamcrest-php"
         },
         {
+            "name": "kodepandai/laravel-indonesia",
+            "version": "v2.0.1",
+            "version_normalized": "2.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kodepandai/laravel-indonesia.git",
+                "reference": "692c58cc9d25261f3a51518b24f9305ed5edfed7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kodepandai/laravel-indonesia/zipball/692c58cc9d25261f3a51518b24f9305ed5edfed7",
+                "reference": "692c58cc9d25261f3a51518b24f9305ed5edfed7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "laravel/framework": "^7.0|^8.0|^9.0|^10.0",
+                "php": "^7.3|^8.0",
+                "staudenmeir/eloquent-has-many-deep": "^1.11"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
+                "pestphp/pest": "^1|^2",
+                "pestphp/pest-plugin-laravel": "^1|^2"
+            },
+            "time": "2023-03-09T04:33:04+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KodePandai\\Indonesia\\IndonesiaServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "KodePandai\\Indonesia\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Indonesia administrative data for laravel",
+            "homepage": "https://github.com/kodepandai/laravel-indonesia",
+            "keywords": [
+                "administrative",
+                "indonesia",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/kodepandai/laravel-indonesia/issues",
+                "source": "https://github.com/kodepandai/laravel-indonesia/tree/v2.0.1"
+            },
+            "install-path": "../kodepandai/laravel-indonesia"
+        },
+        {
             "name": "laravel/framework",
             "version": "v9.52.7",
             "version_normalized": "9.52.7.0",
@@ -7384,6 +7443,111 @@
                 }
             ],
             "install-path": "../spatie/laravel-translatable"
+        },
+        {
+            "name": "staudenmeir/eloquent-has-many-deep",
+            "version": "v1.17.1",
+            "version_normalized": "1.17.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staudenmeir/eloquent-has-many-deep.git",
+                "reference": "c5fc741d51af5094c625c9fc75ef71ba296dc7b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staudenmeir/eloquent-has-many-deep/zipball/c5fc741d51af5094c625c9fc75ef71ba296dc7b1",
+                "reference": "c5fc741d51af5094c625c9fc75ef71ba296dc7b1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^9.0",
+                "php": "^8.0.2",
+                "staudenmeir/eloquent-has-many-deep-contracts": "^1.0"
+            },
+            "require-dev": {
+                "awobaz/compoships": "^2.1",
+                "illuminate/pagination": "^9.0",
+                "korridor/laravel-has-many-merged": "^0.0.3",
+                "nesbot/carbon": "^2.62.1",
+                "phpunit/phpunit": "^9.5",
+                "staudenmeir/eloquent-eager-limit": "^1.7",
+                "staudenmeir/eloquent-json-relations": "^1.7",
+                "staudenmeir/laravel-adjacency-list": "^1.12"
+            },
+            "time": "2023-02-07T20:48:26+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Staudenmeir\\EloquentHasManyDeep\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonas Staudenmeir",
+                    "email": "mail@jonas-staudenmeir.de"
+                }
+            ],
+            "description": "Laravel Eloquent HasManyThrough relationships with unlimited levels",
+            "support": {
+                "issues": "https://github.com/staudenmeir/eloquent-has-many-deep/issues",
+                "source": "https://github.com/staudenmeir/eloquent-has-many-deep/tree/v1.17.1"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/JonasStaudenmeir",
+                    "type": "custom"
+                }
+            ],
+            "install-path": "../staudenmeir/eloquent-has-many-deep"
+        },
+        {
+            "name": "staudenmeir/eloquent-has-many-deep-contracts",
+            "version": "v1.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staudenmeir/eloquent-has-many-deep-contracts.git",
+                "reference": "f9589acaaf25f55f38c6dd9d6c1caa6ff62addf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staudenmeir/eloquent-has-many-deep-contracts/zipball/f9589acaaf25f55f38c6dd9d6c1caa6ff62addf6",
+                "reference": "f9589acaaf25f55f38c6dd9d6c1caa6ff62addf6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^9.0",
+                "php": "^8.0.2"
+            },
+            "time": "2022-09-12T18:34:56+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Staudenmeir\\EloquentHasManyDeepContracts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonas Staudenmeir",
+                    "email": "mail@jonas-staudenmeir.de"
+                }
+            ],
+            "description": "Contracts for staudenmeir/eloquent-has-many-deep",
+            "support": {
+                "issues": "https://github.com/staudenmeir/eloquent-has-many-deep-contracts/issues",
+                "source": "https://github.com/staudenmeir/eloquent-has-many-deep-contracts/tree/v1.0"
+            },
+            "install-path": "../staudenmeir/eloquent-has-many-deep-contracts"
         },
         {
             "name": "symfony/console",

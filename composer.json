@@ -10,6 +10,7 @@
         "filament/spatie-laravel-translatable-plugin": "^2.0",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
+        "kodepandai/laravel-indonesia": "^2.0",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7",

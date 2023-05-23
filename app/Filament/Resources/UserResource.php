@@ -21,6 +21,8 @@ use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use \KodePandai\Indonesia\Models\Province;
+use \KodePandai\Indonesia\Models\City;
 use stdClass;
 
 class UserResource extends Resource
@@ -62,12 +64,19 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('occupation')
                         ->label('Pekerjaan')
                         ->maxLength(20),
-                    Forms\Components\TextInput::make('province')
-                        ->label('Provinsi')
-                        ->maxLength(20),
-                    Forms\Components\TextInput::make('city')
-                        ->label('Kota')
-                        ->maxLength(20),
+                    Select::make('province')
+                        ->placeholder('--Pilih provinsi--')
+                        ->label('Provinsi')->options(Province::all()->pluck('name', 'code')->toArray())->reactive(),
+                    Select::make('city')
+                        ->placeholder('--Pilih kota--')
+                        ->label('Kota')->options(function(callable $get){
+                                $city = City::where('province_code', $get('province'));
+                                if(!$city){
+                                    return City::all()->pluck('name', 'code');
+                                }
+                                return $city->pluck('name', 'code');
+
+                        })->reactive(),
                     Forms\Components\TextInput::make('address')
                         ->label('Alamat')
                         ->maxLength(200),

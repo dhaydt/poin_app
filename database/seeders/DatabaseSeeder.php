@@ -10,6 +10,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use KodePandai\Indonesia\IndonesiaDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(IndonesiaDatabaseSeeder::class);
         // $user = User::factory()->create([
         //     'name' => 'admin',
         //     'email' => 'admin@admin.com',
@@ -54,20 +56,20 @@ class DatabaseSeeder extends Seeder
 
         // Reward::insert($reward);
         
-        $work = [
-            ['name' => 'PNS'],
-            ['name' => 'Militer / Polisi'],
-            ['name' => 'BUMN'],
-            ['name' => 'Karyawan Swasta'],
-            ['name' => 'Pengusaha'],
-            ['name' => 'Guru'],
-            ['name' => 'Profesional'],
-            ['name' => 'Konten Kreator/Entertaint'],
-            ['name' => 'Atlet'],
-            ['name' => 'Ibu Rumah Tangga'],
-            ['name' => 'Lainnya'],
-        ];
+        // $work = [
+        //     ['name' => 'PNS'],
+        //     ['name' => 'Militer / Polisi'],
+        //     ['name' => 'BUMN'],
+        //     ['name' => 'Karyawan Swasta'],
+        //     ['name' => 'Pengusaha'],
+        //     ['name' => 'Guru'],
+        //     ['name' => 'Profesional'],
+        //     ['name' => 'Konten Kreator/Entertaint'],
+        //     ['name' => 'Atlet'],
+        //     ['name' => 'Ibu Rumah Tangga'],
+        //     ['name' => 'Lainnya'],
+        // ];
 
-        Work::insert($work);
+        // Work::insert($work);
     }
 }
