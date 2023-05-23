@@ -49,7 +49,7 @@ class AdminResource extends Resource
                         ->label('Email')
                         ->email()
                         ->required()
-                        ->unique()
+                        ->unique(ignorable: fn ($record) => $record)
                         ->maxLength(255),
                     Forms\Components\TextInput::make('password')
                         ->password()
@@ -57,7 +57,7 @@ class AdminResource extends Resource
                     Forms\Components\TextInput::make('phone')
                         ->label('Nomor Handphone')
                         ->tel()
-                        ->unique()
+                        ->unique(ignorable: fn ($record) => $record)
                         ->maxLength(20),
                     Select::make('outlet_id')->label('Outlet')
                         ->options(function(callable $get){
