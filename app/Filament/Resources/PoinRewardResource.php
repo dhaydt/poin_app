@@ -7,6 +7,8 @@ use App\Filament\Resources\PoinRewardResource\RelationManagers;
 use App\Models\PoinReward;
 use App\Models\Reward;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -33,9 +35,11 @@ class PoinRewardResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('poin')->label('Poin')->disabled(),
-                TextInput::make('reward')->label('Reward'),
-                TextInput::make('reward_eng')->label('Reward (Eng)')
+                Card::make()->schema([
+                    TextInput::make('poin')->label('Poin')->disabled(),
+                    Textarea::make('reward')->label('Reward'),
+                    Textarea::make('reward_eng')->label('Reward (Eng)')
+                ])
             ]);
     }
 
