@@ -6,6 +6,7 @@ use App\Filament\Resources\ConfigResource\Pages;
 use App\Filament\Resources\ConfigResource\RelationManagers;
 use App\Models\Config;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -29,12 +30,13 @@ class ConfigResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->disabled()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('value')
-                    ->maxLength(300),
+                Card::make()->schema([
+                    Forms\Components\TextInput::make('type')
+                        ->required()
+                        ->disabled()
+                        ->maxLength(100),
+                    Forms\Components\TextArea::make('value'),
+                ])
             ]);
     }
 
