@@ -8,6 +8,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use KodePandai\Indonesia\Models\City;
+use KodePandai\Indonesia\Models\Province;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -53,6 +55,14 @@ class User extends Authenticatable implements FilamentUser
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function province(){
+        return $this->belongsTo(Province::class, 'province', 'code');
+    }
+    
+    public function city(){
+        return $this->belongsTo(City::class, 'city', 'code');
+    }
 
     public function outlet(){
         return $this->belongsTo(Outlet::class);

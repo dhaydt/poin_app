@@ -6,9 +6,11 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Models\Work;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Pages\Actions\DeleteAction;
 use Filament\Pages\Page;
 use Filament\Resources\Form;
@@ -48,27 +50,33 @@ class UserResource extends Resource
                         ->email()
                         ->label('Email')
                         ->required()
-                        ->unique()
+                        ->unique(ignorable: fn ($record) => $record)
                         ->maxLength(255),
                     Forms\Components\TextInput::make('phone')
                         ->tel()
-                        ->unique()
+                        ->unique(ignorable: fn ($record) => $record)
+                        ->required()
                         ->label('No Handphone')
                         ->maxLength(20),
                     Forms\Components\DatePicker::make('birthday')
-                        ->label('Tanggal Lahir'),
+                        ->label('Tanggal Lahir')
+                        ->required(),
                     Forms\Components\Select::make('gender')
                         ->options(['laki-laki' => 'Laki - Laki', 'perempuan' => 'Perempuan'])
-                        ->placeholder('Pilih jenis kelamin')
-                        ->label('Jenis Kelamin'),
-                    Forms\Components\TextInput::make('occupation')
+                        ->placeholder('-- Pilih jenis kelamin --')
+                        ->label('Jenis Kelamin')
+                        ->required(),
+                    Select::make('occupation')
+                        ->options(Work::all()->pluck('name', 'name'))
                         ->label('Pekerjaan')
-                        ->maxLength(20),
+                        ->placeholder('-- Pilih pekerjaan --')
+                        ->required(),
                     Select::make('province')
-                        ->placeholder('--Pilih provinsi--')
+                        ->placeholder('-- Pilih provinsi --')
                         ->label('Provinsi')->options(Province::all()->pluck('name', 'code')->toArray())->reactive(),
                     Select::make('city')
-                        ->placeholder('--Pilih kota--')
+                        ->placeholder('-- Pilih kota --')
+                        ->hint('Pilih provinsi untuk menampilkan kota')
                         ->label('Kota')->options(function(callable $get){
                                 $city = City::where('province_code', $get('province'));
                                 if(!$city){
@@ -77,7 +85,7 @@ class UserResource extends Resource
                                 return $city->pluck('name', 'code');
 
                         })->reactive(),
-                    Forms\Components\TextInput::make('address')
+                    Textarea::make('address')
                         ->label('Alamat')
                         ->maxLength(200),
                     Select::make('roles')->multiple()->label('Hak Akses')->placeholder('Pilih hak akses')->relationship('roles', 'name',  fn (Builder $query) => $query->where('name', 'customer'))->preload()->required(),
