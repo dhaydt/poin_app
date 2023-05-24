@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\ViewField;
 use Filament\Pages\Actions\DeleteAction;
 use Filament\Pages\Page;
 use Filament\Resources\Form;
@@ -88,7 +89,15 @@ class UserResource extends Resource
                     Textarea::make('address')
                         ->label('Alamat')
                         ->maxLength(200),
-                    Select::make('roles')->multiple()->label('Hak Akses')->placeholder('Pilih hak akses')->relationship('roles', 'name',  fn (Builder $query) => $query->where('name', 'customer'))->preload()->required(),
+                    Select::make('roles')
+                        ->multiple()
+                        ->label('Hak Akses')
+                        ->placeholder('Pilih hak akses')
+                        ->relationship('roles', 'name',  fn (Builder $query) => $query->where('name', 'customer'))
+                        ->preload()
+                        ->hiddenOn('view')
+                        ->required(),
+                    ViewField::make('id')->label('Status')->view('forms.components.level')
                 ])
             ]);
     }

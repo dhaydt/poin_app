@@ -22,8 +22,8 @@ class UserController extends Controller
     public function level(Request $request){
         $user = $request->user();
 
-        $level = Helpers::level($user->id);
+        $level = Helpers::getLevel($user->id);
 
-        dd($level);
+        return response()->json(['status' => 'success', 'data' => $level], 200);
     }
 }

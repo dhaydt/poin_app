@@ -10,6 +10,31 @@ use Carbon\Carbon;
 
 class Helpers
 {
+  public static function getLevel($id){
+    $total = Poin::where('user_id', $id)->first();
+    if($total){
+      $total = $total['total_pembelian'];
+    }else{
+      $total = 0;
+    }
+    $level = 'silver';
+    $persentase = $total / 2000000 * 100;
+    if($total >= 2000000 && $total <= 5000000){
+      $level = 'gold';
+      $persentase = $total / 5000000 * 100;
+    }
+    if($total > 5000000){
+      $level = 'bronze';
+      $persentase = 100;
+    }
+    
+    $data = [
+      'level' => $level,
+      'persentase' => $persentase.' %',
+      'total' => $total
+    ];
+    return $data;
+  }
   public static function error_processor($validator)
   {
     $err_keeper = [];
