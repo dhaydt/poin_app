@@ -31,12 +31,16 @@ class ConfigResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()->schema([
+                Card::make()->columns(2)->schema([
                     Forms\Components\TextInput::make('type')
                         ->required()
                         ->disabled()
+                        ->columnSpan(2)
                         ->maxLength(100),
-                    Textarea::make('value'),
+                    Textarea::make('value')
+                        ->label('Konten'),
+                    Textarea::make('value_eng')
+                        ->label('Konten (Eng)'),
                 ])
             ]);
     }
@@ -54,7 +58,8 @@ class ConfigResource extends Resource
                     }
                 ),
                 Tables\Columns\TextColumn::make('type')->searchable(),
-                Tables\Columns\TextColumn::make('value'),
+                Tables\Columns\TextColumn::make('value')->label('Konten'),
+                Tables\Columns\TextColumn::make('value_eng')->label('Konten (Eng)'),
             ])
             ->filters([
                 //
