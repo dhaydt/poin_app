@@ -74,8 +74,12 @@ class BannerResource extends Resource
                     ->searchable()
                     ->label('Judul (Eng)'),
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Deskripsi'),
+                    ->label('Deskripsi')
+                    ->wrap()
+                    ->words(30),
                 Tables\Columns\TextColumn::make('description_eng')
+                    ->wrap()
+                    ->words(30)
                     ->label('Deskripsi (Eng)'),
                 ImageColumn::make('image')
                     ->label('Banner'),

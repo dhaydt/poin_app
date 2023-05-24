@@ -65,6 +65,7 @@ class OutletResource extends Resource
                 ),
                 Tables\Columns\TextColumn::make('name')->label('Nama')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->wrap()->words(30)
                     ->label('Deskripsi'),
                 ImageColumn::make('image')
                     ->label('Foto')

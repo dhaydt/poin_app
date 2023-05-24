@@ -58,8 +58,8 @@ class ConfigResource extends Resource
                     }
                 ),
                 Tables\Columns\TextColumn::make('type')->searchable(),
-                Tables\Columns\TextColumn::make('value')->label('Konten'),
-                Tables\Columns\TextColumn::make('value_eng')->label('Konten (Eng)'),
+                Tables\Columns\TextColumn::make('value')->label('Konten')->wrap()->words(30),
+                Tables\Columns\TextColumn::make('value_eng')->label('Konten (Eng)')->wrap()->words(30),
             ])
             ->filters([
                 //

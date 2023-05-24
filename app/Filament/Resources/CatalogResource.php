@@ -73,8 +73,8 @@ class CatalogResource extends Resource
                 Tables\Columns\TextColumn::make('name')->label('Nama')->searchable(),
                 Tables\Columns\TextColumn::make('name_eng')->label('Nama (Eng)')->searchable(),
                 Tables\Columns\TextColumn::make('price')->label('Harga')->formatStateUsing(fn (string $state): string => __(number_format("{$state}"))),
-                Tables\Columns\TextColumn::make('description')->label('Deskripsi'),
-                Tables\Columns\TextColumn::make('description_eng')->label('Deskripsi (Eng)'),
+                Tables\Columns\TextColumn::make('description')->label('Deskripsi')->wrap()->words(30),
+                Tables\Columns\TextColumn::make('description_eng')->label('Deskripsi (Eng)')->wrap()->words(30),
                 ImageColumn::make('image')->label('Foto'),
             ])
             ->filters([

@@ -58,8 +58,8 @@ class PoinRewardResource extends Resource
                     }
                 ),
                 TextColumn::make('poin'),
-                TextColumn::make('reward'),
-                TextColumn::make('reward_eng')->label('Reward (Eng)')
+                TextColumn::make('reward')->wrap()->words(30),
+                TextColumn::make('reward_eng')->label('Reward (Eng)')->wrap()->words(30)
             ])
             ->filters([
                 //
