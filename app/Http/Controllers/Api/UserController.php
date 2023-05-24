@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\Poin;
+use App\Models\PoinHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,6 +20,10 @@ class UserController extends Controller
             ], [
                 'fcm.required' => 'Masukan fcm!',
             ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+            }
     
             $users = User::find($user['id']);
             $users->fcm = $request->fcm;
@@ -42,6 +48,10 @@ class UserController extends Controller
     public function level(Request $request){
         $user = $request->user();
 
+        $belanja = Poin::where('user_id', $user->id)->first();
+        $total = Helpers::refresh_total($user->id);
+        $belanja->total_pembelian = array_sum($total);
+        $belanja->save();
         $level = Helpers::getLevel($user->id);
 
         return response()->json(['status' => 'success', 'data' => $level], 200);

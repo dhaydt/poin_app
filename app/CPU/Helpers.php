@@ -134,7 +134,7 @@ class Helpers
   {
     $ph =  Poin::get();
     foreach ($ph as $p) {
-      $poin = PoinHistory::where(['user_id' => $p['user_id'], 'type' => 'add', 'isexpired' => 0, 'isreset' => 0])->pluck('pembelian')->toArray();
+      $poin = PoinHistory::where(['user_id' => $p['user_id'], 'type' => 'add', 'isreset' => 0])->pluck('pembelian')->toArray();
 
       $p->total_pembelian = array_sum($poin);
       $p->save();
