@@ -43,8 +43,11 @@ Route::get('/occupation', [HomeController::class, 'occupation']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('profile', [UserController::class, 'profile']);
+    Route::post('update_profile', [UserController::class, 'update_profile']);
+    Route::post('update_pin', [UserController::class, 'update_pin']);
     Route::get('level', [UserController::class, 'level']);
     Route::post('update_fcm', [UserController::class, 'update_fcm']);
+    Route::post('stamp_history', [UserController::class, 'stamp_history']);
 
     Route::prefix('karyawan')->group(function(){
         Route::get('profile', [AdminUserController::class, 'profile']);
