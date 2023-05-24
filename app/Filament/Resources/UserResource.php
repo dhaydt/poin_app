@@ -96,8 +96,13 @@ class UserResource extends Resource
                         ->relationship('roles', 'name',  fn (Builder $query) => $query->where('name', 'customer'))
                         ->preload()
                         ->hiddenOn('view')
+                        ->hiddenOn('edit')
                         ->required(),
-                    ViewField::make('id')->label('Status')->view('forms.components.level')
+                    ViewField::make('id')
+                        ->label('Status')
+                        ->hiddenOn('create')
+                        ->hiddenOn('edit')
+                        ->view('forms.components.level')
                 ])
             ]);
     }

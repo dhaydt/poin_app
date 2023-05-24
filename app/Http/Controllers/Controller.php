@@ -37,8 +37,25 @@ class Controller extends BaseController
                 }
             })->get();
 
+            $data = [
+                'title' => 'Test Push',
+                'description' => 'Testng push!!!'
+            ];
+
+            $count = [];
+
+            foreach($users as $u){
+                $token = $u['fcm'];
+                if($token !== null){
+                    Helpers::send_push_notif_to_device($token, $data);
+                    array_push($count, 1);
+                }
+
+            }
+
+
         Notification::make()
-            ->title('Broadcast berhasil dikirim ke '. count($users).' customer!')
+            ->title('Broadcast berhasil dikirim ke '. count($users).' customer! diterima oleh '.count($count),' Customer!')
             ->icon('heroicon-o-check-circle')
             ->iconColor('success')
             ->send();

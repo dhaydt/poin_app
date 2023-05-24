@@ -35,6 +35,63 @@ class Helpers
     ];
     return $data;
   }
+  public static function send_push_notif_to_device($fcm_token, $data)
+    {
+        $key = getenv('FCM_KEY');
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $header = [
+            'authorization: key=' . $key . '',
+            'content-type: application/json',
+        ];
+
+        if (isset($data['order_id']) == false) {
+            $data['order_id'] = null;
+        }
+
+        // $img = asset('assets/front-end/img/notif.png');
+        $img = 'https://ezren.id/assets/front-end/img/e.ico';
+        $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
+
+        $notif = [
+            'title' => $data['title'],
+            'body' => $data['description'],
+            'image' => $img,
+            'order_id' => $data['title'],
+            'title_loc_key' => $data['title'],
+            'is_read' => 0,
+            'icon' => $img,
+            'sound' => 'default',
+        ];
+
+        $postdata = '{
+            "to" : "' . $fcm_token . '",
+            "data" : {
+                "title" :"' . $data['title'] . '",
+                "body" : "' . $data['description'] . '",
+                "image" : "' . $img . '",
+                "icon" : "' . $img . '",
+                "order_id":"' . $data['title'] . '",
+                "is_read": 0
+                },
+            "notification" : ' . json_encode($notif) . '
+        }';
+
+        $ch = curl_init();
+        $timeout = 120;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
+        // Get URL content
+        $result = curl_exec($ch);
+        // close handle to release resources
+        curl_close($ch);
+
+        return $result;
+    }
   public static function error_processor($validator)
   {
     $err_keeper = [];
