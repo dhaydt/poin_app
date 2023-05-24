@@ -174,7 +174,7 @@
             </svg>
 
             <span x-show="! isUploadingFile" class="">
-              Kirim Broadcast
+              Kirim Broadcast!
             </span>
           </span>
         </button>
