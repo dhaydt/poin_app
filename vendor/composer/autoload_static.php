@@ -19,21 +19,21 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         '40275907c8566c390185147049ef6e5d' => __DIR__ . '/..' . '/livewire/livewire/src/helpers.php',
         '29ffe97919493792170d47eb03a68da9' => __DIR__ . '/..' . '/blade-ui-kit/blade-icons/src/helpers.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
-        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         'b69d5f1f95cd1ed438c038b6cbcc45b5' => __DIR__ . '/..' . '/filament/notifications/src/Testing/Autoload.php',
         '9261e07cd92c53dcc971c7c88c176c04' => __DIR__ . '/..' . '/danharrin/date-format-converter/src/helpers.php',
         '9720327d09ed9a4ba00c9b5071b71c7d' => __DIR__ . '/..' . '/danharrin/date-format-converter/src/standards.php',
         '2ad94ea6f6f6013119e9abcf4e302a08' => __DIR__ . '/..' . '/filament/forms/src/helpers.php',
         'eee56a36884c3af04e64bac85043e771' => __DIR__ . '/..' . '/akaunting/laravel-money/src/helpers.php',
-        '3bd81c9b8fcc150b69d8b63b4d2ccf23' => __DIR__ . '/..' . '/spatie/flare-client-php/src/helpers.php',
         '2c620c99f96a2b964346b45a4d1d1e64' => __DIR__ . '/..' . '/spatie/invade/src/functions.php',
+        '3bd81c9b8fcc150b69d8b63b4d2ccf23' => __DIR__ . '/..' . '/spatie/flare-client-php/src/helpers.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
+        'ebb446bb6d02e998480945fbbb73dc64' => __DIR__ . '/..' . '/filament/filament/src/helpers.php',
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
-        'ebb446bb6d02e998480945fbbb73dc64' => __DIR__ . '/..' . '/filament/filament/src/helpers.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
@@ -56,6 +56,7 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         array (
             'Whoops\\' => 7,
             'Webmozart\\Assert\\' => 17,
+            'Webbingbrasil\\FilamentAdvancedFilter\\' => 37,
         ),
         'T' => 
         array (
@@ -229,6 +230,10 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Webbingbrasil\\FilamentAdvancedFilter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -688,7 +693,6 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         'App\\CPU\\Helpers' => __DIR__ . '/../..' . '/app/CPU/Helpers.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Filament\\Pages\\Broadcast' => __DIR__ . '/../..' . '/app/Filament/Pages/Broadcast.php',
         'App\\Filament\\Pages\\Reset' => __DIR__ . '/../..' . '/app/Filament/Pages/Reset.php',
         'App\\Filament\\Resources\\AdminResource' => __DIR__ . '/../..' . '/app/Filament/Resources/AdminResource.php',
         'App\\Filament\\Resources\\AdminResource\\Pages\\CreateAdmin' => __DIR__ . '/../..' . '/app/Filament/Resources/AdminResource/Pages/CreateAdmin.php',
@@ -7201,6 +7205,13 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
+        'Webbingbrasil\\FilamentAdvancedFilter\\Concerns\\HasClauses' => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src/Concerns/HasClauses.php',
+        'Webbingbrasil\\FilamentAdvancedFilter\\FilamentAdvancedFilter' => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src/FilamentAdvancedFilter.php',
+        'Webbingbrasil\\FilamentAdvancedFilter\\FilamentAdvancedFilterProvider' => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src/FilamentAdvancedFilterProvider.php',
+        'Webbingbrasil\\FilamentAdvancedFilter\\Filters\\BooleanFilter' => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src/Filters/BooleanFilter.php',
+        'Webbingbrasil\\FilamentAdvancedFilter\\Filters\\DateFilter' => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src/Filters/DateFilter.php',
+        'Webbingbrasil\\FilamentAdvancedFilter\\Filters\\NumberFilter' => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src/Filters/NumberFilter.php',
+        'Webbingbrasil\\FilamentAdvancedFilter\\Filters\\TextFilter' => __DIR__ . '/..' . '/webbingbrasil/filament-advancedfilter/src/Filters/TextFilter.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'Webmozart\\Assert\\InvalidArgumentException' => __DIR__ . '/..' . '/webmozart/assert/src/InvalidArgumentException.php',
         'Webmozart\\Assert\\Mixin' => __DIR__ . '/..' . '/webmozart/assert/src/Mixin.php',

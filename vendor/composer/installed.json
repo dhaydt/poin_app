@@ -10228,6 +10228,65 @@
             "install-path": "../voku/portable-ascii"
         },
         {
+            "name": "webbingbrasil/filament-advancedfilter",
+            "version": "v1.2.3",
+            "version_normalized": "1.2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webbingbrasil/filament-advancedfilter.git",
+                "reference": "8aa0849770fd2515286bb085dd5748f31c1bc560"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webbingbrasil/filament-advancedfilter/zipball/8aa0849770fd2515286bb085dd5748f31c1bc560",
+                "reference": "8aa0849770fd2515286bb085dd5748f31c1bc560",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.15.23",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "time": "2023-04-25T20:20:56+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Webbingbrasil\\FilamentAdvancedFilter\\FilamentAdvancedFilterProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Webbingbrasil\\FilamentAdvancedFilter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Andrade",
+                    "email": "danilo@webbingbrasil.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Advanced filter component for filament admin.",
+            "homepage": "https://github.com/webbingbrasil/filament-advancedfilter",
+            "keywords": [
+                "filament",
+                "filter",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/webbingbrasil/filament-advancedfilter/issues",
+                "source": "https://github.com/webbingbrasil/filament-advancedfilter/tree/v1.2.3"
+            },
+            "install-path": "../webbingbrasil/filament-advancedfilter"
+        },
+        {
             "name": "webmozart/assert",
             "version": "1.11.0",
             "version_normalized": "1.11.0.0",

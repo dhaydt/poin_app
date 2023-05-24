@@ -16,47 +16,33 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function broadcast(Request $request){
-        // dd($request);
-        $province = null;
-        $city = null;
-        $kelamin = [];
-        $pekerjaan = [];
-
-        $users = User::where('is_admin', 0);
-
-        if($request->province){
-            $province = $request->province;
-            $users = $users->where('province', '!=', null );
-            $users = $users->where('province', $province);
-        }
-
-        if($request->city){
-            $city = $request->city;
-            $users = $users->where('city', $city);
-        }
-
-        if($request->kelamin){
-            $kelamin = $request->kelamin;
-            $users = $users->where('gender', '!=', null );
-            if(count($kelamin) > 0){
-                foreach($kelamin as $k){
-                    $users = $users->orWhere('gender', $k);
+    public function broadcast(Request $request)
+    {
+        $users = User::where('is_admin', 0)
+            ->where(function ($query) use ($request) {
+                if ($request->province_id !== null) {
+                    $query->where('province_id', $request->province_id);
                 }
-            }
-        }
-
-        if($request->pekerjaan){
-            $pekerjaan = $request->pekerjaan;
-            $users = $users->where('occupation', '!=', null );
-            if(count($pekerjaan) > 0){
-                foreach($pekerjaan as $p){
-                    $users = $users->orWhere('occupation','like','%'.$p.'%');
+            })->where(function ($query) use ($request) {
+                if ($request->city_id !== null) {
+                    $query->where('city_id', $request->city_id);
                 }
-            }
-        }
+            })->where(function ($q) use($request){
+                if($request->pekerjaan){
+                    $q->whereIn('occupation', $request->pekerjaan);
+                }
+            })->where(function ($q) use($request){
+                if($request->kelamin){
+                    $q->whereIn('gender', $request->kelamin);
+                }
+            })->get();
 
-        dd($users->get(), $request);
+        Notification::make()
+            ->title('Broadcast berhasil dikirim ke '. count($users).' customer!')
+            ->icon('heroicon-o-check-circle')
+            ->iconColor('success')
+            ->send();
+        return redirect()->back();
     }
 
     public function reset($is_admin)

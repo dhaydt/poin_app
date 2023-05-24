@@ -95,8 +95,8 @@ class AuthController extends Controller
             'birthday.required' => 'Masukan tanggal lahir!',
             'gender.required' => 'Masukan jenis kelamin!',
             'occupation.required' => 'Masukan pekerjaan!',
-            'province.required' => 'Masukan provinsi tempat tinggal!',
-            'city.required' => 'Masukan kota tempat tinggal!',
+            'province_id.required' => 'Masukan provinsi tempat tinggal!',
+            'city_id.required' => 'Masukan kota tempat tinggal!',
             'address.required' => 'Masukan alamat tempat tinggal!',
             'password.required' => 'Masukan Password / PIN!',
             'password.min' => 'Password Minimal 6 angka!',
@@ -113,8 +113,8 @@ class AuthController extends Controller
         $user->birthday = $request['birthday'];
         $user->gender = $request['gender'];
         $user->occupation = $request['occupation'];
-        $user->province_id = $request['province'];
-        $user->city_id = $request['city'];
+        $user->province_id = $request['province_id'];
+        $user->city_id = $request['city_id'];
         $user->address = $request['address'];
         $user->is_admin = 0;
         $user->password = Hash::make($request['password']);
