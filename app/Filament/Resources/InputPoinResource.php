@@ -25,6 +25,7 @@ class InputPoinResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-sort-ascending';
     protected static ?string $label = 'Transaksi input poin';
+    protected static ?string $navigationGroup = 'Transaksi';
 
     public static function form(Form $form): Form
     {

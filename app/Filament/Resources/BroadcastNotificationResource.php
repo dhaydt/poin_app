@@ -25,7 +25,9 @@ class BroadcastNotificationResource extends Resource
     protected static ?string $slug = 'broadcast';
     protected static ?string $label = 'Broadcast Notification';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-volume-up';
+    protected static ?string $navigationGroup = 'Pengaturan';
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {
@@ -66,16 +68,16 @@ class BroadcastNotificationResource extends Resource
                 //     ->label('Hak Akses'),
                 Tables\Columns\TextColumn::make('occupation')
                     ->label('Pekerjaan'),
-                Tables\Columns\TextColumn::make('province')
+                Tables\Columns\TextColumn::make('province_id')
                     ->label('Provinsi'),
-                Tables\Columns\TextColumn::make('city')
+                Tables\Columns\TextColumn::make('city_id')
                     ->label('Kota'),
                 // Tables\Columns\TextColumn::make('address')
                 //   
             ])
             ->filters([
                 SelectFilter::make('province')
-                    ->query(fn(Builder $query): Builder => $query->where('province',))
+                    ->query(fn(Builder $query): Builder => $query->where('province_id',))
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

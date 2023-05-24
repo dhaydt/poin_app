@@ -24,6 +24,7 @@ class RedeemPoinResource extends Resource
     protected static ?string $slug = 'redeem_poin';
     protected static ?string $navigationIcon = 'heroicon-o-refresh';
     protected static ?string $label = 'Transaksi tukar poin';
+    protected static ?string $navigationGroup = 'Transaksi';
 
     public static function form(Form $form): Form
     {
