@@ -34,7 +34,8 @@ class User extends Authenticatable implements FilamentUser
         'province',
         'city',
         'address',
-        'is_admin'
+        'is_admin',
+        'is_notify'
     ];
 
     /**

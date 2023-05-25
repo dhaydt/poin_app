@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function is_notify(Request $request){
+        $user = $request->user();
+        $validator = Validator::make($request->all(), [
+            'is_receive' => 'required'
+        ], [
+            'is_receive.required' => 'Masukan nilai 1 untuk menerima, atau 0 untuk tidak menerima pada field is_receive!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        $us = User::find($user->id);
+        $us->is_notify = $request->is_receive;
+        $us->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Notifikasi berhasil diubah!'], 200);
+    }
     public function total_stamp(Request $request){
         $user = $request->user();
         $poin = Helpers::calc_poin($user->id);

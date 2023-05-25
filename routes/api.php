@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('update_fcm', [UserController::class, 'update_fcm']);
     Route::post('stamp_history', [UserController::class, 'stamp_history']);
     Route::post('total_stamp', [UserController::class, 'total_stamp']);
+    Route::post('is_notify', [UserController::class, 'is_notify']);
 
     Route::prefix('karyawan')->group(function(){
         Route::get('profile', [AdminUserController::class, 'profile']);
