@@ -45,6 +45,7 @@ class UserController extends Controller
                 'name' => $user['name'],
                 'phone' => $user['phone'],
                 'email' => $user['email'],
+                'image' => getenv('APP_URL').'/storage/profile/'.$user['image'],
                 'outlet' => $outlet ? $outlet['name'] : 'invalid outlet',
             ];
             return response()->json(['status' => 'success', 'data' => $data], 200);
