@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function total_stamp(Request $request){
+        $user = $request->user();
+        $poin = Helpers::calc_poin($user->id);
+
+        return response()->json(['status' => 'success', 'data' => $poin], 200);
+    }
     public function stamp_history(Request $request){
         $user = $request->user();
         $history = PoinHistory::with('outlet', 'user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();

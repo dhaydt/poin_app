@@ -178,6 +178,8 @@ class Helpers
     $p = Poin::where('user_id', $id)->first();
     $p->poin = array_sum($poin);
     $p->save();
+
+    return $p;
   }
 
   public static function refresh_total($user_id)
