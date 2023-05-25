@@ -12,6 +12,29 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function change_image_karyawan(Request $request){
+        $user = $request->user();
+        $user = User::find($user->id);
+        $role = Helpers::checkRole($user, 'karyawan');
+        if($role){
+            $validator = Validator::make($request->all(), [
+                'image' => 'required'
+            ], [
+                'image.required' => 'Masukan foto!',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+            }
+
+        $user->image = Helpers::update('profile/', $user->image, 'png', $request->file('image'));
+        $user->save();
+
+            return response()->json(['status' => 'success', 'message' => 'Foto profil berhasil diubah!'], 200);
+        }
+        return response()->json(['status' => 'error', 'message' => 'Anda tidak memiliki akses!'], 403);
+    }
+
     public function profile(Request $request){
         $user = $request->user();
 

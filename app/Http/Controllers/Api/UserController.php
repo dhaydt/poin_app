@@ -13,6 +13,27 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function change_image(Request $request){
+        $user = $request->user();
+        $user = User::find($user->id);
+        if($user){
+            $validator = Validator::make($request->all(), [
+                'image' => 'required'
+            ], [
+                'image.required' => 'Masukan foto!',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+            }
+
+        $user->image = Helpers::update('profile/', $user->image, 'png', $request->file('image'));
+        $user->save();
+
+            return response()->json(['status' => 'success', 'message' => 'Foto profil berhasil diubah!'], 200);
+        }
+        return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan!'], 403);
+    }
     public function is_notify(Request $request){
         $user = $request->user();
         $validator = Validator::make($request->all(), [

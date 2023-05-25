@@ -50,12 +50,14 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('stamp_history', [UserController::class, 'stamp_history']);
     Route::post('total_stamp', [UserController::class, 'total_stamp']);
     Route::post('is_notify', [UserController::class, 'is_notify']);
+    Route::post('change_image', [UserController::class, 'change_image']);
 
     Route::prefix('karyawan')->group(function(){
         Route::get('profile', [AdminUserController::class, 'profile']);
         Route::post('add_stamp', [PoinController::class, 'add_stamp']);
         Route::post('redeem_stamp', [PoinController::class, 'redeem_stamp']);
         Route::post('pin_edit', [AdminUserController::class, 'pin_edit']);
+        Route::post('change_image_karyawan', [AdminUserController::class, 'change_image_karyawan']);
     });
 });
 
