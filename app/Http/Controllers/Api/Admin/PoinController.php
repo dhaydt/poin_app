@@ -89,7 +89,11 @@ class PoinController extends Controller
                 Helpers::calc_poin($customer['id']);
                 $total_poin = Poin::where('user_id', $customer['id'])->first();
                 $poin = $total_poin['poin'];
-                $redeem = 2;
+                $redeem = 0;
+
+                if(in_array($poin, [1,2])){
+                    $redeem = 2;
+                }
 
                 if (in_array($poin, [3, 4, 5])) {
                     $redeem = 4;
