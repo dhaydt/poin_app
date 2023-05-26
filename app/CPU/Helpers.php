@@ -11,60 +11,61 @@ use Illuminate\Support\Facades\Storage;
 
 class Helpers
 {
-  public static function getLevel($id){
+  public static function getLevel($id)
+  {
     $total = Poin::where('user_id', $id)->first();
-    if($total){
+    if ($total) {
       $total = $total['total_pembelian'];
-    }else{
+    } else {
       $total = 0;
     }
     $level = 'silver';
     $persentase = $total / 2000000 * 100;
-    if($total >= 2000000 && $total <= 5000000){
+    if ($total >= 2000000 && $total <= 5000000) {
       $level = 'gold';
       $persentase = $total / 5000000 * 100;
     }
-    if($total > 5000000){
+    if ($total > 5000000) {
       $level = 'bronze';
       $persentase = 100;
     }
-    
+
     $data = [
       'level' => $level,
-      'persentase' => $persentase.' %',
+      'persentase' => $persentase . ' %',
       'total' => $total
     ];
     return $data;
   }
   public static function send_push_notif_to_device($fcm_token, $data)
-    {
-        $key = getenv('FCM_KEY');
-        $url = 'https://fcm.googleapis.com/fcm/send';
-        $header = [
-            'authorization: key=' . $key . '',
-            'content-type: application/json',
-        ];
+  {
+    $key = getenv('FCM_KEY');
+    $url = 'https://fcm.googleapis.com/fcm/send';
+    $header = [
+      'authorization: key=' . $key . '',
+      'content-type: application/json',
+    ];
 
-        if (isset($data['order_id']) == false) {
-            $data['order_id'] = null;
-        }
+    if (isset($data['order_id']) == false) {
+      $data['order_id'] = null;
+    }
 
-        // $img = asset('assets/front-end/img/notif.png');
-        $img = 'https://ezren.id/assets/front-end/img/e.ico';
-        $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
+    // $img = asset('assets/front-end/img/notif.png');
+    $img = 'https://ezren.id/assets/front-end/img/e.ico';
+    $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
 
-        $notif = [
-            'title' => $data['title'],
-            'body' => $data['description'],
-            'image' => $img,
-            'order_id' => $data['title'],
-            'title_loc_key' => $data['title'],
-            'is_read' => 0,
-            'icon' => $img,
-            'sound' => 'default',
-        ];
+    $notif = [
+      'title' => $data['title'],
+      'body' => $data['description'],
+      'image' => $img,
+      'order_id' => $data['title'],
+      'title_loc_key' => $data['title'],
+      'is_read' => 0,
+      'icon' => $img,
+      'sound' => 'default',
+    ];
 
-        $postdata = '{
+    $postdata = '{
             "to" : "' . $fcm_token . '",
             "data" : {
                 "title" :"' . $data['title'] . '",
@@ -77,22 +78,22 @@ class Helpers
             "notification" : ' . json_encode($notif) . '
         }';
 
-        $ch = curl_init();
-        $timeout = 120;
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    $ch = curl_init();
+    $timeout = 120;
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 
-        // Get URL content
-        $result = curl_exec($ch);
-        // close handle to release resources
-        curl_close($ch);
+    // Get URL content
+    $result = curl_exec($ch);
+    // close handle to release resources
+    curl_close($ch);
 
-        return $result;
-    }
+    return $result;
+  }
   public static function error_processor($validator)
   {
     $err_keeper = [];
@@ -168,30 +169,30 @@ class Helpers
   }
 
   public static function upload(string $dir, string $format, $image = null)
-    {
-        if ($image != null) {
-            $imageName = Carbon::now()->toDateString().'-'.uniqid().'.'.$format;
-            if (!Storage::disk('public')->exists($dir)) {
-                Storage::disk('public')->makeDirectory($dir);
-            }
-            Storage::disk('public')->put($dir.$imageName, file_get_contents($image));
-        } else {
-            $imageName = 'def.png';
-        }
-
-        return $imageName;
+  {
+    if ($image != null) {
+      $imageName = Carbon::now()->toDateString() . '-' . uniqid() . '.' . $format;
+      if (!Storage::disk('public')->exists($dir)) {
+        Storage::disk('public')->makeDirectory($dir);
+      }
+      Storage::disk('public')->put($dir . $imageName, file_get_contents($image));
+    } else {
+      $imageName = 'def.png';
     }
+
+    return $imageName;
+  }
 
   public static function update(string $dir, $old_image, string $format, $image = null)
-    {
-        // dd($dir.$old_image);
-        if (Storage::disk('public')->exists($dir.$old_image)) {
-            Storage::disk('public')->delete($dir.$old_image);
-        }
-        $imageName = Helpers::upload($dir, $format, $image);
-
-        return $imageName;
+  {
+    // dd($dir.$old_image);
+    if (Storage::disk('public')->exists($dir . $old_image)) {
+      Storage::disk('public')->delete($dir . $old_image);
     }
+    $imageName = Helpers::upload($dir, $format, $image);
+
+    return $imageName;
+  }
 
   public static function calc_poin($id)
   {
@@ -204,6 +205,11 @@ class Helpers
     $redeem = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 1, 'isexpired' => 0])->pluck('poin')->toArray();
 
     $p = Poin::where('user_id', $id)->first();
+    if (!$p) {
+      $p = new Poin();
+      $p->user_id = $id;
+      $p->total_pembelian = 0;
+    }
     $p->poin = array_sum($poin);
     $p->redeemed = array_sum($redeem);
     $p->save();
@@ -229,12 +235,14 @@ class Helpers
     }
   }
 
-  public static function getPekerjaan(){
+  public static function getPekerjaan()
+  {
     $work = Work::get();
     return $work;
   }
 
-  public function getCountry(){
+  public function getCountry()
+  {
     return \Indonesia::allProvinces();
   }
 }
