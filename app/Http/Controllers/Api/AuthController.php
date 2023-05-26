@@ -121,9 +121,6 @@ class AuthController extends Controller
         $user->assignRole('customer');
         $user->save();
 
-        dd($user->hasRole('customer'));
-
-
         $poin = new Poin();
         $poin->poin = 0;
         $poin->total_pembelian = 0;
