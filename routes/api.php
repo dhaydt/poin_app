@@ -56,6 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('profile', [AdminUserController::class, 'profile']);
         Route::post('add_stamp', [PoinController::class, 'add_stamp']);
         Route::post('redeem_stamp', [PoinController::class, 'redeem_stamp']);
+        Route::post('before_redeem', [PoinController::class, 'before_redeem']);
         Route::post('pin_edit', [AdminUserController::class, 'pin_edit']);
         Route::post('change_image_karyawan', [AdminUserController::class, 'change_image_karyawan']);
     });

@@ -55,14 +55,11 @@ class PoinController extends Controller
                         $check_poin->poin += $poin;
                         $check_poin->total_pembelian = array_sum($total);
 
-                        if ($check_poin['poin'] >= 6) {
-                            return response()->json(['status' => 'error', 'message' => 'Poin anda sudah mencapai limit. Jumlah poin ' . $check_poin['poin']], 200);
-                        } else {
-                            $check_poin->save();
-                            Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
-                            Helpers::calc_poin($customer['id']);
-                            return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak ' . $poin], 200);
-                        }
+
+                        $check_poin->save();
+                        Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
+                        Helpers::calc_poin($customer['id']);
+                        return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak ' . $poin], 200);
                     }
                 } else {
                     return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan'], 200);
@@ -71,6 +68,46 @@ class PoinController extends Controller
         }
 
         return response()->json(['status' => 'error', 'message' => 'not authorized'], 200);
+    }
+
+    public function before_redeem(Request $request)
+    {
+        $user = $request->user();
+        $role = Helpers::checkRole($user, 'karyawan');
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+        ], [
+            'phone.required' => 'Masukan nomor handphone!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+        if ($role) {
+            $customer = Helpers::check_customer($request->phone);
+            if ($customer) {
+                Helpers::calc_poin($customer['id']);
+                $total_poin = Poin::where('user_id', $customer['id'])->first();
+                $poin = $total_poin['poin'];
+                $redeem = 2;
+
+                if (in_array($poin, [3, 4, 5])) {
+                    $redeem = 4;
+                }
+
+                if ($poin > 5) {
+                    $redeem = 6;
+                }
+
+                $data = [
+                    "poin" => $poin,
+                    "redeem" => $redeem
+                ];
+                return response()->json(['status' => 'success', 'data' => $data], 200);
+            }
+            return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan'], 403);
+        }
+        return response()->json(['status' => 'error', 'message' => 'not authorized'], 403);
     }
 
     public function redeem_stamp(Request $request)
@@ -106,17 +143,17 @@ class PoinController extends Controller
                         Helpers::poin_history(null, 0, $customer, $user, 'redeem', $request->redeem_stamp);
                         Helpers::calc_poin($customer['id']);
 
-                        return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem. sisa poin ' . $total_poin->poin], 200);
+                        return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem'], 200);
                     } else {
-                        return response()->json(['status' => 'error', 'message' => 'Nilai stamp yang diredeem hanya bisa 2, 4 atau 6'], 200);
+                        return response()->json(['status' => 'error', 'message' => 'Nilai stamp yang diredeem hanya bisa 2, 4 atau 6'], 403);
                     }
                 } else {
-                    return response()->json(['status' => 'error', 'message' => 'Customer tidak memiliki poin'], 200);
+                    return response()->json(['status' => 'error', 'message' => 'Customer tidak memiliki poin'], 403);
                 }
             } else {
-                return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan'], 200);
+                return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan'], 403);
             }
         }
-        return response()->json(['status' => 'error', 'message' => 'not authorized'], 200);
+        return response()->json(['status' => 'error', 'message' => 'not authorized'], 403);
     }
 }
