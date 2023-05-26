@@ -29,6 +29,7 @@ class UserController extends Controller
             $notif->save();
             return response()->json(['status' => 'success', 'data' => $notif], 200);
         }
+        return response()->json(['status' => 'error', 'message' => 'Notifikasi tidak ditemukan'], 403);
     }
     public function change_image(Request $request){
         $user = $request->user();
