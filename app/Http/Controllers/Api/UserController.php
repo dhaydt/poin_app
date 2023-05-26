@@ -102,8 +102,9 @@ class UserController extends Controller
 
     public function profile(Request $request){
         $user = $request->user();
-        $user = User::find($user['id']);
-        if($user->hasRole['customer']){
+
+        $role = Helpers::checkRole($user, 'customer');
+        if($role){
             $user['image'] = getenv('APP_URL').'/storage/profile/'.$user['image'];
             return response()->json(['status' => 'success', 'data' => $user], 200);
         }
