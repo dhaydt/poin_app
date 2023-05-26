@@ -24,7 +24,7 @@
                         <div
                           class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
                           @php
-                            $country = \KodePandai\Indonesia\Models\Province::all();
+                          $country = \KodePandai\Indonesia\Models\Province::all();
                           @endphp
                           <div class="flex-1">
                             <select name="province_id"
@@ -54,8 +54,8 @@
                           </label>
                         </div>
                         @php
-                            $city = \KodePandai\Indonesia\Models\City::all();
-                          @endphp
+                        $city = \KodePandai\Indonesia\Models\City::all();
+                        @endphp
                         <div
                           class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
                           <div class="flex-1">
@@ -88,60 +88,124 @@
                         <div
                           class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
                           <div class="flex-1">
-                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                                  <div class="flex items-center pl-3">
-                                      <input id="vue-checkbox-list" type="checkbox" value="laki-laki" name="kelamin[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                      <label for="vue-checkbox-list" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Laki - Laki</label>
-                                  </div>
+                            <ul
+                              class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                              <li
+                                class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                                <div class="flex items-center pl-3">
+                                  <input id="vue-checkbox-list" type="checkbox" value="laki-laki" name="kelamin[]"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="vue-checkbox-list"
+                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Laki -
+                                    Laki</label>
+                                </div>
                               </li>
-                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                                  <div class="flex items-center pl-3">
-                                      <input id="react-checkbox-list" type="checkbox" value="perempuan" name="kelamin[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                      <label for="react-checkbox-list" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Perempuan</label>
-                                  </div>
+                              <li
+                                class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                                <div class="flex items-center pl-3">
+                                  <input id="react-checkbox-list" type="checkbox" value="perempuan" name="kelamin[]"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="react-checkbox-list"
+                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Perempuan</label>
+                                </div>
                               </li>
-                          </ul>
+                            </ul>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-span-2"
-                  wire:key="e15jt53F2Qq35tajnsEz.data.phone.Filament\Forms\Components\TextInput">
-                  <div class="filament-forms-field-wrapper">
-                    <div class="space-y-2">
-                      <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
-                        <label
-                          class="filament-forms-field-wrapper-label inline-flex items-center space-x-3 rtl:space-x-reverse"
-                          for="data.phone">
-                          <span class="text-sm font-medium leading-4 text-gray-700">
-                            Pekerjaan<span class="whitespace-nowrap">
+                    wire:key="e15jt53F2Qq35tajnsEz.data.phone.Filament\Forms\Components\TextInput">
+                    <div class="filament-forms-field-wrapper">
+                      <div class="space-y-2">
+                        <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
+                          <label
+                            class="filament-forms-field-wrapper-label inline-flex items-center space-x-3 rtl:space-x-reverse"
+                            for="data.phone">
+                            <span class="text-sm font-medium leading-4 text-gray-700">
+                              Pekerjaan<span class="whitespace-nowrap">
+                              </span>
                             </span>
-                          </span>
-                        </label>
-                      </div>
-                      @php
+                          </label>
+                        </div>
+                        @php
                         $works = \App\Models\Work::get();
-                      @endphp
-                      <div
-                        class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
-                        <div class="flex-1">
-                          <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            @foreach ($works as $w)
-                            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                        @endphp
+                        <div
+                          class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
+                          <div class="flex-1">
+                            <ul
+                              class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                              @foreach ($works as $w)
+                              <li
+                                class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                 <div class="flex items-center pl-2">
-                                    <input type="checkbox" value="{{ $w['name'] }}" name="pekerjaan[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    <label class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $w['name'] }}</label>
+                                  <input type="checkbox" value="{{ $w['name'] }}" name="pekerjaan[]"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label
+                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{
+                                    $w['name'] }}</label>
                                 </div>
-                            </li>
-                            @endforeach
-                        </ul>
+                              </li>
+                              @endforeach
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                  <div class="col-span-2">
+                    <div class="filament-forms-field-wrapper">
+                      <div class="space-y-2">
+                        <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
+                          <label
+                            class="filament-forms-field-wrapper-label inline-flex items-center space-x-3 rtl:space-x-reverse"
+                            for="data.name">
+                            <span class="text-sm font-medium leading-4 text-gray-700">
+                              Judul Notifikasi<span class="whitespace-nowrap">
+                                <sup class="font-medium text-danger-700">*</sup>
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                        <div
+                          class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
+                          <div class="flex-1">
+                            <input name="title" type="text" required=""
+                              class="filament-forms-input block w-full transition duration-75 rounded-lg shadow-sm outline-none focus:ring-1 focus:ring-inset disabled:opacity-70 border-gray-300 focus:border-primary-500 focus:ring-primary-500"
+                              x-bind:class="{
+                                    'border-gray-300 focus:border-primary-500 focus:ring-primary-500': ! ('data.name' in $wire.__instance.serverMemo.errors),
+                                    'dark:border-gray-600 dark:focus:border-primary-500': ! ('data.name' in $wire.__instance.serverMemo.errors) &amp;&amp; false,
+                                    'border-danger-600 ring-danger-600 focus:border-danger-500 focus:ring-danger-500': ('data.name' in $wire.__instance.serverMemo.errors),
+                                    'dark:border-danger-400 dark:ring-danger-400 dark:focus:border-danger-500 dark:focus:ring-danger-500': ('data.name' in $wire.__instance.serverMemo.errors) &amp;&amp; false,
+                                }">
+                          </div>
+
+
+
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-2" >
+                    <div class="filament-forms-field-wrapper">
+                      <div class="space-y-2">
+                        <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
+                          <label
+                            class="filament-forms-field-wrapper-label inline-flex items-center space-x-3 rtl:space-x-reverse">
+                            <span class="text-sm font-medium leading-4 text-gray-700">
+                              Deskripsi </span>
+                              <sup class="font-medium text-danger-700">*</sup>
+                          </label>
+                        </div>
+                        <textarea required name="description"
+                          class="filament-forms-textarea-component filament-forms-input block w-full transition duration-75 rounded-lg shadow-sm outline-none focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 disabled:opacity-70 border-gray-300" style="height: 150px"></textarea>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -153,7 +217,8 @@
 
     <div>
       <div class="filament-page-actions flex flex-wrap items-center gap-4 justify-end filament-form-actions">
-        <button type="submit" class="filament-button filament-button-size-md inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2.25rem] px-4 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700 filament-page-button-action">
+        <button type="submit"
+          class="filament-button filament-button-size-md inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2.25rem] px-4 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700 filament-page-button-action">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
             class="animate-spin filament-button-icon w-5 h-5 mr-1 -ml-2 rtl:ml-1 rtl:-mr-2"
             wire:loading.delay="wire:loading.delay" wire:target="create">

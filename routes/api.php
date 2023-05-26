@@ -51,6 +51,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('total_stamp', [UserController::class, 'total_stamp']);
     Route::post('is_notify', [UserController::class, 'is_notify']);
     Route::post('change_image', [UserController::class, 'change_image']);
+    Route::post('list_notif', [UserController::class, 'list_notif']);
+    Route::post('notif_details/{id}', [UserController::class, 'notif_details']);
 
     Route::prefix('karyawan')->group(function(){
         Route::get('profile', [AdminUserController::class, 'profile']);

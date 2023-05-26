@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\CPU\Helpers;
+use App\Models\Notifications;
+use App\Models\NotifReceiver;
 use App\Models\PoinHistory;
 use App\Models\User;
 use Filament\Notifications\Notification;
@@ -18,6 +20,11 @@ class Controller extends BaseController
 
     public function broadcast(Request $request)
     {
+        $notif = new Notifications();
+        $notif->title = $request->title;
+        $notif->description = $request->description;
+        $notif->save();
+
         $users = User::where('is_admin', 0)
             ->where(function ($query) use ($request) {
                 if ($request->province_id !== null) {
@@ -38,8 +45,8 @@ class Controller extends BaseController
             })->get();
 
             $data = [
-                'title' => 'Test Push',
-                'description' => 'Testng push!!!'
+                'title' => $request->title,
+                'description' => $request->description
             ];
 
             $count = [];
@@ -49,6 +56,11 @@ class Controller extends BaseController
                 if($token !== null){
                     Helpers::send_push_notif_to_device($token, $data);
                     array_push($count, 1);
+                    $receive = new NotifReceiver();
+                    $receive->notification_id = $notif->id;
+                    $receive->user_id = $u['id'];
+                    $receive->is_read = 0;
+                    $receive->save();
                 }
 
             }

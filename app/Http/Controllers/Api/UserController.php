@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\NotifReceiver;
 use App\Models\Poin;
 use App\Models\PoinHistory;
 use App\Models\User;
@@ -13,6 +14,22 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function list_notif(Request $request){
+        $user = $request->user();
+        $notif = NotifReceiver::with('notif')->where(['user_id' => $user->id, 'is_read' => 0])->orderBy('created_at', 'desc')->get();
+
+        return response()->json(['status' => 'success', 'data' => $notif], 200);
+    }
+
+    public function notif_details(Request $request, $id){
+        // $user = $request->user();
+        $notif = NotifReceiver::find($id);
+        if($notif){
+            $notif->is_read = 1;
+            $notif->save();
+            return response()->json(['status' => 'success', 'data' => $notif], 200);
+        }
+    }
     public function change_image(Request $request){
         $user = $request->user();
         $user = User::find($user->id);
