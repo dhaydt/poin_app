@@ -88,6 +88,8 @@ return array(
     'App\\Models\\Banner' => $baseDir . '/app/Models/Banner.php',
     'App\\Models\\Catalog' => $baseDir . '/app/Models/Catalog.php',
     'App\\Models\\Config' => $baseDir . '/app/Models/Config.php',
+    'App\\Models\\NotifReceiver' => $baseDir . '/app/Models/NotifReceiver.php',
+    'App\\Models\\Notifications' => $baseDir . '/app/Models/Notifications.php',
     'App\\Models\\Outlet' => $baseDir . '/app/Models/Outlet.php',
     'App\\Models\\Poin' => $baseDir . '/app/Models/Poin.php',
     'App\\Models\\PoinHistory' => $baseDir . '/app/Models/PoinHistory.php',

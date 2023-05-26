@@ -763,6 +763,8 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         'App\\Models\\Banner' => __DIR__ . '/../..' . '/app/Models/Banner.php',
         'App\\Models\\Catalog' => __DIR__ . '/../..' . '/app/Models/Catalog.php',
         'App\\Models\\Config' => __DIR__ . '/../..' . '/app/Models/Config.php',
+        'App\\Models\\NotifReceiver' => __DIR__ . '/../..' . '/app/Models/NotifReceiver.php',
+        'App\\Models\\Notifications' => __DIR__ . '/../..' . '/app/Models/Notifications.php',
         'App\\Models\\Outlet' => __DIR__ . '/../..' . '/app/Models/Outlet.php',
         'App\\Models\\Poin' => __DIR__ . '/../..' . '/app/Models/Poin.php',
         'App\\Models\\PoinHistory' => __DIR__ . '/../..' . '/app/Models/PoinHistory.php',
