@@ -130,11 +130,11 @@ class PoinController extends Controller
                 $poin = $total_poin['poin'];
                 $redeem = 0;
 
-                if (in_array($poin, [1, 2])) {
+                if (in_array($poin, [2, 3])) {
                     $redeem = 2;
                 }
 
-                if (in_array($poin, [3, 4, 5])) {
+                if (in_array($poin, [4, 5])) {
                     $redeem = 4;
                 }
 
@@ -179,7 +179,7 @@ class PoinController extends Controller
                     if ($total_poin['poin'] !== $request->total_stamp) {
                         return response()->json(['status' => 'error', 'message' => 'Total poin tidak sesuai! poin saat ini adalah ' . $total_poin['poin']], 200);
                     }
-                    if (in_array($request->redeem_stamp, [2, 4, 6])) {
+                    if ($request->redeem_stamp) {
                         if ($total_poin['poin'] < $request->redeem_stamp) {
                             return response()->json(['status' => 'error', 'message' => 'Stamp tidak mencukupi'], 200);
                         }
