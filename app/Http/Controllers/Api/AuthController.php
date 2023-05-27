@@ -147,7 +147,8 @@ class AuthController extends Controller
         }else{
             $email = $user['email'];
             // $email = '1992dayat@gmail.com';
-            $pass = str_pad(mt_rand(1,99999999),6,'0',STR_PAD_LEFT);
+            $pass = str_pad(mt_rand(1,999999),6,'0',STR_PAD_LEFT);
+            // dd($pass);
             $user['password'] = Hash::make($pass);
             $user->save();
             Mail::to($email)->send(new ResetPasswordMail($pass));

@@ -10,8 +10,8 @@
 
 <body>
   <div class="card">
-    <h3>Reset Password {{ env('APP_NAME') }}</h3>
-    <span>Password : {{ $password }}</span>
+    <h3>Menya Sakura :</h3>
+    <span>Your New PIN : {{ $password }}</span>
   </div>
   
 </body>
