@@ -51,8 +51,8 @@ class Helpers
     }
 
     // $img = asset('assets/front-end/img/notif.png');
-    $img = 'https://ezren.id/assets/front-end/img/e.ico';
-    $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
+    $img = 'https://adminbmi.com/assets/images/logo.png';
+    // $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
 
     $notif = [
       'title' => $data['title'],
