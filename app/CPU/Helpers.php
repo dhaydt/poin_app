@@ -2,6 +2,7 @@
 
 namespace App\CPU;
 
+use App\Models\Banner;
 use App\Models\Notifications;
 use App\Models\NotifReceiver;
 use App\Models\Poin;
@@ -40,13 +41,19 @@ class Helpers
     return $data;
   }
 
-  public static function saveNotif($title, $desc, $img)
+  public static function saveNotif($title, $desc, $id, $type = null)
   {
+    $img = null;
+    if ($type == "banner") {
+      $banner = Banner::find($id);
+      $img = $banner['image'];
+    }
+
     $notif = new Notifications();
-        $notif->title = $title;
-        $notif->description = $desc;
-        $notif->image = $img;
-        $notif->save();
+    $notif->title = $title;
+    $notif->description = $desc;
+    $notif->image = $img;
+    $notif->save();
 
     $users = User::where(['is_admin' => 0, 'is_notify' => 1])->get();
     $data = [
@@ -54,7 +61,7 @@ class Helpers
       'description' => $desc
     ];
 
-    $img = getenv('APP_URL').'/'.$img;
+    $img = getenv('APP_URL') . '/' . $img;
     foreach ($users as $u) {
       $token = $u['fcm'];
       if ($token) {
