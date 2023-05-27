@@ -51,7 +51,7 @@ class Helpers
     }
 
     // $img = asset('assets/front-end/img/notif.png');
-    $img = 'https://adminbmi.com/assets/images/logo.png';
+    $img = 'https://adminbmi.com/assets/images/logo2.png';
     // $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
 
     $notif = [
