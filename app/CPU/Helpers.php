@@ -61,7 +61,7 @@ class Helpers
       'description' => $desc
     ];
 
-    // $img = getenv('APP_URL') . '/' . $img;
+    $img = getenv('APP_URL') . '/storage/' . $img;
     foreach ($users as $u) {
       $token = $u['fcm'];
       if ($token) {
@@ -88,7 +88,7 @@ class Helpers
     }
 
     // $img = asset('assets/front-end/img/notif.png');
-    $img = 'https://adminbmi.com/'.$img;
+    // $img = 'https://adminbmi.com/assets/images/logo2.png';
     // $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
 
     $notif = [
