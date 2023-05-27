@@ -64,7 +64,7 @@ class Helpers
     $img = getenv('APP_URL') . '/storage/' . $img;
     foreach ($users as $u) {
       $token = $u['fcm'];
-      if ($token) {
+      if ($token && $u['is_notify'] == 1) {
         Helpers::send_push_notif_to_device($token, $data, $img);
         $receive = new NotifReceiver();
         $receive->notification_id = $notif->id;

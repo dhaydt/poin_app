@@ -45,7 +45,7 @@ class PoinController extends Controller
                     $token = $customer['fcm'];
                     if (array_sum($total) >= 6) {
                         Helpers::calc_poin($customer['id']);
-                        if ($token) {
+                        if ($token && $customer['is_notify'] == 1) {
                             $data = [
                                 "title" => "Stamp status",
                                 "description" => "Your points have reached the limit!"
@@ -80,7 +80,7 @@ class PoinController extends Controller
                         $check_poin->save();
                         Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
                         Helpers::calc_poin($customer['id']);
-                        if ($token) {
+                        if ($token && $customer['is_notify'] == 1) {
                             $data = [
                                 "title" => "Stamp status",
                                 "description" => "Your points have been added successfully!"
@@ -186,7 +186,7 @@ class PoinController extends Controller
                         Helpers::poin_history(null, 0, $customer, $user, 'redeem', $request->redeem_stamp);
                         Helpers::calc_poin($customer['id']);
                         $token = $customer['fcm'];
-                        if ($token) {
+                        if ($token && $customer['is_notify'] == 1) {
                             $total_poin = Poin::where('user_id', $customer['id'])->first();
                             $data = [
                                 "title" => "Stamp redeem",
