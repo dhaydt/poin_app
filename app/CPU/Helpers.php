@@ -2,6 +2,8 @@
 
 namespace App\CPU;
 
+use App\Models\Notifications;
+use App\Models\NotifReceiver;
 use App\Models\Poin;
 use App\Models\PoinHistory;
 use App\Models\User;
@@ -37,7 +39,35 @@ class Helpers
     ];
     return $data;
   }
-  public static function send_push_notif_to_device($fcm_token, $data)
+
+  public static function saveNotif($title, $desc, $img)
+  {
+    $notif = new Notifications();
+        $notif->title = $title;
+        $notif->description = $desc;
+        $notif->image = $img;
+        $notif->save();
+
+    $users = User::where(['is_admin' => 0, 'is_notify' => 1])->get();
+    $data = [
+      'title' => $title,
+      'description' => $desc
+    ];
+
+    $img = getenv('APP_URL').'/'.$img;
+    foreach ($users as $u) {
+      $token = $u['fcm'];
+      if ($token) {
+        Helpers::send_push_notif_to_device($token, $data, $img);
+        $receive = new NotifReceiver();
+        $receive->notification_id = $notif->id;
+        $receive->user_id = $u['id'];
+        $receive->is_read = 0;
+        $receive->save();
+      }
+    }
+  }
+  public static function send_push_notif_to_device($fcm_token, $data, $img)
   {
     $key = getenv('FCM_KEY');
     $url = 'https://fcm.googleapis.com/fcm/send';
@@ -51,7 +81,7 @@ class Helpers
     }
 
     // $img = asset('assets/front-end/img/notif.png');
-    $img = 'https://adminbmi.com/assets/images/logo2.png';
+    // $img = 'https://adminbmi.com/assets/images/logo2.png';
     // $img = 'https://ezren.id/assets/front-end/img/ejren.jpg';
 
     $notif = [

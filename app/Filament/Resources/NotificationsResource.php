@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -41,7 +42,7 @@ class NotificationsResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')->label('Judul'),
                 Tables\Columns\TextColumn::make('description')->label('Deskripsi'),
-                // Tables\Columns\TextColumn::make('image'),
+                ImageColumn::make('image'),
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime(),
                 // Tables\Columns\TextColumn::make('updated_at')
@@ -51,7 +52,7 @@ class NotificationsResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),

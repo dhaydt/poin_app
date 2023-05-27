@@ -25,7 +25,7 @@ class Controller extends BaseController
         $notif->description = $request->description;
         $notif->save();
 
-        $users = User::where('is_admin', 0)
+        $users = User::where(['is_admin' => 0, 'is_notify' => 1])
             ->where(function ($query) use ($request) {
                 if ($request->province_id !== null) {
                     $query->where('province_id', $request->province_id);
@@ -54,7 +54,7 @@ class Controller extends BaseController
             foreach($users as $u){
                 $token = $u['fcm'];
                 if($token){
-                    Helpers::send_push_notif_to_device($token, $data);
+                    Helpers::send_push_notif_to_device($token, $data, null);
                     array_push($count, 1);
                     $receive = new NotifReceiver();
                     $receive->notification_id = $notif->id;

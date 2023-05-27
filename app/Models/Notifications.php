@@ -9,5 +9,5 @@ class Notifications extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description', 'image'];
 }
