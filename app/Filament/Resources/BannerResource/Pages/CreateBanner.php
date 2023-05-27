@@ -12,10 +12,10 @@ class CreateBanner extends CreateRecord
     protected static string $resource = BannerResource::class;
     protected function getRedirectUrl(): string
     {
-        $img = $this->record->image;
+        $id = $this->record->id;
         $title = $this->record->title_eng;
         $desc = $this->record->description_eng;
-        Helpers::saveNotif($title, $desc, $img);
+        Helpers::saveNotif($title, $desc, $id, 'banner');
         return $this->getResource()::getUrl('index');
     }
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\Notifications;
+use App\Models\NotifReceiver;
 use App\Models\Poin;
 use App\Models\PoinHistory;
 use Carbon\Carbon;
@@ -43,12 +45,23 @@ class PoinController extends Controller
                     $token = $customer['fcm'];
                     if (array_sum($total) >= 6) {
                         Helpers::calc_poin($customer['id']);
-                        if($token){
+                        if ($token) {
                             $data = [
                                 "title" => "Stamp status",
                                 "description" => "Your points have reached the limit!"
                             ];
+                            $notif = new Notifications();
+                            $notif->title = $data['title'];
+                            $notif->description = $data['description'];
+                            $notif->save();
+
                             Helpers::send_push_notif_to_device($token, $data, null);
+
+                            $receive = new NotifReceiver();
+                            $receive->notification_id = $notif->id;
+                            $receive->user_id = $customer['id'];
+                            $receive->is_read = 0;
+                            $receive->save();
                         }
                         return response()->json(['status' => 'error', 'message' => 'Poin anda sudah mencapai limit'], 403);
                     }
@@ -67,12 +80,23 @@ class PoinController extends Controller
                         $check_poin->save();
                         Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
                         Helpers::calc_poin($customer['id']);
-                        if($token){
+                        if ($token) {
                             $data = [
                                 "title" => "Stamp status",
                                 "description" => "Your points have been added successfully!"
                             ];
+                            $notif = new Notifications();
+                            $notif->title = $data['title'];
+                            $notif->description = $data['description'];
+                            $notif->save();
+
                             Helpers::send_push_notif_to_device($token, $data, null);
+
+                            $receive = new NotifReceiver();
+                            $receive->notification_id = $notif->id;
+                            $receive->user_id = $customer['id'];
+                            $receive->is_read = 0;
+                            $receive->save();
                         }
                         return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak ' . $poin], 200);
                     }
@@ -106,7 +130,7 @@ class PoinController extends Controller
                 $poin = $total_poin['poin'];
                 $redeem = 0;
 
-                if(in_array($poin, [1,2])){
+                if (in_array($poin, [1, 2])) {
                     $redeem = 2;
                 }
 
@@ -162,13 +186,24 @@ class PoinController extends Controller
                         Helpers::poin_history(null, 0, $customer, $user, 'redeem', $request->redeem_stamp);
                         Helpers::calc_poin($customer['id']);
                         $token = $customer['fcm'];
-                        if($token){
+                        if ($token) {
                             $total_poin = Poin::where('user_id', $customer['id'])->first();
                             $data = [
                                 "title" => "Stamp redeem",
-                                "description" => "Your points have been successfully redeemed by ".$request->redeem_stamp
+                                "description" => "Your points have been successfully redeemed by " . $request->redeem_stamp
                             ];
+                            $notif = new Notifications();
+                            $notif->title = $data['title'];
+                            $notif->description = $data['description'];
+                            $notif->save();
+
                             Helpers::send_push_notif_to_device($token, $data, null);
+
+                            $receive = new NotifReceiver();
+                            $receive->notification_id = $notif->id;
+                            $receive->user_id = $customer['id'];
+                            $receive->is_read = 0;
+                            $receive->save();
                         }
 
                         return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem'], 200);
