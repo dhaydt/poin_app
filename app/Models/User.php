@@ -35,6 +35,7 @@ class User extends Authenticatable implements FilamentUser
         'city',
         'address',
         'is_admin',
+        'fcm',
         'is_notify'
     ];
 
