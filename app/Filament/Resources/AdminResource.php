@@ -53,7 +53,7 @@ class AdminResource extends Resource
                         ->maxLength(255),
                     Forms\Components\TextInput::make('password')
                         ->password()
-                        ->default('12345678')->hidden(),
+                        ->default('123456')->hidden(),
                     Forms\Components\TextInput::make('phone')
                         ->label('Nomor Handphone')
                         ->tel()

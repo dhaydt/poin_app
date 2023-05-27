@@ -53,7 +53,7 @@ class Controller extends BaseController
 
             foreach($users as $u){
                 $token = $u['fcm'];
-                if($token !== null){
+                if($token){
                     Helpers::send_push_notif_to_device($token, $data);
                     array_push($count, 1);
                     $receive = new NotifReceiver();
