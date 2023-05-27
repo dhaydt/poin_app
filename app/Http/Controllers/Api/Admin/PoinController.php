@@ -40,8 +40,16 @@ class PoinController extends Controller
                     $poin = Helpers::poin_counter($request->amount);
                     $total = PoinHistory::where('user_id', $customer['id'])->where(['isexpired' => 0, 'type' => 'add'])->get()->pluck('poin')->toArray();
                     // dd(array_sum($total));
+                    $token = $customer['fcm'];
                     if (array_sum($total) >= 6) {
                         Helpers::calc_poin($customer['id']);
+                        if($token){
+                            $data = [
+                                "title" => "Stamp status",
+                                "description" => "Your points have reached the limit!"
+                            ];
+                            Helpers::send_push_notif_to_device($token, $data, null);
+                        }
                         return response()->json(['status' => 'error', 'message' => 'Poin anda sudah mencapai limit'], 403);
                     }
                     if ($poin > 0) {
@@ -59,6 +67,13 @@ class PoinController extends Controller
                         $check_poin->save();
                         Helpers::poin_history($request->receipt, $request->amount, $customer, $user, 'add', $poin);
                         Helpers::calc_poin($customer['id']);
+                        if($token){
+                            $data = [
+                                "title" => "Stamp status",
+                                "description" => "Your points have been added successfully!"
+                            ];
+                            Helpers::send_push_notif_to_device($token, $data, null);
+                        }
                         return response()->json(['status' => 'success', 'message' => 'Poin berhasil berhasilkan ditambahkan sebanyak ' . $poin], 200);
                     }
                 } else {
@@ -146,6 +161,15 @@ class PoinController extends Controller
                         }
                         Helpers::poin_history(null, 0, $customer, $user, 'redeem', $request->redeem_stamp);
                         Helpers::calc_poin($customer['id']);
+                        $token = $customer['fcm'];
+                        if($token){
+                            $total_poin = Poin::where('user_id', $customer['id'])->first();
+                            $data = [
+                                "title" => "Stamp redeem",
+                                "description" => "Your points have been successfully redeemed by ".$request->redeem_stamp
+                            ];
+                            Helpers::send_push_notif_to_device($token, $data, null);
+                        }
 
                         return response()->json(['status' => 'success', 'message' => 'Poin berhasil di redeem'], 200);
                     } else {
