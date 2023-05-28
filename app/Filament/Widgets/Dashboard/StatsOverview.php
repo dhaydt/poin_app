@@ -83,18 +83,18 @@ class StatsOverview extends BaseWidget
         $redeemNew = array_sum(PoinHistory::where('type', 'redeem')->whereMonth('created_at', $nowMonth)->get()->pluck('poin')->toArray());
 
         return [
-            Card::make('Total Customer', $cust)
-                ->description($custNew . ' customer bertambah')
+            Card::make('Total Customer '.$nowYear, $cust)
+                ->description($custNew . ' customer bertambah pada bulan '.$nowMonth)
                 ->descriptionIcon('heroicon-s-trending-up')
                 ->chart($arrayUser)
                 ->color('success'),
-            Card::make('Total Stamps', $stamp)
-                ->description($stampNew.' stamp bertambah')
+            Card::make('Total Stamps '.$nowYear, $stamp)
+                ->description($stampNew.' stamp bertambah pada bulan '.$nowMonth)
                 ->descriptionIcon('heroicon-s-trending-up')
                 ->chart($arrayStamp)
                 ->color('success'),
-            Card::make('Total Redeem', $redeem)
-                ->description($redeemNew.' redeem bertambah')
+            Card::make('Total Redeem '.$nowYear, $redeem)
+                ->description($redeemNew.' redeem bertambah pada bulan '.$nowMonth)
                 ->descriptionIcon('heroicon-s-trending-up')
                 ->chart($redeemStamp)
                 ->color('success'),
