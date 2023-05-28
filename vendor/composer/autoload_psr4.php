@@ -68,6 +68,7 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'Livewire\\' => array($vendorDir . '/livewire/livewire/src'),
+    'Leandrocfe\\FilamentApexCharts\\' => array($vendorDir . '/leandrocfe/filament-apex-charts/src'),
     'League\\Uri\\' => array($vendorDir . '/league/uri-parser/src'),
     'League\\MimeTypeDetection\\' => array($vendorDir . '/league/mime-type-detection/src'),
     'League\\Flysystem\\Local\\' => array($vendorDir . '/league/flysystem-local'),
