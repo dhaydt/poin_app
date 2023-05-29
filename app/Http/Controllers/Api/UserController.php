@@ -89,6 +89,7 @@ class UserController extends Controller
                 "pembelian" => $h['pembelian'],
                 "poin" => $h['poin'],
                 "tanggal" => $h['created_at'],
+                "expire" => $h['created_at']->addDays(365)
             ];
 
             array_push($data, $dat);
