@@ -40,7 +40,7 @@ class PoinController extends Controller
                 $customer = Helpers::check_customer($request->phone);
                 if ($customer) {
                     $poin = Helpers::poin_counter($request->amount);
-                    $total = PoinHistory::where('user_id', $customer['id'])->where(['isexpired' => 0, 'type' => 'add'])->get()->pluck('poin')->toArray();
+                    $total = PoinHistory::where('user_id', $customer['id'])->where(['isexpired' => 0, 'type' => 'add', 'isredeem' => 0])->get()->pluck('poin')->toArray();
                     // dd(array_sum($total));
                     $token = $customer['fcm'];
                     if (array_sum($total) >= 6) {
