@@ -53,8 +53,14 @@ class InputPoinResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Customer')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('user.phone')
+                    ->label('No HP')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('admin.name')
                     ->label('Karyawan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('no_receipt')
+                    ->label('No Receipt')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pembelian')
                     ->label('Pembelian')
