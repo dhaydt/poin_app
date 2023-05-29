@@ -19,6 +19,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
@@ -138,6 +139,9 @@ class UserResource extends Resource
                 //     ->label('Hak Akses'),
                 Tables\Columns\TextColumn::make('occupation')
                     ->label('Pekerjaan'),
+                Tables\Columns\TextColumn::make('poin.poin')
+                    ->label('Poin'),
+                ViewColumn::make('id')->label('Level')->view('filament.tables.columns.level-view'),
                 Tables\Columns\TextColumn::make('province.name')
                     ->label('Provinsi'),
                 Tables\Columns\TextColumn::make('city.name')

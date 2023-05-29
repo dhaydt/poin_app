@@ -14,8 +14,10 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use stdClass;
 
@@ -65,6 +67,8 @@ class PoinResource extends Resource
                     }
                 ),
                 Tables\Columns\TextColumn::make('user.name')->label('Customer')->searchable(),
+                ViewColumn::make('id')->label('Poin Awal')->view('filament.tables.columns.poinawal-view'),
+                ViewColumn::make('user_id')->label('Total Redeem')->view('filament.tables.columns.redeem-view'),
                 Tables\Columns\TextColumn::make('poin'),
                 Tables\Columns\TextColumn::make('total_pembelian')->label('Total Belanja')->formatStateUsing(fn (string $state): string => __(number_format("{$state}"))),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -78,11 +82,15 @@ class PoinResource extends Resource
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
     public static function canCreate(): bool
+    {
+        return false;
+    }
+    public static function canEdit(Model $record): bool
     {
         return false;
     }

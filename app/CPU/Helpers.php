@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Storage;
 
 class Helpers
 {
+  public static function poinAwal($id){
+    $redeem = PoinHistory::where(['type' => 'add', 'user_id' => $id, 'isexpired' => 0])->get()->pluck('poin')->toArray();
+    if(count($redeem) > 0){
+      return array_sum($redeem);
+    }else{
+      return 0;
+    }
+  }
+  public static function getRedeem($id){
+    $redeem = PoinHistory::where(['type' => 'redeem', 'user_id' => $id])->get()->pluck('poin')->toArray();
+    if(count($redeem) > 0){
+      return array_sum($redeem);
+    }else{
+      return 0;
+    }
+  }
   public static function getLevel($id)
   {
     $total = Poin::where('user_id', $id)->first();

@@ -58,6 +58,10 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
+    public function poin(){
+        return $this->belongsTo(Poin::class, 'id','user_id');
+    }
+
     public function province(){
         return $this->belongsTo(Province::class, 'province_id', 'code');
     }
