@@ -45,13 +45,13 @@ class Helpers
       $persentase = $total / 5000000 * 100;
     }
     if ($total > 5000000) {
-      $level = 'bronze';
+      $level = 'diamond';
       $persentase = 100;
     }
 
     $data = [
       'level' => $level,
-      'persentase' => $persentase . ' %',
+      'persentase' => round($persentase) . ' %',
       'total' => $total
     ];
     return $data;
