@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Storage;
 
 class Helpers
 {
+  public static function getPoinHistory($uid){
+    $ph = PoinHistory::with('user', 'outlet')->where(['user_id' => $uid, 'isexpired' => 0])->orderBy('created_at', 'desc')->get();
+
+    return $ph;
+  }
   public static function poinAwal($id){
     $redeem = PoinHistory::where(['type' => 'add', 'user_id' => $id, 'isexpired' => 0])->get()->pluck('poin')->toArray();
     if(count($redeem) > 0){

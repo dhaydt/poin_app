@@ -8,17 +8,20 @@ use App\Models\Poin;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use PhpOption\None;
 use stdClass;
 
 class PoinResource extends Resource
@@ -80,6 +83,9 @@ class PoinResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Action::make('history')
+                    ->url(fn (Poin $record): string => 'poins/history?id='.$record['user_id'])
+                    ->openUrlInNewTab()
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
@@ -108,6 +114,7 @@ class PoinResource extends Resource
             'index' => Pages\ListPoins::route('/'),
             'create' => Pages\CreatePoin::route('/create'),
             'edit' => Pages\EditPoin::route('/{record}/edit'),
+            'history' => Pages\HistoryPoin::route('/history')
         ];
     }
 }
