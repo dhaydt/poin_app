@@ -8,6 +8,7 @@ use App\Models\Notifications;
 use App\Models\NotifReceiver;
 use App\Models\Poin;
 use App\Models\PoinHistory;
+use App\Models\PoinView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -42,8 +43,15 @@ class PoinController extends Controller
                     $poin = Helpers::poin_counter($request->amount);
                     $total = PoinHistory::where('user_id', $customer['id'])->where(['isexpired' => 0, 'type' => 'add', 'isredeem' => 0])->get()->pluck('poin')->toArray();
                     // dd(array_sum($total));
+                    $check = PoinView::where('user_id', $customer['id'])->get();
+                    $ava = [];
+                    foreach ($check as $key => $c) {
+                        if($c['history']['isredeem'] == 0){
+                            array_push($ava, 1);
+                        }
+                    }
                     $token = $customer['fcm'];
-                    if (array_sum($total) >= 6) {
+                    if (count($check) == 6 && array_sum($ava) >= 2) {
                         Helpers::calc_poin($customer['id']);
                         if ($token && $customer['is_notify'] == 1) {
                             $data = [

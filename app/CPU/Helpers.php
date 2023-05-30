@@ -7,6 +7,7 @@ use App\Models\Notifications;
 use App\Models\NotifReceiver;
 use App\Models\Poin;
 use App\Models\PoinHistory;
+use App\Models\PoinView;
 use App\Models\User;
 use App\Models\Work;
 use Carbon\Carbon;
@@ -223,6 +224,12 @@ class Helpers
         $p->isredeem = 1;
         $p->save();
       }
+    }else{
+      $nView = new PoinView();
+      $nView->user_id = $user['id'];
+      $nView->ph_id = $data['id'];
+      $nView->updated_at = $data['created_at'];
+      $nView->save();
     }
   }
 

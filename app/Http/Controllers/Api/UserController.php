@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\NotifReceiver;
 use App\Models\Poin;
 use App\Models\PoinHistory;
+use App\Models\PoinView;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -79,31 +80,43 @@ class UserController extends Controller
         $user = $request->user();
         $poin = Helpers::calc_poin($user->id);
 
+
         $history = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->get();
 
+        $view = PoinView::where('user_id', $user->id)->get();
+
+        foreach ($view as $v) {
+            $v->delete();
+        }
         $bilangan = count($history);
         $pembagi = 6;
         $sisaBagi = $bilangan % $pembagi;
 
-        // dd($sisaBagi);
-
         if ($sisaBagi == 0) {
             $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
-            $redeem = $show->pluck('isredeem')->toArray();
         } else {
             $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
         }
+        
+        foreach ($show as $n) {
+            $nView = new PoinView();
+            $nView->user_id = $user->id;
+            $nView->ph_id = $n['id'];
+            $nView->updated_at = $n['created_at'];
+            $nView->save();
+        }
+
+        $view = PoinView::with('history')->where('user_id', $user->id)->get();
+
         $poinNew = [];
         $redeem = [];
-        foreach($show as $s){
-            if($s['isredeem'] == 1){
-                array_push($redeem, $s['poin']);
-            }else{
-                array_push($poinNew, $s['poin']);
+        foreach ($view as $s) {
+            if ($s['history']['isredeem'] == 1) {
+                array_push($redeem, $s['history']['poin']);
+            } else {
+                array_push($poinNew, $s['history']['poin']);
             }
         }
-        // dd($poinNew);
-        // return $poin;
 
         $data = [
             "id" => $poin['id'],
