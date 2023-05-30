@@ -79,24 +79,42 @@ class UserController extends Controller
         $user = $request->user();
         $poin = Helpers::calc_poin($user->id);
 
-        return response()->json(['status' => 'success', 'data' => $poin], 200);
+        $history = PoinHistory::with('outlet', 'user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+
+        $bilangan = count($history);
+        $pembagi = 6;
+        $sisaBagi = $bilangan % $pembagi;
+
+        if ($sisaBagi == 0) {
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6);
+            $poinNew = $show->pluck('poin')->toArray();
+            $redeem = $show->pluck('isredeem')->toArray();
+        } else {
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi);
+            $poinNew = $show->pluck('poin')->toArray();
+            $redeem = $show->pluck('isredeem')->toArray();
+        }
+        // dd($poinNew);
+        // return $poin;
+
+        $data = [
+            "user_id" => $poin ? $poin['user_id'] : null,
+            "poin" => array_sum($poinNew),
+            "total_pembelian" => $poin['total_pembelian'],
+            "created_at" => $poin['created_at'],
+            "updated_at" => $poin['updated_at'],
+            "redeemed" => array_sum($redeem),
+        ];
+
+        return response()->json(['status' => 'success', 'data' => $data], 200);
     }
     public function stamp_history(Request $request)
     {
         $user = $request->user();
         $history = PoinHistory::with('outlet', 'user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
-        $bilangan = count($history);
-        $pembagi = 6;
-        $sisaBagi = $bilangan % $pembagi;
-        $hasilBagi = ($bilangan - $sisaBagi) / $pembagi;
-
         // dd($bilangan . " dibagi dengan " . $pembagi . " adalah " . $hasilBagi . " sisa " . $sisaBagi);
-        if($sisaBagi == 0){
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
-        }else{
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
-        }
+
         $data = [];
         foreach ($history as $h) {
             $dat = [
@@ -113,23 +131,7 @@ class UserController extends Controller
             array_push($data, $dat);
         }
 
-        $dataShow = [];
-        foreach($show as $s){
-            $da = [
-                "nama" => $s['user'] ? $s['user']['name'] : 'Invalid user',
-                "outlet" => $s['outlet'] ? $s['outlet']['name'] : 'Invalid outlet',
-                "type" => $s['type'],
-                "no_receipt" => $s['no_receipt'],
-                "pembelian" => $s['pembelian'],
-                "poin" => $s['poin'],
-                "tanggal" => $s['created_at'],
-                "expire" => $s['created_at']->addDays(365)
-            ];
-
-            array_push($dataShow, $da);
-        }
-
-        return response()->json(['status' => 'success', 'data' => $data, 'stamp' => $dataShow], 200);
+        return response()->json(['status' => 'success', 'data' => $data], 200);
     }
     public function update_fcm(Request $request)
     {
