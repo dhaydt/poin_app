@@ -98,6 +98,7 @@ class UserController extends Controller
         // return $poin;
 
         $data = [
+            "id" => $poin['id'],
             "user_id" => $poin ? $poin['user_id'] : null,
             "poin" => array_sum($poinNew),
             "total_pembelian" => $poin['total_pembelian'],
