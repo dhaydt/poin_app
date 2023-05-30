@@ -113,7 +113,23 @@ class UserController extends Controller
             array_push($data, $dat);
         }
 
-        return response()->json(['status' => 'success', 'data' => $data, 'stamp' => $show], 200);
+        $dataShow = [];
+        foreach($show as $s){
+            $da = [
+                "nama" => $s['user'] ? $s['user']['name'] : 'Invalid user',
+                "outlet" => $s['outlet'] ? $s['outlet']['name'] : 'Invalid outlet',
+                "type" => $s['type'],
+                "no_receipt" => $s['no_receipt'],
+                "pembelian" => $s['pembelian'],
+                "poin" => $s['poin'],
+                "tanggal" => $s['created_at'],
+                "expire" => $s['created_at']->addDays(365)
+            ];
+
+            array_push($dataShow, $da);
+        }
+
+        return response()->json(['status' => 'success', 'data' => $data, 'stamp' => $dataShow], 200);
     }
     public function update_fcm(Request $request)
     {
