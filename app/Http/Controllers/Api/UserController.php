@@ -14,45 +14,49 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function list_notif(Request $request){
+    public function list_notif(Request $request)
+    {
         $user = $request->user();
         $notif = NotifReceiver::with('notif')->where(['user_id' => $user->id, 'is_read' => 0])->orderBy('created_at', 'desc')->get();
 
         return response()->json(['status' => 'success', 'data' => $notif], 200);
     }
 
-    public function notif_details(Request $request, $id){
+    public function notif_details(Request $request, $id)
+    {
         // $user = $request->user();
         $notif = NotifReceiver::find($id);
-        if($notif){
+        if ($notif) {
             $notif->is_read = 1;
             $notif->save();
             return response()->json(['status' => 'success', 'data' => $notif], 200);
         }
         return response()->json(['status' => 'error', 'message' => 'Notifikasi tidak ditemukan'], 403);
     }
-    public function change_image(Request $request){
+    public function change_image(Request $request)
+    {
         $user = $request->user();
         $user = User::find($user->id);
-        if($user){
+        if ($user) {
             $validator = Validator::make($request->all(), [
                 'image' => 'required'
             ], [
                 'image.required' => 'Masukan foto!',
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json(['errors' => Helpers::error_processor($validator)], 403);
             }
 
-        $user->image = Helpers::update('profile/', $user->image, 'png', $request->file('image'));
-        $user->save();
+            $user->image = Helpers::update('profile/', $user->image, 'png', $request->file('image'));
+            $user->save();
 
             return response()->json(['status' => 'success', 'message' => 'Foto profil berhasil diubah!'], 200);
         }
         return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan!'], 403);
     }
-    public function is_notify(Request $request){
+    public function is_notify(Request $request)
+    {
         $user = $request->user();
         $validator = Validator::make($request->all(), [
             'is_receive' => 'required'
@@ -70,17 +74,31 @@ class UserController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Notifikasi berhasil diubah!'], 200);
     }
-    public function total_stamp(Request $request){
+    public function total_stamp(Request $request)
+    {
         $user = $request->user();
         $poin = Helpers::calc_poin($user->id);
 
         return response()->json(['status' => 'success', 'data' => $poin], 200);
     }
-    public function stamp_history(Request $request){
+    public function stamp_history(Request $request)
+    {
         $user = $request->user();
         $history = PoinHistory::with('outlet', 'user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+
+        $bilangan = count($history);
+        $pembagi = 6;
+        $sisaBagi = $bilangan % $pembagi;
+        $hasilBagi = ($bilangan - $sisaBagi) / $pembagi;
+
+        // dd($bilangan . " dibagi dengan " . $pembagi . " adalah " . $hasilBagi . " sisa " . $sisaBagi);
+        if($sisaBagi == 0){
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
+        }else{
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
+        }
         $data = [];
-        foreach($history as $h){
+        foreach ($history as $h) {
             $dat = [
                 "nama" => $h['user'] ? $h['user']['name'] : 'Invalid user',
                 "outlet" => $h['outlet'] ? $h['outlet']['name'] : 'Invalid outlet',
@@ -95,11 +113,12 @@ class UserController extends Controller
             array_push($data, $dat);
         }
 
-        return response()->json(['status' => 'success', 'data' => $data], 200);
+        return response()->json(['status' => 'success', 'data' => $data, 'stamp' => $show], 200);
     }
-    public function update_fcm(Request $request){
+    public function update_fcm(Request $request)
+    {
         $user = $request->user();
-        if($user){
+        if ($user) {
             $validator = Validator::make($request->all(), [
                 'fcm' => 'required'
             ], [
@@ -109,7 +128,7 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors' => Helpers::error_processor($validator)], 403);
             }
-    
+
             $users = User::find($user['id']);
             $users->fcm = $request->fcm;
             $users->save();
@@ -119,23 +138,25 @@ class UserController extends Controller
     }
 
 
-    public function profile(Request $request){
+    public function profile(Request $request)
+    {
         $user = $request->user();
 
         $role = Helpers::checkRole($user, 'customer');
-        if($role){
-            $user['image'] = getenv('APP_URL').'/storage/profile/'.$user['image'];
+        if ($role) {
+            $user['image'] = getenv('APP_URL') . '/storage/profile/' . $user['image'];
             return response()->json(['status' => 'success', 'data' => $user], 200);
         }
         return response()->json(['status' => 'error', 'message' => 'not authorized'], 200);
     }
 
-    public function update_profile(Request $request){
+    public function update_profile(Request $request)
+    {
         $user = $request->user();
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'phone' => 'required|unique:users,phone,'.$user->id,
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'phone' => 'required|unique:users,phone,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'birthday' => 'required',
             'gender' => 'required',
             'occupation' => 'required',
@@ -160,9 +181,9 @@ class UserController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        if($user){
+        if ($user) {
             $user = User::find($user['id']);
-    
+
             $user->name = $request['name'];
             $user->phone = $request['phone'];
             $user->email = $request['email'];
@@ -179,7 +200,8 @@ class UserController extends Controller
         return response()->json(['status' => 'error', 'message' => 'user tidak ditemukan!'], 403);
     }
 
-    public function update_pin(Request $request){
+    public function update_pin(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'pin' => 'required'
         ], [
@@ -191,7 +213,7 @@ class UserController extends Controller
         }
         $user = $request->user();
         $user = User::find($user->id);
-        if($user){
+        if ($user) {
             $user->password = Hash::make($request->pin);
             $user->save();
 
@@ -200,7 +222,8 @@ class UserController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Customer tidak ditemukan!'], 403);
     }
 
-    public function level(Request $request){
+    public function level(Request $request)
+    {
         $user = $request->user();
 
         $belanja = Poin::where('user_id', $user->id)->first();
