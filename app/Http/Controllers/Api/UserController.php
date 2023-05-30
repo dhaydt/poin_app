@@ -79,20 +79,28 @@ class UserController extends Controller
         $user = $request->user();
         $poin = Helpers::calc_poin($user->id);
 
-        $history = PoinHistory::with('outlet', 'user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $history = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->get();
 
         $bilangan = count($history);
         $pembagi = 6;
         $sisaBagi = $bilangan % $pembagi;
 
+        // dd($sisaBagi);
+
         if ($sisaBagi == 0) {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6);
-            $poinNew = $show->pluck('poin')->toArray();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
             $redeem = $show->pluck('isredeem')->toArray();
         } else {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi);
-            $poinNew = $show->pluck('poin')->toArray();
-            $redeem = $show->pluck('isredeem')->toArray();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
+        }
+        $poinNew = [];
+        $redeem = [];
+        foreach($show as $s){
+            if($s['isredeem'] == 1){
+                array_push($redeem, $s['poin']);
+            }else{
+                array_push($poinNew, $s['poin']);
+            }
         }
         // dd($poinNew);
         // return $poin;
