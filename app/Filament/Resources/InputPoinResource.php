@@ -16,6 +16,7 @@ use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use stdClass;
 
@@ -89,6 +90,10 @@ class InputPoinResource extends Resource
     }
 
     public static function canCreate(): bool
+    {
+        return false;
+    }
+    public static function canEdit(Model $record): bool
     {
         return false;
     }

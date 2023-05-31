@@ -71,7 +71,10 @@ class AdminResource extends Resource
                     Select::make('roles')
                         ->label('Hak Akses')
                         ->placeholder('Pilih hak akses')
-                        ->multiple()->relationship('roles', 'name')->preload()->default(2),
+                        ->multiple()
+                        ->relationship('roles', 'name',  fn (Builder $query) => $query->where('name', '!=', 'customer'))
+                        ->preload()
+                        ->default(2),
                 ])
             ]);
     }

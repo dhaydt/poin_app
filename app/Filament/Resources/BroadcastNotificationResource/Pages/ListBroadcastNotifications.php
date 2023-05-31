@@ -16,9 +16,9 @@ class ListBroadcastNotifications extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Action::make('broadcast')
-            ->url(fn (Collection $get): string => route('broadcast', [' mdata' => $get]))
-            ->openUrlInNewTab()
+            // Action::make('broadcast')
+            // ->url(fn (Collection $get): string => route('broadcast', [' mdata' => $get]))
+            // ->openUrlInNewTab()
         ];
     }
 }
