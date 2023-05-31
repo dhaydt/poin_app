@@ -147,6 +147,7 @@ class UserController extends Controller
                 "pembelian" => $h['pembelian'],
                 "poin" => $h['poin'],
                 "tanggal" => $h['created_at'],
+                'is_redeemed' => $h['isredeem'],
                 "expire" => $h['created_at']->addDays(365)
             ];
 
