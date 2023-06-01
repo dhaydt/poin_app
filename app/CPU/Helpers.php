@@ -200,6 +200,20 @@ class Helpers
     }
   }
 
+  public static function singleExpire($id){
+    $date = Carbon::now()->addDay();
+    $to = $date->format('Y-m-d');
+    $from = $date->subDays(365)->format('Y-m-d');
+
+    $ph = PoinHistory::where('user_id', $id)->whereDate('created_at', '<', $from)->get();
+    if(count($ph) > 0){
+      foreach($ph as $p){
+        $p->isexpired = 1;
+        $p->save();
+      }
+    }
+  }
+
   public static function poin_history($receipt, $amount, $user, $admin, $type, $poin)
   {
     $data = new PoinHistory();

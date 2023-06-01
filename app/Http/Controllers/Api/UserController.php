@@ -78,6 +78,7 @@ class UserController extends Controller
     public function total_stamp(Request $request)
     {
         $user = $request->user();
+        Helpers::singleExpire($user['id']);
         $poin = Helpers::calc_poin($user->id);
 
 
@@ -93,9 +94,9 @@ class UserController extends Controller
         $sisaBagi = $bilangan % $pembagi;
 
         if ($sisaBagi == 0) {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit(6)->get();
         } else {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
         }
         
         foreach ($show as $n) {
@@ -133,6 +134,7 @@ class UserController extends Controller
     public function stamp_history(Request $request)
     {
         $user = $request->user();
+        Helpers::singleExpire($user['id']);
         $history = PoinHistory::with('outlet', 'user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
         // dd($bilangan . " dibagi dengan " . $pembagi . " adalah " . $hasilBagi . " sisa " . $sisaBagi);
@@ -148,6 +150,7 @@ class UserController extends Controller
                 "poin" => $h['poin'],
                 "tanggal" => $h['created_at'],
                 'is_redeemed' => $h['isredeem'],
+                'is_expired' => $h['isexpired'],
                 "expire" => $h['created_at']->addDays(365)
             ];
 
@@ -182,6 +185,8 @@ class UserController extends Controller
     public function profile(Request $request)
     {
         $user = $request->user();
+
+        Helpers::singleExpire($user['id']);
 
         $role = Helpers::checkRole($user, 'customer');
         if ($role) {
@@ -266,6 +271,7 @@ class UserController extends Controller
     public function level(Request $request)
     {
         $user = $request->user();
+        Helpers::singleExpire($user['id']);
 
         $belanja = Poin::where('user_id', $user->id)->first();
         $total = Helpers::refresh_total($user->id);
