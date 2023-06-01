@@ -203,7 +203,8 @@ class Helpers
   public static function singleExpire($id){
     $date = Carbon::now()->addDay();
     $to = $date->format('Y-m-d');
-    $from = $date->subDays(365)->format('Y-m-d');
+    // $from = $date->subDays(365)->format('Y-m-d');
+    $from = $date->subDay()->format('Y-m-d');
 
     $ph = PoinHistory::where('user_id', $id)->whereDate('created_at', '<', $from)->get();
     if(count($ph) > 0){
@@ -212,6 +213,7 @@ class Helpers
         $p->save();
       }
     }
+    return $ph;
   }
 
   public static function poin_history($receipt, $amount, $user, $admin, $type, $poin)
