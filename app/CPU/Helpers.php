@@ -15,24 +15,27 @@ use Illuminate\Support\Facades\Storage;
 
 class Helpers
 {
-  public static function getPoinHistory($uid){
+  public static function getPoinHistory($uid)
+  {
     $ph = PoinHistory::with('user', 'outlet')->where(['user_id' => $uid, 'isexpired' => 0])->orderBy('created_at', 'desc')->get();
 
     return $ph;
   }
-  public static function poinAwal($id){
+  public static function poinAwal($id)
+  {
     $redeem = PoinHistory::where(['type' => 'add', 'user_id' => $id, 'isexpired' => 0])->get()->pluck('poin')->toArray();
-    if(count($redeem) > 0){
+    if (count($redeem) > 0) {
       return array_sum($redeem);
-    }else{
+    } else {
       return 0;
     }
   }
-  public static function getRedeem($id){
+  public static function getRedeem($id)
+  {
     $redeem = PoinHistory::where(['type' => 'redeem', 'user_id' => $id])->get()->pluck('poin')->toArray();
-    if(count($redeem) > 0){
+    if (count($redeem) > 0) {
       return array_sum($redeem);
-    }else{
+    } else {
       return 0;
     }
   }
@@ -200,17 +203,27 @@ class Helpers
     }
   }
 
-  public static function singleExpire($id){
+  public static function singleExpire($id)
+  {
     $date = Carbon::now()->addDay();
     $to = $date->format('Y-m-d');
     // $from = $date->subDays(365)->format('Y-m-d');
     $from = $date->subDay()->format('Y-m-d');
 
     $ph = PoinHistory::where('user_id', $id)->whereDate('created_at', '<', $from)->get();
-    if(count($ph) > 0){
-      foreach($ph as $p){
-        $p->isexpired = 1;
-        $p->save();
+    if (count($ph) > 0) {
+      foreach ($ph as $p) {
+        if ($p->isexpired == 0) {
+          $p->isexpired = 1;
+          $p->save();
+        }
+
+        $user = User::find($id);
+        $data = [
+          'title' => 'Stamp Expired',
+          'description' => 'Your stamp was expired'
+        ];
+        Helpers::send_push_notif_to_device($user['fcm'], $data, null);
       }
     }
     return $ph;
@@ -240,7 +253,7 @@ class Helpers
         $p->isredeem = 1;
         $p->save();
       }
-    }else{
+    } else {
       $nView = new PoinView();
       $nView->user_id = $user['id'];
       $nView->ph_id = $data['id'];
