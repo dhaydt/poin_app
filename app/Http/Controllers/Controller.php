@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CPU\Helpers;
+use App\Exports\UsersExport;
 use App\Models\Notifications;
 use App\Models\NotifReceiver;
 use App\Models\PoinHistory;
@@ -13,11 +14,18 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function export(){
+        return Excel::download(new UsersExport, 'user.xlsx');
+    }
+    public function export_poin(Request $request){
+        dd($request);
+    }
     public function broadcast(Request $request)
     {
         $notif = new Notifications();

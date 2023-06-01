@@ -4,6 +4,7 @@ namespace App\Filament\Resources\InputPoinResource\Pages;
 
 use App\Filament\Resources\InputPoinResource;
 use Filament\Pages\Actions;
+use Filament\Pages\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
 
 class ListInputPoins extends ListRecords

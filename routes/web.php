@@ -37,6 +37,9 @@ Route::get('/seed', function () {
     dd('seeded!');
 });
 
+Route::get('export', [Controller::class, 'export'])->name('export');
+Route::get('export-poin', [Controller::class, 'export_poin'])->name('export.poin');
+
 Route::post('broadcast', [Controller::class, 'broadcast'])->name('broadcast');
 
 Route::get('reset/{is_admin}', [Controller::class, 'reset'])->name('reset');

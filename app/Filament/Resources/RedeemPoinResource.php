@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use App\Filament\Resources\RedeemPoinResource\Pages;
 use App\Filament\Resources\RedeemPoinResource\RelationManagers;
+use App\Models\Outlet;
 use App\Models\Poin;
 use App\Models\PoinHistory;
 use App\Models\RedeemPoin;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -14,6 +17,8 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -63,16 +68,56 @@ class RedeemPoinResource extends Resource
                     ->dateTime('d M Y H:i'),
             ])
             ->filters([
-                //
+                SelectFilter::make('outlet_id')
+                    ->label('Outlet')
+                    ->options(Outlet::all()->pluck('name', 'id')),
+                SelectFilter::make('admin_id')
+                    ->label('Karyawan')
+                    ->options(User::where('is_admin', 1)->pluck('name', 'id')),
+                Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')->label('Dari'),
+                        Forms\Components\DatePicker::make('created_until')->label('Sampai'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
+                FilamentExportBulkAction::make('Export')->fileName('InputPoin' . now()) // Default file name
+                    ->timeFormat('m y d') // Default time format for naming exports
+                    ->defaultFormat('xlsx') // xlsx, csv or pdf
+                    ->defaultPageOrientation('landscape') // Page orientation for pdf files. portrait or landscape
+                    ->directDownload() // Download directly without showing modal
+                    ->disableAdditionalColumns() // Disable additional columns input
+                    ->disableFilterColumns() // Disable filter columns input
+                    ->disableFileName() // Disable file name input
+                    ->disableFileNamePrefix() // Disable file name prefix
+                    ->disablePreview() // Disable export preview
+                    ->withHiddenColumns() //Show the columns which are toggled hidden
+                    ->fileNameFieldLabel('File Name') // Label for file name input
+                    ->formatFieldLabel('Format') // Label for format input
+                    ->pageOrientationFieldLabel('Page Orientation') // Label for page orientation input
+                    ->filterColumnsFieldLabel('filter columns') // Label for filter columns input
+                    ->additionalColumnsFieldLabel('Additional Columns') // Label for additional columns input
+                    ->additionalColumnsTitleFieldLabel('Title') // Label for additional columns' title input
+                    ->additionalColumnsDefaultValueFieldLabel('Default Value') // Label for additional columns' default value input
+                    ->additionalColumnsAddButtonLabel('Add Column') // Label for additional columns' add button,
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
@@ -93,7 +138,7 @@ class RedeemPoinResource extends Resource
     {
         return static::getModel()::query()->where('type', 'redeem')->orderBy('created_at', 'desc');
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -101,5 +146,5 @@ class RedeemPoinResource extends Resource
             'create' => Pages\CreateRedeemPoin::route('/create'),
             'edit' => Pages\EditRedeemPoin::route('/{record}/edit'),
         ];
-    }    
+    }
 }
