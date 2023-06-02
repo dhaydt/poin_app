@@ -213,16 +213,17 @@ class Helpers
       if($p->isexpired == 0) {
         $p->isexpired = 1;
         $p->save();
+        
+        $user = User::find($p['user_id']);
+        if($user && $user['fcm']){
+          $data = [
+            'title' => 'Stamp Expired',
+            'description' => 'Your stamp was expired'
+          ];
+          Helpers::send_push_notif_to_device($user['fcm'], $data, null);
+        }
       }
 
-      $user = User::find($p['user_id']);
-      if($user && $user['fcm']){
-        $data = [
-          'title' => 'Stamp Expired',
-          'description' => 'Your stamp was expired'
-        ];
-        Helpers::send_push_notif_to_device($user['fcm'], $data, null);
-      }
     }
   }
 
@@ -239,14 +240,15 @@ class Helpers
         if ($p->isexpired == 0) {
           $p->isexpired = 1;
           $p->save();
+
+          $user = User::find($id);
+          $data = [
+            'title' => 'Stamp Expired',
+            'description' => 'Your stamp was expired'
+          ];
+          Helpers::send_push_notif_to_device($user['fcm'], $data, null);
         }
 
-        $user = User::find($id);
-        $data = [
-          'title' => 'Stamp Expired',
-          'description' => 'Your stamp was expired'
-        ];
-        Helpers::send_push_notif_to_device($user['fcm'], $data, null);
       }
     }
     return $ph;
