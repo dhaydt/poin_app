@@ -20,6 +20,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function checkExpire(){
+        Helpers::checkExpire();
+    }
     public function export(){
         return Excel::download(new UsersExport, 'user.xlsx');
     }

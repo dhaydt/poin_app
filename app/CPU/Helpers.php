@@ -203,12 +203,35 @@ class Helpers
     }
   }
 
+  public static function checkExpire(){
+    $date = Carbon::now()->addDay();
+    $to = $date->format('Y-m-d');
+    $from = $date->subDays(365)->format('Y-m-d');
+
+    $ph = PoinHistory::whereDate('created_at', '<', $from)->get();
+    foreach($ph as $p){
+      if($p->isexpired == 0) {
+        $p->isexpired = 1;
+        $p->save();
+      }
+
+      $user = User::find($p['user_id']);
+      if($user && $user['fcm']){
+        $data = [
+          'title' => 'Stamp Expired',
+          'description' => 'Your stamp was expired'
+        ];
+        Helpers::send_push_notif_to_device($user['fcm'], $data, null);
+      }
+    }
+  }
+
   public static function singleExpire($id)
   {
     $date = Carbon::now()->addDay();
     $to = $date->format('Y-m-d');
-    // $from = $date->subDays(365)->format('Y-m-d');
-    $from = $date->subDay()->format('Y-m-d');
+    $from = $date->subDays(365)->format('Y-m-d');
+    // $from = $date->subDay()->format('Y-m-d');
 
     $ph = PoinHistory::where('user_id', $id)->whereDate('created_at', '<', $from)->get();
     if (count($ph) > 0) {
