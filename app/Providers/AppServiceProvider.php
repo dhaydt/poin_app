@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\CPU\Helpers;
 use App\Filament\Resources\AdminResource;
 use App\Filament\Resources\BannerResource;
 use App\Filament\Resources\CatalogResource;
@@ -39,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Helpers::checkExpire();
         // Passport::routes();
         // $users = User::get();
         // $role = Role::pluck('name');
