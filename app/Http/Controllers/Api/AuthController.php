@@ -64,11 +64,11 @@ class AuthController extends Controller
                     $notif->description = $data['description'];
                     $notif->save();
 
-                    $receive = new NotifReceiver();
-                    $receive->notification_id = $notif->id;
-                    $receive->user_id = $user['id'];
-                    $receive->is_read = 0;
-                    $receive->save();
+                    $notifSave = new NotifReceiver();
+                    $notifSave->notification_id = $notif->id;
+                    $notifSave->user_id = $user['id'];
+                    $notifSave->is_read = 0;
+                    $notifSave->save();
 
                     Helpers::send_push_notif_to_device($user['fcm'], $data,null);
 
