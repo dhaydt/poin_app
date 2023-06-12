@@ -54,7 +54,7 @@ class AuthController extends Controller
             $type = 'customer';
             if($user['birthday'] == null || $user['gender'] == null || $user['occupation'] == null || $user['province_id'] == null || $user['city_id'] == null || $user['address'] == null){
                 // dd($data);
-                if($user['fcm']){
+                if($user['fcm'] && $user['is_notify'] == 1){
                     $data = [
                         'title' => 'Information your profile!',
                         'description' => 'Please complete your profile to get a promo from us!'
@@ -64,8 +64,10 @@ class AuthController extends Controller
                     $notif->description = $data['description'];
                     $notif->save();
 
+                    $id = $notif->id ?? $notif['id'];
+
                     $notifSave = new NotifReceiver();
-                    $notifSave->notification_id = $notif->id;
+                    $notifSave->notification_id = $id;
                     $notifSave->user_id = $user['id'];
                     $notifSave->is_read = 0;
                     $notifSave->save();
