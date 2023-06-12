@@ -52,10 +52,11 @@ class AuthController extends Controller
             $type = 'customer';
             if($user['birthday'] == null || $user['gender'] == null || $user['occupation'] == null || $user['province_id'] == null || $user['city_id'] == null || $user['address'] == null){
                 $data = [
-                    'title' => 'Lengkapi proses pendaftaran!',
-                    'description' => 'Mohon lengkapi profil anda untuk dapat menggunakan layanan kami!'
+                    'title' => 'Information your profile!',
+                    'description' => 'Please complete your profile to get a promo from us!'
                 ];
-                
+                // dd($data);
+
                 Helpers::send_push_notif_to_device($user['fcm'], $data,null);
             }
             return response()
