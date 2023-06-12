@@ -6,6 +6,8 @@ use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
 use App\Mail\ReserPasswordMail;
 use App\Mail\ResetPasswordMail;
+use App\Models\Notifications;
+use App\Models\NotifReceiver;
 use App\Models\Outlet;
 use App\Models\Poin;
 use App\Models\User;
@@ -56,8 +58,21 @@ class AuthController extends Controller
                     'description' => 'Please complete your profile to get a promo from us!'
                 ];
                 // dd($data);
+                if($user['fcm']){
+                    $notif = new Notifications();
+                    $notif->title = $data['title'];
+                    $notif->description = $data['description'];
+                    $notif->save();
 
-                Helpers::send_push_notif_to_device($user['fcm'], $data,null);
+                    Helpers::send_push_notif_to_device($user['fcm'], $data,null);
+
+                    $receive = new NotifReceiver();
+                    $receive->notification_id = $notif->id;
+                    $receive->user_id = $user['id'];
+                    $receive->is_read = 0;
+                    $receive->save();
+                }
+
             }
             return response()
             ->json(['message' => 'Hi ' . $user->name . ', welcome to home', 'access_token' => $token, 'token_type' => 'Bearer', 'Role' => $type]);
