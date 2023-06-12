@@ -53,24 +53,25 @@ class AuthController extends Controller
         if($user->hasRole('customer')){
             $type = 'customer';
             if($user['birthday'] == null || $user['gender'] == null || $user['occupation'] == null || $user['province_id'] == null || $user['city_id'] == null || $user['address'] == null){
-                $data = [
-                    'title' => 'Information your profile!',
-                    'description' => 'Please complete your profile to get a promo from us!'
-                ];
                 // dd($data);
                 if($user['fcm']){
+                    $data = [
+                        'title' => 'Information your profile!',
+                        'description' => 'Please complete your profile to get a promo from us!'
+                    ];
                     $notif = new Notifications();
                     $notif->title = $data['title'];
                     $notif->description = $data['description'];
                     $notif->save();
 
-                    Helpers::send_push_notif_to_device($user['fcm'], $data,null);
-
                     $receive = new NotifReceiver();
-                    $receive->notification_id = $notif['id'];
+                    $receive->notification_id = $notif->id;
                     $receive->user_id = $user['id'];
                     $receive->is_read = 0;
                     $receive->save();
+
+                    Helpers::send_push_notif_to_device($user['fcm'], $data,null);
+
                 }
 
             }
