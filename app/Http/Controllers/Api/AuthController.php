@@ -50,6 +50,14 @@ class AuthController extends Controller
 
         if($user->hasRole('customer')){
             $type = 'customer';
+            if($user['birthday'] == null || $user['gender'] == null || $user['occupation'] == null || $user['province_id'] == null || $user['city_id'] == null || $user['address'] == null){
+                $data = [
+                    'title' => 'Lengkapi proses pendaftaran!',
+                    'description' => 'Mohon lengkapi profil anda untuk dapat menggunakan layanan kami!'
+                ];
+                
+                Helpers::send_push_notif_to_device($user['fcm'], $data,null);
+            }
             return response()
             ->json(['message' => 'Hi ' . $user->name . ', welcome to home', 'access_token' => $token, 'token_type' => 'Bearer', 'Role' => $type]);
         }
