@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\Notifications;
 use App\Models\NotifReceiver;
 use App\Models\Poin;
 use App\Models\PoinHistory;
@@ -176,6 +177,35 @@ class UserController extends Controller
             $users = User::find($user['id']);
             $users->fcm = $request->fcm;
             $users->save();
+
+            if($user['is_admin'] == 0){
+                if($user['birthday'] == null || $user['gender'] == null || $user['occupation'] == null || $user['province_id'] == null || $user['city_id'] == null || $user['address'] == null){
+                    // dd($data);
+                    if($user['fcm'] && $user['is_notify'] == 1){
+                        $data = [
+                            'title' => 'Information your profile!',
+                            'description' => 'Please complete your profile to get a promo from us!'
+                        ];
+                        $notif = new Notifications();
+                        $notif->title = $data['title'];
+                        $notif->description = $data['description'];
+                        $notif->save();
+    
+                        $id = $notif->id ?? $notif['id'];
+    
+                        $notifSave = new NotifReceiver();
+                        $notifSave->notification_id = $id;
+                        $notifSave->user_id = $user['id'];
+                        $notifSave->is_read = 0;
+                        $notifSave->save();
+    
+                        Helpers::send_push_notif_to_device($user['fcm'], $data,null);
+    
+                    }
+    
+                }
+            }
+            
             return response()->json(['status' => 'success', 'message' => 'Firebase token saved successfully!'], 200);
         }
         return response()->json(['status' => 'error', 'message' => 'not authorized'], 200);
