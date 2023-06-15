@@ -181,7 +181,7 @@ class UserController extends Controller
             if($user['is_admin'] == 0){
                 if($user['birthday'] == null || $user['gender'] == null || $user['occupation'] == null || $user['province_id'] == null || $user['city_id'] == null || $user['address'] == null){
                     // dd($data);
-                    if($user['fcm'] && $user['is_notify'] == 1){
+                    if($request->fcm && $user['is_notify'] == 1){
                         $data = [
                             'title' => 'Information your profile!',
                             'description' => 'Please complete your profile to get a promo from us!'
@@ -199,13 +199,13 @@ class UserController extends Controller
                         $notifSave->is_read = 0;
                         $notifSave->save();
     
-                        Helpers::send_push_notif_to_device($user['fcm'], $data,null);
+                        Helpers::send_push_notif_to_device($request->fcm, $data,null);
     
                     }
     
                 }
             }
-            
+
             return response()->json(['status' => 'success', 'message' => 'Firebase token saved successfully!'], 200);
         }
         return response()->json(['status' => 'error', 'message' => 'not authorized'], 200);
