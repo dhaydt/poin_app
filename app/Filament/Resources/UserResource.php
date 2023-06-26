@@ -142,7 +142,7 @@ class UserResource extends Resource
                     ->label('Pekerjaan'),
                 Tables\Columns\TextColumn::make('poin.poin')
                     ->label('Poin'),
-                Tables\Columns\TextColumn::make('total belanja (Rp.)')
+                Tables\Columns\TextColumn::make('total belanja')
                 ->formatStateUsing(fn ($record): string => __(number_format(array_sum(Helpers::refresh_total($record['id']))))),
                 ViewColumn::make('id')->label('Level')->view('filament.tables.columns.level-view'),
                 Tables\Columns\TextColumn::make('province.name')
