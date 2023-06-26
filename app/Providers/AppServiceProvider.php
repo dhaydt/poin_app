@@ -76,5 +76,12 @@ class AppServiceProvider extends ServiceProvider
         //             ->url(route('filament.pages.reset')),
         //     ]);
         // });
+
+        Filament::serving(function () {
+            // Using Laravel Mix
+            Filament::registerTheme(
+                mix('css/filament.css'),
+            );
+        });
     }
 }

@@ -68,6 +68,7 @@ return array(
     'AnourValar\\EloquentSerialize\\Package' => $vendorDir . '/anourvalar/eloquent-serialize/src/Package.php',
     'AnourValar\\EloquentSerialize\\Service' => $vendorDir . '/anourvalar/eloquent-serialize/src/Service.php',
     'App\\CPU\\Helpers' => $baseDir . '/app/CPU/Helpers.php',
+    'App\\Console\\Commands\\DemoCron' => $baseDir . '/app/Console/Commands/DemoCron.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Exports\\UsersExport' => $baseDir . '/app/Exports/UsersExport.php',

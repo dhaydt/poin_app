@@ -855,6 +855,7 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         'AnourValar\\EloquentSerialize\\Package' => __DIR__ . '/..' . '/anourvalar/eloquent-serialize/src/Package.php',
         'AnourValar\\EloquentSerialize\\Service' => __DIR__ . '/..' . '/anourvalar/eloquent-serialize/src/Service.php',
         'App\\CPU\\Helpers' => __DIR__ . '/../..' . '/app/CPU/Helpers.php',
+        'App\\Console\\Commands\\DemoCron' => __DIR__ . '/../..' . '/app/Console/Commands/DemoCron.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Exports\\UsersExport' => __DIR__ . '/../..' . '/app/Exports/UsersExport.php',
