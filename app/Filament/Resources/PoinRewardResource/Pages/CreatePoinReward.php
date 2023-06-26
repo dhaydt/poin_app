@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePoinReward extends CreateRecord
 {
     protected static string $resource = PoinRewardResource::class;
+    protected static bool $canCreateAnother = false;
 }

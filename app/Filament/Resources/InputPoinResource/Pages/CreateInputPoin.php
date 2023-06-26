@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateInputPoin extends CreateRecord
 {
     protected static string $resource = InputPoinResource::class;
+    protected static bool $canCreateAnother = false;
 }

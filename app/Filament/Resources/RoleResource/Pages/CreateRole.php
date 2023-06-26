@@ -9,6 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateRole extends CreateRecord
 {
     protected static string $resource = RoleResource::class;
+    protected static bool $canCreateAnother = false;
 
     protected function getRedirectUrl(): string
     {

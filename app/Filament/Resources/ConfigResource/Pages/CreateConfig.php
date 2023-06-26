@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateConfig extends CreateRecord
 {
     protected static string $resource = ConfigResource::class;
+    protected static bool $canCreateAnother = false;
 }

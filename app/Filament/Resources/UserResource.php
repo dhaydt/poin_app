@@ -169,7 +169,7 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::query()->where('is_admin', 0);
+        return static::getModel()::query()->where('is_admin', 0)->orderBy('created_at', 'desc');
     }
 
     public static function getRelations(): array

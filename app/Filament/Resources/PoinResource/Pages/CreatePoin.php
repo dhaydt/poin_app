@@ -9,6 +9,8 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePoin extends CreateRecord
 {
     protected static string $resource = PoinResource::class;
+    protected static bool $canCreateAnother = false;
+    
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
