@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\CPU\Helpers;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -141,6 +142,8 @@ class UserResource extends Resource
                     ->label('Pekerjaan'),
                 Tables\Columns\TextColumn::make('poin.poin')
                     ->label('Poin'),
+                Tables\Columns\TextColumn::make('total belanja (Rp.)')
+                ->formatStateUsing(fn ($record): string => __(number_format(array_sum(Helpers::refresh_total($record['id']))))),
                 ViewColumn::make('id')->label('Level')->view('filament.tables.columns.level-view'),
                 Tables\Columns\TextColumn::make('province.name')
                     ->label('Provinsi'),
