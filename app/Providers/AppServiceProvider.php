@@ -18,6 +18,7 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationItem;
+use Filament\Navigation\UserMenuItem;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Role;
 
@@ -82,6 +83,16 @@ class AppServiceProvider extends ServiceProvider
             Filament::registerTheme(
                 mix('css/filament.css'),
             );
+        });
+
+        Filament::serving(function () {
+            Filament::registerUserMenuItems([
+                UserMenuItem::make()
+                    ->label('Ganti Password')
+                    ->url(route('filament.pages.settings'))
+                    ->icon('heroicon-s-cog'),
+                // ...
+            ]);
         });
     }
 }

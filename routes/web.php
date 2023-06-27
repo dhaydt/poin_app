@@ -44,6 +44,8 @@ Route::post('broadcast', [Controller::class, 'broadcast'])->name('broadcast');
 
 Route::get('reset/{is_admin}', [Controller::class, 'reset'])->name('reset');
 
+Route::post('change-password', [Controller::class, 'changePassword'])->name('password');
+
 Route::get('/', function () {
     return redirect()->route('filament.auth.login');
 })->name('login');

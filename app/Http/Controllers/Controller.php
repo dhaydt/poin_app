@@ -9,11 +9,14 @@ use App\Models\NotifReceiver;
 use App\Models\PoinHistory;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class Controller extends BaseController
@@ -25,6 +28,51 @@ class Controller extends BaseController
     }
     public function export(){
         return Excel::download(new UsersExport, 'user.xlsx');
+    }
+
+    public function changePassword(Request $request){
+        $user = auth()->user();
+        if($user){
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|min:8',
+                'c_password' => 'required|same:password'
+            ], [
+                'password.required' => 'Masukan password baru!',
+                'password.min' => 'Minimal 8 karakter!',
+                'c_password.required' => 'Masukan konfirmasi password!',
+                'c_password.same' => 'Password konfirmasi tidak sama!',
+            ]);
+            if ($validator->fails()) {
+                $messages = Helpers::error_processor($validator);
+    
+                foreach($messages as $m){
+                    Notification::make()
+                    ->title($m['message'])
+                    ->icon('heroicon-o-check-circle')
+                    ->iconColor('danger')
+                    ->send();
+                }
+                return redirect()->back();
+            }
+
+            $user = User::find(auth()->id());
+            $user->password = Hash::make($request['password']);
+            $user->save();
+
+            Notification::make()
+                ->title('Password berhasil diganti!')
+                ->icon('heroicon-o-check-circle')
+                ->iconColor('success')
+                ->send();
+            return redirect()->back();
+        }
+
+        Notification::make()
+            ->title('Anda tidak terautentikasi!')
+            ->icon('heroicon-o-check-circle')
+            ->iconColor('danger')
+            ->send();
+        return redirect()->back();
     }
     public function export_poin(Request $request){
         dd($request);
