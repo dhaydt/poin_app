@@ -13,7 +13,7 @@
           <div class="h-12 flex items-center space-x-4 rtl:space-x-reverse">
             <div>
               <h2 class="text-lg sm:text-xl font-bold tracking-tight" style="text-transform: capitalize">
-                History Poin {{ $user['name'] }}
+                History Poin {{ $user['name'] ?? 'Invalid user' }}
               </h2>
             </div>
           </div>
