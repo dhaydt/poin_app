@@ -158,7 +158,7 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make()->label('')->tooltip('Lihat Customer'),
                 Tables\Actions\EditAction::make()->label('')->tooltip('Ubah Customer'),
-                Tables\Actions\DeleteAction::make()->label('')->tooltip('Hapus Customer')
+                // Tables\Actions\DeleteAction::make()->label('')->tooltip('Hapus Customer')
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
