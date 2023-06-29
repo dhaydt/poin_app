@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Storage;
 
 class Helpers
 {
+  public static function getRole(): bool
+  {
+    $id = auth()->id();
+    $user = User::find($id);
+    if ($user->hasRole('admin')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   public static function getPoinHistory($uid)
   {
     $ph = PoinHistory::with('user', 'outlet')->where(['user_id' => $uid, 'isexpired' => 0])->orderBy('created_at', 'desc')->get();
@@ -203,19 +213,20 @@ class Helpers
     }
   }
 
-  public static function checkExpire(){
+  public static function checkExpire()
+  {
     $date = Carbon::now()->addDay();
     $to = $date->format('Y-m-d');
     $from = $date->subDays(365)->format('Y-m-d');
 
     $ph = PoinHistory::whereDate('created_at', '<', $from)->get();
-    foreach($ph as $p){
-      if($p->isexpired == 0) {
+    foreach ($ph as $p) {
+      if ($p->isexpired == 0) {
         $p->isexpired = 1;
         $p->save();
-        
+
         $user = User::find($p['user_id']);
-        if($user && $user['fcm']){
+        if ($user && $user['fcm']) {
           $data = [
             'title' => 'Stamp Expired',
             'description' => 'Your stamp was expired'
@@ -223,7 +234,6 @@ class Helpers
           Helpers::send_push_notif_to_device($user['fcm'], $data, null);
         }
       }
-
     }
   }
 
@@ -248,7 +258,6 @@ class Helpers
           ];
           Helpers::send_push_notif_to_device($user['fcm'], $data, null);
         }
-
       }
     }
     return $ph;

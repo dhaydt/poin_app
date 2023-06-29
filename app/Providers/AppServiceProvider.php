@@ -3,11 +3,15 @@
 namespace App\Providers;
 
 use App\CPU\Helpers;
+use App\Filament\Pages\BroadcastNotif;
+use App\Filament\Pages\Reset;
 use App\Filament\Resources\AdminResource;
 use App\Filament\Resources\BannerResource;
+use App\Filament\Resources\BroadcastNotificationResource;
 use App\Filament\Resources\CatalogResource;
 use App\Filament\Resources\ConfigResource;
 use App\Filament\Resources\InputPoinResource;
+use App\Filament\Resources\NotificationsResource;
 use App\Filament\Resources\OutletResource;
 use App\Filament\Resources\PoinResource;
 use App\Filament\Resources\PoinRewardResource;
@@ -16,9 +20,12 @@ use App\Filament\Resources\RoleResource;
 use App\Filament\Resources\UserResource;
 use App\Models\User;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Hidden;
 use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Navigation\UserMenuItem;
+use Filament\Notifications\BroadcastNotification;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Role;
 
@@ -93,6 +100,85 @@ class AppServiceProvider extends ServiceProvider
                     ->icon('heroicon-s-cog'),
                 // ...
             ]);
+        });
+
+        Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
+            if (Helpers::getRole()) {
+                return $builder->items([
+                    NavigationItem::make('Dashboard')
+                        ->icon('heroicon-o-home')
+                        ->activeIcon('heroicon-s-home')
+                        ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.dashboard'))
+                        ->url(route('filament.pages.dashboard')),
+                    ...BannerResource::getNavigationItems(),
+                    ...CatalogResource::getNavigationItems(),
+                    ...OutletResource::getNavigationItems(),
+                ])
+                ->groups([
+                    NavigationGroup::make('Transaksi')->items([
+                        ...InputPoinResource::getNavigationItems(),
+                        ...RedeemPoinResource::getNavigationItems(),
+                    ])
+                ])
+                ->groups([
+                    NavigationGroup::make('Poin')->items([
+                        ...PoinResource::getNavigationItems(),
+                        ...PoinRewardResource::getNavigationItems(),
+                    ])
+                ])
+                ->groups([
+                    NavigationGroup::make('Pengguna')->items([
+                        ...UserResource::getNavigationItems(),
+                        ...AdminResource::getNavigationItems(),
+                    ])
+                ])
+                ->groups([
+                    NavigationGroup::make('Pengaturan')->items([
+                        ...BroadcastNotif::getNavigationItems(),
+                        ...BroadcastNotificationResource::getNavigationItems(),
+                        ...NotificationsResource::getNavigationItems(),
+                        ...Reset::getNavigationItems(),
+                        ...ConfigResource::getNavigationItems(),
+                    ])
+                ]);
+            } else {
+                return $builder->items([
+                    NavigationItem::make('Dashboard')
+                        ->icon('heroicon-o-home')
+                        ->activeIcon('heroicon-s-home')
+                        ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.dashboard'))
+                        ->url(route('filament.pages.dashboard')),
+                    ...BannerResource::getNavigationItems(),
+                    ...CatalogResource::getNavigationItems(),
+                    ...OutletResource::getNavigationItems(),
+                ])
+                ->groups([
+                    NavigationGroup::make('Transaksi')->items([
+                        ...InputPoinResource::getNavigationItems(),
+                        ...RedeemPoinResource::getNavigationItems(),
+                    ])
+                ])
+                ->groups([
+                    NavigationGroup::make('Poin')->items([
+                        ...PoinResource::getNavigationItems(),
+                        ...PoinRewardResource::getNavigationItems(),
+                    ])
+                ])
+                ->groups([
+                    NavigationGroup::make('Pengguna')->items([
+                        ...UserResource::getNavigationItems(),
+                    ])
+                ])
+                ->groups([
+                    NavigationGroup::make('Pengaturan')->items([
+                        ...BroadcastNotif::getNavigationItems(),
+                        ...BroadcastNotificationResource::getNavigationItems(),
+                        ...NotificationsResource::getNavigationItems(),
+                        ...Reset::getNavigationItems(),
+                        ...ConfigResource::getNavigationItems(),
+                    ])
+                ]);
+            }
         });
     }
 }

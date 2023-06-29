@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\CPU\Helpers;
 use App\Filament\Resources\AdminResource\Pages;
 use App\Filament\Resources\AdminResource\RelationManagers;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
@@ -33,6 +34,8 @@ class AdminResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?int $navigationSort = 7;
     protected static ?string $label = 'Admin';
+
+    protected static bool $shouldRegisterNavigation = true;
 
     protected static ?string $navigationGroup = 'Pengguna';
 

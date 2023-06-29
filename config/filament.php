@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Middleware\UserMenuItemMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
+use Filament\Navigation\UserMenuItem;
 use Filament\Pages;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;

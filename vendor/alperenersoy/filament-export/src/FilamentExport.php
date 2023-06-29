@@ -9,6 +9,7 @@ use AlperenErsoy\FilamentExport\Concerns\CanFilterColumns;
 use AlperenErsoy\FilamentExport\Concerns\CanHaveAdditionalColumns;
 use AlperenErsoy\FilamentExport\Concerns\CanHaveExtraColumns;
 use AlperenErsoy\FilamentExport\Concerns\CanHaveExtraViewData;
+use AlperenErsoy\FilamentExport\Concerns\CanModifyWriters;
 use AlperenErsoy\FilamentExport\Concerns\CanShowHiddenColumns;
 use AlperenErsoy\FilamentExport\Concerns\CanUseSnappy;
 use AlperenErsoy\FilamentExport\Concerns\HasCsvDelimiter;
@@ -22,6 +23,7 @@ use Carbon\Carbon;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -35,6 +37,7 @@ class FilamentExport
     use CanHaveAdditionalColumns;
     use CanHaveExtraColumns;
     use CanHaveExtraViewData;
+    use CanModifyWriters;
     use CanShowHiddenColumns;
     use CanUseSnappy;
     use HasCsvDelimiter;
@@ -45,7 +48,7 @@ class FilamentExport
     use HasPaginator;
     use HasTable;
 
-    public const FORMATS = [
+    public const DEFAULT_FORMATS = [
         'xlsx' => 'XLSX',
         'csv' => 'CSV',
         'pdf' => 'PDF',
@@ -109,6 +112,10 @@ class FilamentExport
         if ($this->getFormat() === 'pdf') {
             $pdf = $this->getPdf();
 
+            if ($modifyPdf = $this->getModifyPdfWriter()) {
+                $pdf = $modifyPdf($pdf);
+            }
+
             return response()->streamDownload(fn () => print($pdf->output()), "{$this->getFileName()}.{$this->getFormat()}");
         }
 
@@ -118,6 +125,10 @@ class FilamentExport
             $stream = SimpleExcelWriter::streamDownload("{$this->getFileName()}.{$this->getFormat()}", $this->getFormat(), delimiter: $this->getCsvDelimiter())
                 ->noHeaderRow()
                 ->addRows($this->getRows()->prepend($headers));
+
+            if ($modifyExcel = $this->getModifyExcelWriter()) {
+                $stream = $modifyExcel($stream);
+            }
 
             $stream->close();
         }, "{$this->getFileName()}.{$this->getFormat()}");
@@ -241,8 +252,9 @@ class FilamentExport
                 ->required(),
             \Filament\Forms\Components\Select::make('format')
                 ->label($action->getFormatFieldLabel())
-                ->options(FilamentExport::FORMATS)
-                ->default($action->getDefaultFormat()),
+                ->options($action->getFormats())
+                ->default($action->getDefaultFormat())
+                ->reactive(),
             \Filament\Forms\Components\Select::make('page_orientation')
                 ->label($action->getPageOrientationFieldLabel())
                 ->options(FilamentExport::getPageOrientations())
@@ -284,6 +296,8 @@ class FilamentExport
             ->withColumns($action->getWithColumns())
             ->withHiddenColumns($action->shouldShowHiddenColumns())
             ->csvDelimiter($action->getCsvDelimiter())
+            ->modifyExcelWriter($action->getModifyExcelWriter())
+            ->modifyPdfWriter($action->getModifyPdfWriter())
             ->download();
     }
 
@@ -305,7 +319,7 @@ class FilamentExport
         foreach ($records as $index => $record) {
             $item = [];
             foreach ($columns as $column) {
-                $state = self::getColumnState($column, $record, $index);
+                $state = self::getColumnState($this->getTable(), $column, $record, $index);
 
                 $item[$column->getName()] = (string) $state;
             }
@@ -315,14 +329,16 @@ class FilamentExport
         return $items;
     }
 
-    public static function getColumnState(Column $column, Model $record, int $index): ?string
+    public static function getColumnState(Table $table, Column $column, Model $record, int $index): ?string
     {
         $column->rowLoop((object) [
             'index' => $index,
             'iteration' => $index + 1,
         ]);
 
-        $column = $column->record($record);
+        $column->record($record);
+
+        $column->table($table);
 
         $state = in_array(\Filament\Tables\Columns\Concerns\CanFormatState::class, class_uses($column)) ? $column->getFormattedState() : $column->getState();
 
