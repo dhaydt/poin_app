@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use App\CPU\Helpers;
 use App\Filament\Resources\PoinResource\Pages;
 use App\Filament\Resources\PoinResource\RelationManagers;
 use App\Models\Poin;
@@ -61,6 +62,8 @@ class PoinResource extends Resource
 
     public static function table(Table $table): Table
     {
+        Helpers::refresh_all_total();
+
         return $table
             ->columns([
                 TextColumn::make('No')->getStateUsing(
