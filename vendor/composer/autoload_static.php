@@ -643,8 +643,8 @@ class ComposerStaticInit445e778209eaeda3a40270b485f78038
         ),
         'Filament\\' => 
         array (
-            0 => __DIR__ . '/..' . '/filament/filament/src',
-            1 => __DIR__ . '/..' . '/filament/spatie-laravel-translatable-plugin/src',
+            0 => __DIR__ . '/..' . '/filament/spatie-laravel-translatable-plugin/src',
+            1 => __DIR__ . '/..' . '/filament/filament/src',
         ),
         'Faker\\' => 
         array (

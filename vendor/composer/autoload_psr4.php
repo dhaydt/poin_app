@@ -104,7 +104,7 @@ return array(
     'Filament\\Support\\' => array($vendorDir . '/filament/support/src'),
     'Filament\\Notifications\\' => array($vendorDir . '/filament/notifications/src'),
     'Filament\\Forms\\' => array($vendorDir . '/filament/forms/src'),
-    'Filament\\' => array($vendorDir . '/filament/filament/src', $vendorDir . '/filament/spatie-laravel-translatable-plugin/src'),
+    'Filament\\' => array($vendorDir . '/filament/spatie-laravel-translatable-plugin/src', $vendorDir . '/filament/filament/src'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'Egulias\\EmailValidator\\' => array($vendorDir . '/egulias/email-validator/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),

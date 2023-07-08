@@ -2160,14 +2160,9 @@ module.exports = {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vendor_alperenersoy_filament_export_resources_js_filament_export_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../vendor/alperenersoy/filament-export/resources/js/filament-export.js */ "./vendor/alperenersoy/filament-export/resources/js/filament-export.js");
-/* harmony import */ var _vendor_alperenersoy_filament_export_resources_js_filament_export_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vendor_alperenersoy_filament_export_resources_js_filament_export_js__WEBPACK_IMPORTED_MODULE_0__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
 
 /***/ }),
 
@@ -2204,50 +2199,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-/***/ }),
-
-/***/ "./vendor/alperenersoy/filament-export/resources/js/filament-export.js":
-/*!*****************************************************************************!*\
-  !*** ./vendor/alperenersoy/filament-export/resources/js/filament-export.js ***!
-  \*****************************************************************************/
-/***/ (() => {
-
-function onElementRemoved(element, callback) {
-  new MutationObserver(function (mutations) {
-    if (!document.body.contains(element)) {
-      callback();
-      this.disconnect();
-    }
-  }).observe(element.parentElement, {
-    childList: true
-  });
-}
-function triggerInputEvent(statePath, value) {
-  var input = document.getElementById(statePath);
-  input.value = value;
-  input.dispatchEvent(new Event('input', {
-    bubbles: true
-  }));
-}
-function printHTML(html, statePath, uniqueActionId) {
-  var iframe = document.createElement("iframe");
-  var random = Math.floor(Math.random() * 99999);
-  iframe.id = "print-".concat(random);
-  iframe.srcdoc = html;
-  document.body.append(iframe);
-  onElementRemoved(iframe, function () {
-    return triggerInputEvent(statePath, "afterprint-".concat(uniqueActionId));
-  });
-  iframe.contentWindow.onafterprint = function () {
-    return document.getElementById(iframe.id).remove();
-  };
-  iframe.contentWindow.onload = function () {
-    return iframe.contentWindow.print();
-  };
-}
-window.triggerInputEvent = triggerInputEvent;
-window.printHTML = printHTML;
 
 /***/ }),
 
@@ -19745,30 +19696,6 @@ process.umask = function() { return 0; };
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
 /******/ 		};
 /******/ 	})();
 /******/ 	
