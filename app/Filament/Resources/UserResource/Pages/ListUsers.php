@@ -19,8 +19,8 @@ class ListUsers extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Action::make('Export')
-                ->url(route('export.customer')),
+            // Action::make('Export')
+            //     ->url(route('export.customer')),
             // LocaleSwitcher::make()
         ];
     }
