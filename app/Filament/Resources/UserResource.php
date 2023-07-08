@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\CPU\Helpers;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use App\Models\Work;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
@@ -162,6 +165,24 @@ class UserResource extends Resource
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
+                FilamentExportBulkAction::make('Export Customer')
+                    ->fileName('Customer_' . Carbon::now()->format('d-M-Y')) // Default file name
+                    ->defaultFormat('xlsx') // xlsx, csv or pdf
+                    ->defaultPageOrientation('landscape') // Page orientation for pdf files. portrait or landscape
+                    ->directDownload() // Download directly without showing modal
+                    ->disableAdditionalColumns() // Disable additional columns input
+                    ->disableFilterColumns() // Disable filter columns input
+                    ->disableFileNamePrefix() // Disable file name prefix
+                    ->disablePreview() // Disable export preview
+                    ->withHiddenColumns() //Show the columns which are toggled hidden
+                    ->fileNameFieldLabel('customer') // Label for file name input
+                    ->formatFieldLabel('Format') // Label for format input
+                    ->pageOrientationFieldLabel('landscape') // Label for page orientation input
+                    ->filterColumnsFieldLabel('filter columns') // Label for filter columns input
+                    ->additionalColumnsFieldLabel('Additional Columns') // Label for additional columns input
+                    ->additionalColumnsTitleFieldLabel('Title') // Label for additional columns' title input
+                    ->additionalColumnsDefaultValueFieldLabel('Default Value') // Label for additional columns' default value input
+                    ->additionalColumnsAddButtonLabel('Add Column') // Label for additional columns' add button,
             ]);
     }
 

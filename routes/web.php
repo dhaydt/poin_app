@@ -43,6 +43,7 @@ Route::get('export-poin', [Controller::class, 'export_poin'])->name('export.poin
 Route::post('broadcast', [Controller::class, 'broadcast'])->name('broadcast');
 
 Route::get('reset/{is_admin}', [Controller::class, 'reset'])->name('reset');
+Route::get('export-customer', [Controller::class, 'export_customer'])->name('export.customer');
 
 Route::post('change-password', [Controller::class, 'changePassword'])->name('password');
 

@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'voku\\' => array($vendorDir . '/voku/portable-ascii/src/voku'),
-    'pxlrbt\\FilamentExcel\\' => array($vendorDir . '/pxlrbt/filament-excel/src'),
     'ZipStream\\' => array($vendorDir . '/maennchen/zipstream-php/src'),
     'Whoops\\' => array($vendorDir . '/filp/whoops/src/Whoops'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
@@ -105,7 +104,7 @@ return array(
     'Filament\\Support\\' => array($vendorDir . '/filament/support/src'),
     'Filament\\Notifications\\' => array($vendorDir . '/filament/notifications/src'),
     'Filament\\Forms\\' => array($vendorDir . '/filament/forms/src'),
-    'Filament\\' => array($vendorDir . '/filament/spatie-laravel-translatable-plugin/src', $vendorDir . '/filament/filament/src'),
+    'Filament\\' => array($vendorDir . '/filament/filament/src', $vendorDir . '/filament/spatie-laravel-translatable-plugin/src'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'Egulias\\EmailValidator\\' => array($vendorDir . '/egulias/email-validator/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
@@ -133,7 +132,6 @@ return array(
     'Barryvdh\\DomPDF\\' => array($vendorDir . '/barryvdh/laravel-dompdf/src'),
     'Asm89\\Stack\\' => array($vendorDir . '/asm89/stack-cors/src'),
     'App\\' => array($baseDir . '/app'),
-    'AnourValar\\EloquentSerialize\\' => array($vendorDir . '/anourvalar/eloquent-serialize/src'),
     'AlperenErsoy\\FilamentExport\\' => array($vendorDir . '/alperenersoy/filament-export/src'),
     'Akaunting\\Money\\' => array($vendorDir . '/akaunting/laravel-money/src'),
 );
