@@ -34,9 +34,8 @@ class HomeController extends Controller
     }
     public function outlet(){
         $outlet = Outlet::orderBy('created_at', 'desc')->get();
-
         foreach($outlet as $b){
-            $b['image'] = getenv('APP_URL').'/storage/'.$b['image'];
+            $b['image'] = config('app.url').'/storage/'.$b['image'];
         }
 
         return response()->json(['status' => 'success', 'data' => $outlet], 200);
@@ -50,7 +49,7 @@ class HomeController extends Controller
             $d['id'] = $b['id'];
             $d['title'] = $b['title'];
             $d['title_eng'] = $b['title_eng'];
-            $d['image'] = getenv('APP_URL').'/storage/'.$b['image'];
+            $d['image'] = config('app.url').'/storage/'.$b['image'];
             array_push($banners, $d);
         }
 
@@ -61,7 +60,7 @@ class HomeController extends Controller
         $banner = Catalog::orderBy('updated_at', 'desc')->get();
 
         foreach($banner as $b){
-            $b['image'] = getenv('APP_URL').'/storage/'.$b['image'];
+            $b['image'] = config('app.url').'/storage/'.$b['image'];
         }
 
         return response()->json(['status' => 'success', 'data' => $banner], 200);
@@ -70,7 +69,7 @@ class HomeController extends Controller
     public function banner_details($id){
         $banner = Banner::find($id);
         if($banner){
-            $banner['image'] = getenv('APP_URL').'/storage/'.$banner['image'];
+            $banner['image'] = config('app.url').'/storage/'.$banner['image'];
         }else{
             $banner = [];
         }
@@ -80,7 +79,7 @@ class HomeController extends Controller
     public function outlet_details($id){
         $banner = Outlet::find($id);
         if($banner){
-            $banner['image'] = getenv('APP_URL').'/storage/'.$banner['image'];
+            $banner['image'] = config('app.url').'/storage/'.$banner['image'];
         }else{
             $banner = [];
         }
@@ -90,7 +89,7 @@ class HomeController extends Controller
     public function catalog_details($id){
         $banner = Catalog::find($id);
         if($banner){
-            $banner['image'] = getenv('APP_URL').'/storage/'.$banner['image'];
+            $banner['image'] = config('app.url').'/storage/'.$banner['image'];
         }else{
             $banner = [];
         }
