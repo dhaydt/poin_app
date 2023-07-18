@@ -134,11 +134,11 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable()
                     ->label('No Handphone'),
-                // Tables\Columns\TextColumn::make('birthday')
-                //     ->label('Tanggal lahir')
-                //     ->date(),
-                // Tables\Columns\TextColumn::make('gender')
-                //     ->label('Kelamin'),
+                Tables\Columns\TextColumn::make('birthday')
+                    ->label('Tanggal lahir')
+                    ->date(),
+                Tables\Columns\TextColumn::make('gender')
+                    ->label('Kelamin'),
                 // Tables\Columns\TextColumn::make('roles.name')
                 //     ->label('Hak Akses'),
                 Tables\Columns\TextColumn::make('occupation')
