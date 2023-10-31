@@ -21,7 +21,14 @@ class UserController extends Controller
         $user = $request->user();
         $notif = NotifReceiver::with('notif')->where(['user_id' => $user->id, 'is_read' => 0])->orderBy('created_at', 'desc')->get();
 
-        return response()->json(['status' => 'success', 'data' => $notif], 200);
+        $newNotif = [];
+        foreach($notif as $n){
+            if(isset($n['notif'])){
+                array_push($n, $newNotif);
+            }
+        }
+
+        return response()->json(['status' => 'success', 'data' => $newNotif], 200);
     }
 
     public function notif_details(Request $request, $id)
