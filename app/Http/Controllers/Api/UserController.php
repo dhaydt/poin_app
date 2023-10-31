@@ -24,7 +24,7 @@ class UserController extends Controller
         $newNotif = [];
         foreach($notif as $n){
             if(isset($n['notif'])){
-                array_push($n, $newNotif);
+                array_push($newNotif, $n);
             }
         }
 
