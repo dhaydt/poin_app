@@ -30,8 +30,9 @@ class NotificationsResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description'),
+                Forms\Components\Textarea::make('description')->required(),
                 Forms\Components\TextInput::make('image')
+                    ->required()
                     ->maxLength(255),
             ]);
     }
