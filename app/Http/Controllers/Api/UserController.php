@@ -102,11 +102,11 @@ class UserController extends Controller
         $sisaBagi = $bilangan % $pembagi;
 
         if ($sisaBagi == 0) {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit(6)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
         } else {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
         }
-        
+
         foreach ($show as $n) {
             $nView = new PoinView();
             $nView->user_id = $user->id;
@@ -197,19 +197,19 @@ class UserController extends Controller
                         $notif->title = $data['title'];
                         $notif->description = $data['description'];
                         $notif->save();
-    
+
                         $id = $notif->id ?? $notif['id'];
-    
+
                         $notifSave = new NotifReceiver();
                         $notifSave->notification_id = $id;
                         $notifSave->user_id = $user['id'];
                         $notifSave->is_read = 0;
                         $notifSave->save();
-    
+
                         Helpers::send_push_notif_to_device($request->fcm, $data,null);
-    
+
                     }
-    
+
                 }
             }
 
