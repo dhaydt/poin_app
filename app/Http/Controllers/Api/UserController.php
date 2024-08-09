@@ -90,21 +90,22 @@ class UserController extends Controller
         $poin = Helpers::calc_poin($user->id);
 
 
-        $history = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->get();
+        $history = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->get();
 
         $view = PoinView::where('user_id', $user->id)->get();
 
         foreach ($view as $v) {
             $v->delete();
         }
+
         $bilangan = count($history);
         $pembagi = 6;
         $sisaBagi = $bilangan % $pembagi;
 
         if ($sisaBagi == 0) {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit(6)->get();
         } else {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
         }
 
         foreach ($show as $n) {
