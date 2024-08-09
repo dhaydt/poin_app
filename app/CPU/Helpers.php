@@ -109,6 +109,7 @@ class Helpers
       }
     }
   }
+  
   public static function send_push_notif_to_device($fcm_token, $data, $img)
   {
     $key = getenv('FCM_KEY');

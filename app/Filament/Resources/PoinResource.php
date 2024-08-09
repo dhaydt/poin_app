@@ -62,7 +62,7 @@ class PoinResource extends Resource
 
     public static function table(Table $table): Table
     {
-        Helpers::refresh_all_total();
+        // Helpers::refresh_all_total();
 
         return $table
             ->columns([
