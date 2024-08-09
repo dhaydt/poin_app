@@ -1,7 +1,7 @@
 <x-filament::page>
   @php
-  $poinHistory = \App\CPU\Helpers::getPoinHistory(app('request')->id);
-  $user = \App\Models\User::find(app('request')->id);
+  $poinHistory = \App\CPU\Helpers::getPoinHistory($this->user_id);
+  $user = \App\Models\User::find($this->user_id);
   @endphp
 
   <div wire:id="RYEIxyD0m7RdOyy6dQIi" class="filament-widget col-span-1      filament-account-widget">
@@ -451,7 +451,7 @@
             </div>
           </div>
 
-          
+
 
         </div>
       </div>

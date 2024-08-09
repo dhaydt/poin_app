@@ -27,7 +27,7 @@ class Helpers
     }
     public static function getPoinHistory($uid)
     {
-        $ph = PoinHistory::with('user', 'outlet')->where(['user_id' => $uid, 'isexpired' => 0])->orderBy('created_at', 'desc')->get();
+        $ph = PoinHistory::with('user', 'outlet')->where(['user_id' => $uid])->orderBy('created_at', 'desc')->get();
 
         return $ph;
     }

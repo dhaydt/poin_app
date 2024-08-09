@@ -107,7 +107,7 @@ class PoinResource extends Resource
                     ->label('Refresh Poin')
                     ->action(fn ($record) => Helpers::calc_poin($record['user_id'])),
                 Action::make('history')
-                    ->url(fn (Poin $record): string => 'poins/history?id='.$record['user_id'])
+                    ->url(fn (Poin $record): string => 'poins/history/'.$record['user_id'])
                     ->openUrlInNewTab()
             ])
             ->bulkActions([
@@ -156,7 +156,7 @@ class PoinResource extends Resource
             'index' => Pages\ListPoins::route('/'),
             'create' => Pages\CreatePoin::route('/create'),
             'edit' => Pages\EditPoin::route('/{record}/edit'),
-            'history' => Pages\HistoryPoin::route('/history')
+            'history' => Pages\HistoryPoin::route('/history/{id}')
         ];
     }
 }
