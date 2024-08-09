@@ -103,9 +103,9 @@ class UserController extends Controller
         $sisaBagi = $bilangan % $pembagi;
 
         if ($sisaBagi == 0) {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit(6)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit(6)->get();
         } else {
-            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', 'isexpired' => 0])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
+            $show = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->limit($sisaBagi)->get();
         }
 
         foreach ($show as $n) {
