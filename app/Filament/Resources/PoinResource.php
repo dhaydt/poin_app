@@ -105,7 +105,7 @@ class PoinResource extends Resource
                 // Tables\Actions\EditAction::make(),
                 Action::make('refresh')
                     ->label('Refresh Poin')
-                    ->action(fn ($record) => Helpers::calc_poin($record['id'])),
+                    ->action(fn ($record) => Helpers::calc_poin($record['user_id'])),
                 Action::make('history')
                     ->url(fn (Poin $record): string => 'poins/history?id='.$record['user_id'])
                     ->openUrlInNewTab()
