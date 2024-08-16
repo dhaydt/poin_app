@@ -330,8 +330,8 @@ class Helpers
         // $from = $date->subDays(365)->format('Y-m-d');
         // $poin = PoinHistory::where(['user_id' => $id, 'type' => 'add'])->whereBetween('created_at', [$from, $to])->pluck('poin')->toArray();
 
-        $poin = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 0, 'isexpired' => 0])->pluck('poin')->toArray();
-        $redeem = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 1, 'isexpired' => 0])->pluck('poin')->toArray();
+        $poin = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 0, ])->pluck('poin')->toArray();
+        $redeem = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 1, ])->pluck('poin')->toArray();
 
         $p = Poin::where('user_id', $id)->first();
         if (!$p) {
@@ -350,7 +350,7 @@ class Helpers
         $poin = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 0])->pluck('poin')->toArray();
         $redeem = PoinHistory::where(['user_id' => $id, 'type' => 'add', 'isredeem' => 1])->pluck('poin')->toArray();
         $redeemed = PoinHistory::where(['user_id' => $id, 'type' => 'redeem'])->pluck('poin')->toArray();
-        dd($id,$poin, $redeem, $redeemed);
+        // dd($id,$poin, $redeem, $redeemed);
         $p = Poin::where('user_id', $id)->first();
         if (!$p) {
             $p = new Poin();
