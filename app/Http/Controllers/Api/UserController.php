@@ -90,7 +90,7 @@ class UserController extends Controller
         $poin = Helpers::calc_poin($user->id);
 
 
-        $history = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add'])->orderBy('created_at', 'desc')->get();
+        $history = PoinHistory::with('outlet', 'user')->where(['user_id' => $user->id, 'type' => 'add', "isexpired" => 0])->orderBy('created_at', 'desc')->get();
 
         $view = PoinView::where('user_id', $user->id)->get();
 
@@ -99,6 +99,7 @@ class UserController extends Controller
         }
 
         $bilangan = count($history);
+
         $pembagi = 6;
         $sisaBagi = $bilangan % $pembagi;
 
